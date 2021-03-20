@@ -1,4 +1,5 @@
 .git
 .terraform*
-*.tfstate
 tfplan
+node_modules/
+dist/
