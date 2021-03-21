@@ -13,7 +13,7 @@ const isVerbose = process.env.VERBOSE === 'true';
 const isTest = process.env.NODE_TEST === 'test';
 const treatWarningsAsErrors = !process.argv.includes('--watch');
 
-const buildDir = path.resolve(__dirname, 'dist');
+const buildDir = path.resolve(__dirname, '../server/wwwroot/dist');
 
 module.exports = {
 	mode: isDebug ? 'development' : 'production',
@@ -24,6 +24,7 @@ module.exports = {
 		]
 	},
 	output: {
+		publicPath: 'dist/',
 		path: buildDir,
 		filename: '[name].js?[chunkhash]',
 		chunkFilename: '[name].[id].js?[chunkhash]',

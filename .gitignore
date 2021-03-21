@@ -3,3 +3,5 @@
 tfplan
 node_modules/
 dist/
+obj/
+bin/
