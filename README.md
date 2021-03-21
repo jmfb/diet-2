@@ -23,6 +23,26 @@ To host a React frontend/Lambda backend using AWS free tier services.
 * Create an S3 Bucket `jmfb-terraform` with versioning enabled.
 * Create a DynamoDB table `tfstate-lock` with primary key `LockID` of type string.
 
+## Google OAuth Setup
+
+Go to the [API Credentials Page](https://console.cloud.google.com/apis/credentials) and create an OAuth 2 Client ID
+with the Name `Diet`.
+
+**JavaScript Origins**
+* https://diet.buysse.link
+* https://localdiet.buysse.link:5001
+
+**Authorized Redirect URIs**
+* https://diet.buysse.link/authenticate
+* https://localdiet.buysse.link:5001/authenticate
+
+## Local Machine Setup
+
+Add the following entry to your hosts file: `C:\Windows\System32\drivers\etc\hosts`
+```
+127.0.0.1 localdiet.buysse.link
+```
+
 ## Deployment
 
 ### Build
