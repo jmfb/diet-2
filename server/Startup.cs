@@ -9,6 +9,9 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Diet.Server.Configuration;
+using Diet.Server.Models;
+using Diet.Server.Services;
 
 namespace Diet.Server
 {
@@ -23,6 +26,11 @@ namespace Diet.Server
 
 		public void ConfigureServices(IServiceCollection services)
 		{
+			services.Configure<AppSettings>(settings => settings.Configure());
+			services.AddHttpClient<IAuthenticationService, AuthenticationService>(httpClient =>
+			{
+				httpClient.BaseAddress = new Uri("https://www.googleapis.com/oauth2/");
+			});
 			services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 		}
 
@@ -30,8 +38,8 @@ namespace Diet.Server
 		{
 			app.UseHsts();
 			app.UseHttpsRedirection();
-			app.UseStaticFiles();
-			app.UseMvc();
+			app.UseStaticFiles(StaticFiles.Configure());
+			app.UseMvc(Routes.Configure);
 		}
 	}
 }
