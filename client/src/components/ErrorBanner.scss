@@ -1,0 +1,14 @@
+@import '~/variables';
+
+.root {
+	white-space: pre-wrap;
+	font-size: $font-size-min;
+
+	border-radius: $border-radius;
+	padding: ($base-measurement * 0.75) $base-measurement;
+	font-weight: $font-weight-emphasis;
+
+	background-color: #fcc6d1;
+	border: 1px solid #f88ea2;
+	color: #b80b2d;
+}

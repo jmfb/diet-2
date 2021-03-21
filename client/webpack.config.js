@@ -17,7 +17,7 @@ const buildDir = path.resolve(__dirname, 'dist');
 
 module.exports = {
 	mode: isDebug ? 'development' : 'production',
-	entry: './src/index.ts',
+	entry: './src/index.tsx',
 	output: {
 		path: buildDir,
 		filename: 'bundle.js?[chunkhash]',
@@ -33,7 +33,7 @@ module.exports = {
 	module: {
 		rules: [
 			{
-				test: /\.tsx?$/,
+				test: /\.(j|t)sx?$/,
 				exclude: /node_modules/,
 				use: {
 					loader: 'babel-loader',

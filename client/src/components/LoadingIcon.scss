@@ -1,0 +1,47 @@
+@import '~/variables';
+
+:local {
+	:global (.c-icon) {
+		vertical-align: middle;
+		width: 1em;
+		height: 1em;
+		fill: currentColor;
+	}
+}
+
+.loading {
+	circle {
+		animation-name: 'loading-icon';
+		animation-duration: $motion-duration-transition;
+		transform-origin: center;
+		animation-iteration-count: infinite;
+		animation-direction: alternate;
+		transform: scale(0.3);
+		opacity: 0.3;
+		transform-box: fill-box;
+
+		&.pos1 {
+			animation-delay: 0;
+		}
+
+		&.pos2 {
+			animation-delay: (($motion-duration-transition * 2) / 3);
+		}
+
+		&.pos3 {
+			animation-delay: ($motion-duration-transition * 2) / 3 * 2;
+		}
+	}
+
+	@keyframes {
+		from {
+			transform: scale(0.3);
+			opacity: 0.3;
+		}
+
+		to {
+			transform: scale(1);
+			opacity: 1;
+		}
+	}
+}
