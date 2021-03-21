@@ -43,6 +43,12 @@ Add the following entry to your hosts file: `C:\Windows\System32\drivers\etc\hos
 127.0.0.1 localdiet.buysse.link
 ```
 
+Get the following secrets from BitWarden and run in powershell to setup local environment variables.
+```PowerShell
+[Environment]::SetEnvironmentVariable("AuthClientSecret", "TODO", [EnvironmentVariableTarget]::Machine)
+[Environment]::SetEnvironmentVariable("TokenSecret", "TODO", [EnvironmentVariableTarget]::Machine)
+```
+
 ## Deployment
 
 ### Build
