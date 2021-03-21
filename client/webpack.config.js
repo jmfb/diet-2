@@ -17,10 +17,15 @@ const buildDir = path.resolve(__dirname, 'dist');
 
 module.exports = {
 	mode: isDebug ? 'development' : 'production',
-	entry: './src/index.tsx',
+	entry: {
+		'bundle': [
+			'whatwg-fetch',
+			'./src/index.tsx'
+		]
+	},
 	output: {
 		path: buildDir,
-		filename: 'bundle.js?[chunkhash]',
+		filename: '[name].js?[chunkhash]',
 		chunkFilename: '[name].[id].js?[chunkhash]',
 		pathinfo: isDebug
 	},
@@ -28,7 +33,7 @@ module.exports = {
 		alias: {
 			'~': path.join(__dirname, 'src')
 		},
-		extensions: ['*', '.tsx', '.ts']
+		extensions: ['*', '.tsx', '.ts', '.jsx', '.js']
 	},
 	module: {
 		rules: [
@@ -63,12 +68,7 @@ module.exports = {
 				test: /\.scss$/,
 				exclude: /node_modules/,
 				use: [
-					{
-						loader: MiniCssExtractPlugin.loader,
-						options: {
-							modules: true
-						}
-					},
+					MiniCssExtractPlugin.loader,
 					{
 						loader: 'css-loader',
 						options: {

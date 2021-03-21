@@ -1,6 +1,6 @@
 import * as React from 'react';
 import cx from 'classnames';
-import styles './LoadingIcon.scss';
+import styles from './LoadingIcon.scss';
 
 export default class LoadingIcon extends React.PureComponent {
 	render() {

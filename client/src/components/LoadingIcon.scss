@@ -1,12 +1,10 @@
 @import '~/variables';
 
-:local {
-	:global (.c-icon) {
-		vertical-align: middle;
-		width: 1em;
-		height: 1em;
-		fill: currentColor;
-	}
+:global(.c-icon) {
+	vertical-align: middle;
+	width: 1em;
+	height: 1em;
+	fill: currentColor;
 }
 
 .loading {
