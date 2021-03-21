@@ -27,10 +27,7 @@ namespace Diet.Server
 		public void ConfigureServices(IServiceCollection services)
 		{
 			services.Configure<AppSettings>(settings => settings.Configure());
-			services.AddHttpClient<IAuthenticationService, AuthenticationService>(httpClient =>
-			{
-				httpClient.BaseAddress = new Uri("https://www.googleapis.com/oauth2/");
-			});
+			services.AddHttpClient<IAuthenticationService, AuthenticationService>();
 			services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 		}
 

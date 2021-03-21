@@ -15,10 +15,10 @@ class ApplicationContainer extends React.Component<RouteComponentProps, IApplica
 	}
 
 	componentWillMount() {
-		if (localStorage.getItem('name') == null) {
-			localStorage.removeItem('token');
+		if (localStorage.getItem('email') == null) {
+			localStorage.removeItem('accessToken');
 		}
-		if (localStorage.getItem('token') == null) {
+		if (localStorage.getItem('accessToken') == null) {
 			this.setState({ redirectToLogin: true });
 		}
 	}

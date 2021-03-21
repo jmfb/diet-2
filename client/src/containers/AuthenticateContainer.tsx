@@ -11,8 +11,8 @@ class AuthenticateContainer extends React.PureComponent<RouteComponentProps> {
 		const { code } = queryString.parse(location.search) as { code: string; };
 		history.replace('/authenticate');
 		AuthApi.login(code).then(loginModel => {
-			localStorage.setItem('token', loginModel.token);
-			localStorage.setItem('name', loginModel.name);
+			localStorage.setItem('accessToken', loginModel.accessToken);
+			localStorage.setItem('email', loginModel.email);
 			history.push('/');
 		});
 	}

@@ -1,3 +1,5 @@
+using System.Reflection;
+
 namespace Diet.Server.Models
 {
 	public class AppSettings

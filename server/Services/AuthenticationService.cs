@@ -1,30 +1,41 @@
 using System;
-using System.IdentityModel.Tokens;
+using System.IdentityModel.Tokens.Jwt;
+using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Security;
+using System.Security.Claims;
+using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 using Microsoft.Extensions.Options;
 using Diet.Server.Models;
+using Microsoft.IdentityModel.Tokens;
+using Newtonsoft.Json;
 
 namespace Diet.Server.Services
 {
 	public interface IAuthenticationService
 	{
+		Task<string> GetGoogleAuthenticationUrl(string redirectUrl);
+		Task<TokenModel> GetGoogleToken(string redirectUrl, string authorizationCode);
+		Task<UserInfoModel> GetUserInfo(string tokenType, string accessToken);
+		string CreateAuthorizationToken(int userId);
+		int? Authorize(AuthenticationHeaderValue authorization);
 	}
 
 	public class AuthenticationService : IAuthenticationService
 	{
-		private const string clientId = "658047002068-3ua2muku5jcicnj8ru0nvqa6f5khg0mi.apps.googleusercontent.com";
-		private const string clientSecret = "KYbKCySxnPQLvFoywB_wO5Uu";
-		private const string audience = "DietClient";
-		private const string issuer = "DietApi";
+		private const string clientId = "959516251255-t1bd2ee6771be2ck4j68vpbg9em8g2pp.apps.googleusercontent.com";
+		private const string clientSecret = "E8eCk1stbxzPtRBZQPz2x34E";
+		private const string audience = "https://diet.buysse.link";
+		private const string issuer = "https://diet.buysse.link";
 		private const string signatureAlgorithm = "http://www.w3.org/2001/04/xmldsig-more#hmac-sha256";
 		private const string digestAlgorithm = "http://www.w3.org/2001/04/xmlenc#sha256";
 		private const string userIdClaimType = "userId";
 
 		private HttpClient HttpClient { get; }
-		private InMemorySymmetricSecurityKey Key { get; }
+		private SymmetricSecurityKey Key { get; }
 
 		public AuthenticationService(
 			HttpClient httpClient,
@@ -33,10 +44,19 @@ namespace Diet.Server.Services
 			HttpClient = httpClient;
 			var secret = appSettingsAccessor.Value.Secret;
 			var secretBytes = Encoding.UTF8.GetBytes(secret);
-			Key = new InMemorySymmetricSecurityKey(secretBytes);
+			Key = new SymmetricSecurityKey(secretBytes);
 		}
 
-		public string GetGoogleAuthenticationUrl(string redirectUrl)
+		private async Task<DiscoveryModel> GetDiscoveryModel()
+		{
+			var response = await HttpClient.GetAsync("https://accounts.google.com/.well-known/openid-configuration");
+			if (!response.IsSuccessStatusCode)
+				throw new InvalidOperationException(await response.Content.ReadAsStringAsync());
+			var json = await response.Content.ReadAsStringAsync();
+			return JsonConvert.DeserializeObject<DiscoveryModel>(json);
+		}
+
+		public async Task<string> GetGoogleAuthenticationUrl(string redirectUrl)
 		{
 			var query = HttpUtility.ParseQueryString("");
 			query["redirect_uri"] = redirectUrl;
@@ -45,11 +65,13 @@ namespace Diet.Server.Services
 			query["client_id"] = clientId;
 			query["scope"] = "https://www.googleapis.com/auth/userinfo.email";
 			query["access_type"] = "offline";
-			return $"https://accounts.google.com/o/oauth2/v2/auth?{query}";
+			var discovery = await GetDiscoveryModel();
+			return $"{discovery.AuthorizationEndpoint}?{query}";
 		}
 
 		public async Task<TokenModel> GetGoogleToken(string redirectUrl, string authorizationCode)
 		{
+			var discovery = await GetDiscoveryModel();
 			var query = HttpUtility.ParseQueryString("");
 			query["code"] = authorizationCode;
 			query["redirect_uri"] = redirectUrl;
@@ -58,7 +80,7 @@ namespace Diet.Server.Services
 			query["scope"] = "";
 			query["grant_type"] = "authorization_code";
 			var content = new StringContent(query.ToString(), Encoding.UTF8, "application/x-www-form-urlencoded");
-			var response = await httpClient.PostAsync(new Uri("v4/token"), content);
+			var response = await HttpClient.PostAsync(discovery.TokenEndpoint, content);
 			if (!response.IsSuccessStatusCode)
 				throw new InvalidOperationException(await response.Content.ReadAsStringAsync());
 			var json = await response.Content.ReadAsStringAsync();
@@ -67,12 +89,16 @@ namespace Diet.Server.Services
 
 		public async Task<UserInfoModel> GetUserInfo(string tokenType, string accessToken)
 		{
-			client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(tokenType, accessToken);
-			var response = await client.GetAsync(new Uri("v2/userinfo"));
-			if (!response.IsSuccessStatusCode)
-				throw new InvalidOperationException(await response.Content.ReadAsStringAsync());
-			var json = await response.Content.ReadAsStringAsync();
-			return JsonConvert.DeserializeObject<UserInfoModel>(json);
+			var discovery = await GetDiscoveryModel();
+			using (var request = new HttpRequestMessage(HttpMethod.Get, discovery.UserInfoEndpoint))
+			{
+				request.Headers.Authorization = new AuthenticationHeaderValue(tokenType, accessToken);
+				var response = await HttpClient.SendAsync(request);
+				if (!response.IsSuccessStatusCode)
+					throw new InvalidOperationException(await response.Content.ReadAsStringAsync());
+				var json = await response.Content.ReadAsStringAsync();
+				return JsonConvert.DeserializeObject<UserInfoModel>(json);
+			}
 		}
 
 		public string CreateAuthorizationToken(int userId) => new JwtSecurityTokenHandler()
