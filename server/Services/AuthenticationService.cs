@@ -27,7 +27,6 @@ namespace Diet.Server.Services
 	public class AuthenticationService : IAuthenticationService
 	{
 		private const string clientId = "959516251255-t1bd2ee6771be2ck4j68vpbg9em8g2pp.apps.googleusercontent.com";
-		private const string clientSecret = "E8eCk1stbxzPtRBZQPz2x34E";
 		private const string audience = "https://diet.buysse.link";
 		private const string issuer = "https://diet.buysse.link";
 		private const string signatureAlgorithm = "http://www.w3.org/2001/04/xmldsig-more#hmac-sha256";
@@ -36,15 +35,16 @@ namespace Diet.Server.Services
 
 		private HttpClient HttpClient { get; }
 		private SymmetricSecurityKey Key { get; }
+		private string ClientSecret { get; }
 
 		public AuthenticationService(
 			HttpClient httpClient,
 			IOptions<AppSettings> appSettingsAccessor)
 		{
 			HttpClient = httpClient;
-			var secret = appSettingsAccessor.Value.Secret;
-			var secretBytes = Encoding.UTF8.GetBytes(secret);
-			Key = new SymmetricSecurityKey(secretBytes);
+			var appSettings = appSettingsAccessor.Value;
+			Key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(appSettings.TokenSecret));
+			ClientSecret = appSettings.AuthClientSecret;
 		}
 
 		private async Task<DiscoveryModel> GetDiscoveryModel()
@@ -76,7 +76,7 @@ namespace Diet.Server.Services
 			query["code"] = authorizationCode;
 			query["redirect_uri"] = redirectUrl;
 			query["client_id"] = clientId;
-			query["client_secret"] = clientSecret;
+			query["client_secret"] = ClientSecret;
 			query["scope"] = "";
 			query["grant_type"] = "authorization_code";
 			var content = new StringContent(query.ToString(), Encoding.UTF8, "application/x-www-form-urlencoded");
