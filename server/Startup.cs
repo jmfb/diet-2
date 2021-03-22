@@ -28,15 +28,22 @@ namespace Diet.Server
 		{
 			services.Configure<AppSettings>(settings => settings.Configure());
 			services.AddHttpClient<IAuthenticationService, AuthenticationService>();
-			services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+			services.AddControllers();
 		}
 
-		public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+		public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
 		{
 			app.UseHsts();
 			app.UseHttpsRedirection();
 			app.UseStaticFiles(StaticFiles.Configure());
-			app.UseMvc(Routes.Configure);
+			app.UseRouting();
+			app.UseEndpoints(endpoints =>
+			{
+				endpoints.MapControllers();
+				endpoints.MapControllerRoute(
+					name: "default",
+					pattern: "{controller=Home}/{action=Index}/{id?}");
+			});
 		}
 	}
 }
