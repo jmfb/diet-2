@@ -7,12 +7,13 @@ using System.Net.Http.Headers;
 using System.Security;
 using System.Security.Claims;
 using System.Text;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using System.Web;
 using Microsoft.Extensions.Options;
 using Diet.Server.Models;
 using Microsoft.IdentityModel.Tokens;
-using Newtonsoft.Json;
 
 namespace Diet.Server.Services
 {
@@ -54,7 +55,7 @@ namespace Diet.Server.Services
 			if (!response.IsSuccessStatusCode)
 				throw new InvalidOperationException(await response.Content.ReadAsStringAsync());
 			var json = await response.Content.ReadAsStringAsync();
-			return JsonConvert.DeserializeObject<DiscoveryModel>(json);
+			return JsonSerializer.Deserialize<DiscoveryModel>(json);
 		}
 
 		public async Task<string> GetGoogleAuthenticationUrl(string redirectUrl)
@@ -85,7 +86,7 @@ namespace Diet.Server.Services
 			if (!response.IsSuccessStatusCode)
 				throw new InvalidOperationException(await response.Content.ReadAsStringAsync());
 			var json = await response.Content.ReadAsStringAsync();
-			return JsonConvert.DeserializeObject<TokenModel>(json);
+			return JsonSerializer.Deserialize<TokenModel>(json);
 		}
 
 		public async Task<UserInfoModel> GetUserInfo(string tokenType, string accessToken)
@@ -98,7 +99,7 @@ namespace Diet.Server.Services
 				if (!response.IsSuccessStatusCode)
 					throw new InvalidOperationException(await response.Content.ReadAsStringAsync());
 				var json = await response.Content.ReadAsStringAsync();
-				return JsonConvert.DeserializeObject<UserInfoModel>(json);
+				return JsonSerializer.Deserialize<UserInfoModel>(json);
 			}
 		}
 

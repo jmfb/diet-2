@@ -29,6 +29,7 @@ namespace Diet.Server
 			services.Configure<AppSettings>(settings => settings.Configure());
 			services.AddHttpClient<IAuthenticationService, AuthenticationService>();
 			services.AddControllers();
+			services.AddMvc();
 		}
 
 		public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -37,13 +38,7 @@ namespace Diet.Server
 			app.UseHttpsRedirection();
 			app.UseStaticFiles(StaticFiles.Configure());
 			app.UseRouting();
-			app.UseEndpoints(endpoints =>
-			{
-				endpoints.MapControllers();
-				endpoints.MapControllerRoute(
-					name: "default",
-					pattern: "{controller=Home}/{action=Index}/{id?}");
-			});
+			app.UseEndpoints(Endpoints.Configure);
 		}
 	}
 }

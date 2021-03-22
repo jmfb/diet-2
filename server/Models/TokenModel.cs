@@ -1,22 +1,22 @@
-using Newtonsoft.Json;
+using System.Text.Json.Serialization;
 
 namespace Diet.Server.Models
 {
 	public class TokenModel
 	{
-		[JsonProperty("access_token")]
+		[JsonPropertyName("access_token")]
 		public string AccessToken { get; set; }
 
-		[JsonProperty("token_type")]
+		[JsonPropertyName("token_type")]
 		public string TokenType { get; set; }
 
-		[JsonProperty("expires_in")]
+		[JsonPropertyName("expires_in")]
 		public int ExpiresIn { get; set; }
 
-		[JsonProperty("refresh_token")]
+		[JsonPropertyName("refresh_token")]
 		public string RefreshToken { get; set; }
 
-		[JsonProperty("id_token")]
+		[JsonPropertyName("id_token")]
 		public string IdToken { get; set; }
 	}
 }
