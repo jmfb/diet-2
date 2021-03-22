@@ -49,6 +49,30 @@ Get the following secrets from BitWarden and run in powershell to setup local en
 [Environment]::SetEnvironmentVariable("TokenSecret", "TODO", [EnvironmentVariableTarget]::Machine)
 ```
 
+## Docker Setup
+
+```sh
+sudo docker run -it -p 5000:5000 -p 5001:5001 debian
+apt-get update -y
+apt-get install -y git wget curl vim
+wget https://packages.microsoft.com/config/debian/10/packages-microsoft-prod.deb -O packages-microsoft-prod.deb
+dpkg -i packages-microsoft-prod.deb
+apt-get update -y
+apt-get install -y apt-transport-https
+apt-get update -y
+apt-get install -y dotnet-sdk-5.0
+curl -fsSL https://deb.nodesource.com/setup_15.x | bash -
+apt-get install -y nodejs
+npm install --global yarn
+cd home
+git clone https://github.com/jmfb/diet-2.git
+cd diet-2/client
+yarn install
+yarn build-prod
+cd ../server
+dotnet run
+```
+
 ## Deployment
 
 ### Build
