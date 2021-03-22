@@ -22,18 +22,17 @@ namespace Diet.Server.Services
 		Task<string> GetGoogleAuthenticationUrl(string redirectUrl);
 		Task<TokenModel> GetGoogleToken(string redirectUrl, string authorizationCode);
 		Task<UserInfoModel> GetUserInfo(string tokenType, string accessToken);
-		string CreateAuthorizationToken(int userId);
-		int? Authorize(AuthenticationHeaderValue authorization);
+		string CreateAccessToken(int userId);
 	}
 
 	public class AuthenticationService : IAuthenticationService
 	{
 		private const string clientId = "959516251255-t1bd2ee6771be2ck4j68vpbg9em8g2pp.apps.googleusercontent.com";
-		private const string audience = "https://diet.buysse.link";
-		private const string issuer = "https://diet.buysse.link";
+		public const string Audience = "https://diet.buysse.link";
+		public const string Issuer = "https://diet.buysse.link";
 		private const string signatureAlgorithm = "http://www.w3.org/2001/04/xmldsig-more#hmac-sha256";
 		private const string digestAlgorithm = "http://www.w3.org/2001/04/xmlenc#sha256";
-		private const string userIdClaimType = "userId";
+		public const string UserIdClaimType = "userId";
 
 		private HttpClient HttpClient { get; }
 		private SymmetricSecurityKey Key { get; }
@@ -45,7 +44,7 @@ namespace Diet.Server.Services
 		{
 			HttpClient = httpClient;
 			var appSettings = appSettingsAccessor.Value;
-			Key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(appSettings.TokenSecret));
+			Key = appSettings.Key;
 			ClientSecret = appSettings.AuthClientSecret;
 		}
 
@@ -103,56 +102,14 @@ namespace Diet.Server.Services
 			}
 		}
 
-		public string CreateAuthorizationToken(int userId) => new JwtSecurityTokenHandler()
+		public string CreateAccessToken(int userId) => new JwtSecurityTokenHandler()
 			.WriteToken(new JwtSecurityToken(
-				issuer,
-				audience,
+				Issuer,
+				Audience,
 				new[]
 				{
-					new Claim(userIdClaimType, userId.ToString())
+					new Claim(UserIdClaimType, userId.ToString())
 				},
 				signingCredentials: new SigningCredentials(Key, signatureAlgorithm, digestAlgorithm)));
-
-		private int ParseToken(string token)
-		{
-			try
-			{
-				var claimsPrincipal = new JwtSecurityTokenHandler().ValidateToken(
-					token,
-					new TokenValidationParameters
-					{
-						ValidateIssuer = true,
-						ValidIssuer = issuer,
-						ValidateAudience = true,
-						ValidAudience = audience,
-						ValidateIssuerSigningKey = true,
-						IssuerSigningKey = Key,
-						ValidateLifetime = false
-					},
-					out var _);
-				var userId = claimsPrincipal.Claims.Single(claim => claim.Type == userIdClaimType).Value;
-				return int.Parse(userId);
-			}
-			catch (Exception exception)
-			{
-				throw new SecurityException("Invalid authorization token.", exception);
-			}
-		}
-
-		public int? Authorize(AuthenticationHeaderValue authorization)
-		{
-			if (authorization == null)
-				return null;
-			if (authorization.Scheme != "Bearer")
-				return null;
-			try
-			{
-				return ParseToken(authorization.Parameter);
-			}
-			catch (SecurityException)
-			{
-				return null;
-			}
-		}
 	}
 }

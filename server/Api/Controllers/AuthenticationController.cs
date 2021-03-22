@@ -33,7 +33,7 @@ namespace Diet.Server.Api.Controllers
 			var userId = 1;
 			return new LoginModel
 			{
-				AccessToken = AuthenticationService.CreateAuthorizationToken(userId),
+				AccessToken = AuthenticationService.CreateAccessToken(userId),
 				Email = email
 			};
 		}

@@ -1,22 +1,27 @@
 using System;
 using System.Reflection;
+using System.Text;
+using Microsoft.IdentityModel.Tokens;
 
 namespace Diet.Server.Models
 {
 	public class AppSettings
 	{
 		public string BundleVersion { get; set; }
-		public string TokenSecret { get; set; }
+		public SymmetricSecurityKey Key { get; set; }
 		public string AuthClientSecret { get; set; }
 
-		public void Configure()
+		public static SymmetricSecurityKey CreateKey() =>
+			new SymmetricSecurityKey(Encoding.UTF8.GetBytes(GetEnvironmentVariable("TokenSecret")));
+
+		public void Configure(SymmetricSecurityKey key)
 		{
 			BundleVersion = Assembly
 				.GetExecutingAssembly()
 				.GetName()
 				.Version
 				.ToString();
-			TokenSecret = GetEnvironmentVariable(nameof(TokenSecret));
+			Key = key;
 			AuthClientSecret = GetEnvironmentVariable(nameof(AuthClientSecret));
 		}
 
