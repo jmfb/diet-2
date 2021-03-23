@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import Button from '~/components/Button';
 import styles from './ErrorView.scss';
 
@@ -21,7 +20,7 @@ export default class ErrorView extends React.PureComponent<IErrorViewProps> {
 						This error may be due to your session being out of date.<br />
 						Try logging out and logging back in.
 					</div>
-					<Link to='/login'>Login</Link>
+					<a href='/login'>Login</a>
 					<Button
 						type='primary'
 						display='Dismiss'
@@ -30,10 +29,10 @@ export default class ErrorView extends React.PureComponent<IErrorViewProps> {
 						/>
 				</div>
 				<div className={styles.message}>
-					{context}
-				</div>
-				<div className={styles.message}>
 					{message}
+				</div>
+				<div className={styles.context}>
+					{context}
 				</div>
 			</main>
 		);

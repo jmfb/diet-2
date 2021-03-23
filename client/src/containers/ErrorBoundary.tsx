@@ -26,6 +26,10 @@ type IErrorBoundaryProps =
 	IErrorBoundaryStateProps &
 	IErrorBoundaryDispatchProps;
 
+interface IErrorBoundaryState {
+	hasBoundaryError: boolean;
+}
+
 function mapStateToProps(state: IState): IErrorBoundaryStateProps {
 	const { error: { showError, action, context, message} } = state;
 	return {
@@ -41,24 +45,46 @@ const mapDispatchToProps: IErrorBoundaryDispatchProps = {
 	reportError
 };
 
-class ErrorBoundary extends React.PureComponent<IErrorBoundaryProps> {
+class ErrorBoundary extends React.PureComponent<IErrorBoundaryProps, IErrorBoundaryState> {
+	constructor(props: IErrorBoundaryProps) {
+		super(props);
+		this.state = {
+			hasBoundaryError: false
+		};
+	}
+
+	static getDerivedStateFromError(error: Error) {
+		return {
+			hasBoundaryError: true
+		};
+	}
+
 	componentDidCatch(error: Error, errorInfo: ErrorInfo) {
 		const { reportError } = this.props;
 		reportError('componentDidCatch', errorInfo.componentStack, error.message);
 	}
 
 	render() {
-		const { showError, action, context, message, children, dismissError } = this.props;
-		if (showError) {
+		const { showError, action, context, message, children } = this.props;
+		const { hasBoundaryError } = this.state;
+		if (showError || hasBoundaryError) {
 			return (
 				<ErrorView
 					{...{action, context, message}}
-					onClickDismiss={dismissError}
+					onClickDismiss={this.handleDismissClicked}
 					/>
 			);
 		}
 		return children;
 	}
+
+	handleDismissClicked = () => {
+		const { dismissError } = this.props;
+		dismissError();
+		this.setState({
+			hasBoundaryError: false
+		});
+	};
 }
 
 export default connect<

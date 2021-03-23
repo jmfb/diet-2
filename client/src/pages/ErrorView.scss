@@ -28,5 +28,23 @@
 }
 
 .message {
+	border-radius: 4px;
+	box-shadow: $box-shadow;
+	border-left: 2px solid transparent;
+	border-left-color: cadetblue;
+	padding: 0.5em;
+	margin-top: 0.5em;
+	margin-bottom: 2.5em;
+	white-space: pre-line;
 	font-family: monospace;
+	font-size: 1em;
+	background-color: white;}
+
+.context {
+	font-family: monospace;
+	white-space: pre;
+	overflow-x: auto;
+	background-color: lightgoldenrodyellow;
+	padding: 1em;
+	border: 1px solid #ccc;
 }
