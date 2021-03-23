@@ -1,44 +1,55 @@
-import * as React from 'react';
-import { withRouter, Redirect } from 'react-router';
-import { RouteComponentProps } from 'react-router-dom';
+import React from 'react';
+import { Redirect } from 'react-router';
+import { connect } from 'react-redux';
+import { IState } from '~/reducers/rootReducer';
+import { readLocalStorage } from '~/actions/ReadLocalStorage';
 
-interface IApplicationContainerState {
+interface IApplicationContainerStateProps {
+	email?: string;
 	redirectToLogin: boolean;
+	url?: string;
 }
 
-class ApplicationContainer extends React.Component<RouteComponentProps, IApplicationContainerState> {
-	constructor(props: RouteComponentProps) {
-		super(props);
-		this.state = {
-			redirectToLogin: false
-		};
-	}
+interface IApplicationContainerDispatchProps {
+	readLocalStorage(): void;
+}
 
-	componentWillMount() {
-		if (localStorage.getItem('email') == null) {
-			localStorage.removeItem('accessToken');
-		}
-		if (localStorage.getItem('accessToken') == null) {
-			this.setState({ redirectToLogin: true });
-		}
+type IApplicationContainerProps =
+	IApplicationContainerStateProps &
+	IApplicationContainerDispatchProps;
+
+function mapStateToProps(state: IState): IApplicationContainerStateProps {
+	const { auth: { email, redirectToLogin, url } } = state;
+	return { email, redirectToLogin, url };
+}
+
+const mapDispatchToProps: IApplicationContainerDispatchProps = {
+	readLocalStorage
+};
+
+class ApplicationContainer extends React.PureComponent<IApplicationContainerProps> {
+	componentDidMount() {
+		const { readLocalStorage } = this.props;
+		readLocalStorage();
 	}
 
 	render() {
-		const { history } = this.props;
-		const { redirectToLogin } = this.state;
-		if (redirectToLogin) {
-			const redirectTo = {
-				pathname: '/login',
-				state: { returnTo: history.location.pathname }
-			};
+		const { email, redirectToLogin, url } = this.props;
+		if (redirectToLogin && url === undefined) {
 			return (
-				<Redirect to={redirectTo} />
+				<Redirect to='/login' />
 			);
 		}
+		if (email === undefined) {
+			return null;
+		}
 		return (
-			<div>Hello World</div>
+			<div>Hello World, {email}</div>
 		);
 	}
 }
 
-export default withRouter(ApplicationContainer);
+export default connect<
+	IApplicationContainerStateProps,
+	IApplicationContainerDispatchProps
+>(mapStateToProps, mapDispatchToProps)(ApplicationContainer);

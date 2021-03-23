@@ -1,22 +1,13 @@
-import * as React from 'react';
-import { LoadingComponentProps } from 'react-loadable';
+import React from 'react';
 import LoadingIcon from './LoadingIcon';
-import ErrorBanner from './ErrorBanner';
 import styles from './ChunkLoading.scss';
 
-export default class ChunkLoading extends React.PureComponent<LoadingComponentProps> {
+export default class ChunkLoading extends React.PureComponent {
 	render() {
-		const { error, pastDelay } = this.props;
-		if (error !== null) {
-			return <ErrorBanner message={error.message} />;
-		}
-		if (pastDelay) {
-			return (
-				<div className={styles.loading}>
-					<LoadingIcon />
-				</div>
-			);
-		}
-		return null;
+		return (
+			<div className={styles.loading}>
+				<LoadingIcon />
+			</div>
+		);
 	}
 }

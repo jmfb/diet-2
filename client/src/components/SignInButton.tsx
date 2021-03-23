@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import styles from './SignInButton.scss';
 import cx from 'classnames';
 

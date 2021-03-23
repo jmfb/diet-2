@@ -1,30 +1,58 @@
-import * as React from 'react';
+import React from 'react';
+import { Redirect } from 'react-router';
+import { connect } from 'react-redux';
 import Login from '~/pages/Login';
-import AuthApi from '~/api/AuthApi';
+import { IState } from '~/reducers/rootReducer';
+import { getAuthenticationUrl } from '~/actions/GetAuthenticationUrl';
+import { logOut } from '~/actions/LogOut';
 
-interface ILoginContainerState {
-	signingIn: boolean;
+interface ILoginContainerStateProps {
+	isSigningIn: boolean;
+	url?: string;
 }
 
-export default class LoginContainer extends React.PureComponent<{}, ILoginContainerState> {
-	constructor(props: {}) {
-		super(props);
-		this.state = { signingIn: false };
+interface ILoginContainerDispatchProps {
+	getAuthenticationUrl(): void;
+	logOut(): void;
+}
+
+type ILoginContainerProps =
+	ILoginContainerStateProps &
+	ILoginContainerDispatchProps;
+
+function mapStateToProps(state: IState): ILoginContainerStateProps {
+	const { auth: { isSigningIn, url } } = state;
+	return { isSigningIn, url };
+}
+
+const mapDispatchToProps: ILoginContainerDispatchProps = {
+	getAuthenticationUrl,
+	logOut
+};
+
+class LoginContainer extends React.PureComponent<ILoginContainerProps> {
+	componentDidMount() {
+		const { logOut } = this.props;
+		logOut();
 	}
 
 	render() {
-		const { signingIn } = this.state;
+		const { isSigningIn, url, getAuthenticationUrl } = this.props;
+		if (url !== undefined) {
+			return (
+				<Redirect to={url} />
+			);
+		}
 		return (
 			<Login
-				{...{signingIn}}
-				onClickSignIn={this.handleClickSignIn} />
+				{...{isSigningIn, url}}
+				onClickSignIn={getAuthenticationUrl}
+				/>
 		);
 	}
-
-	handleClickSignIn = () => {
-		this.setState({ signingIn: true });
-		AuthApi.getAuthenticationUrl().then(url => {
-			window.location.href = url;
-		});
-	};
 }
+
+export default connect<
+	ILoginContainerStateProps,
+	ILoginContainerDispatchProps
+>(mapStateToProps, mapDispatchToProps)(LoginContainer);

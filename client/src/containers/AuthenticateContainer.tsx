@@ -1,23 +1,46 @@
-import * as React from 'react';
-import { withRouter } from 'react-router';
-import { RouteComponentProps } from 'react-router-dom';
+import React from 'react';
+import { Redirect } from 'react-router';
+import { connect } from 'react-redux';
 import Banner from '~/components/Banner';
-import AuthApi from '~/api/AuthApi';
+import { IState } from '~/reducers/rootReducer';
+import { authenticate } from '~/actions/Authenticate';
 import queryString from 'query-string';
 
-class AuthenticateContainer extends React.PureComponent<RouteComponentProps> {
+interface IAuthenticateContainerStateProps {
+	email?: string;
+}
+
+interface IAuthenticateContainerDispatchProps {
+	authenticate(code: string): void;
+}
+
+type IAuthenticateContainerProps =
+	IAuthenticateContainerStateProps &
+	IAuthenticateContainerDispatchProps;
+
+function mapStateToProps(state: IState): IAuthenticateContainerStateProps {
+	const { auth: { email } } = state;
+	return { email };
+}
+
+const mapDispatchToProps: IAuthenticateContainerDispatchProps = {
+	authenticate
+};
+
+class AuthenticateContainer extends React.PureComponent<IAuthenticateContainerProps> {
 	componentDidMount() {
-		const { history } = this.props;
+		const { authenticate } = this.props;
 		const { code } = queryString.parse(location.search) as { code: string; };
-		history.replace('/authenticate');
-		AuthApi.login(code).then(loginModel => {
-			localStorage.setItem('accessToken', loginModel.accessToken);
-			localStorage.setItem('email', loginModel.email);
-			history.push('/');
-		});
+		authenticate(code);
 	}
 
 	render() {
+		const { email } = this.props;
+		if (email !== undefined) {
+			return (
+				<Redirect to='/' />
+			);
+		}
 		return (
 			<div>
 				<main>
@@ -30,4 +53,7 @@ class AuthenticateContainer extends React.PureComponent<RouteComponentProps> {
 	}
 }
 
-export default withRouter(AuthenticateContainer);
+export default connect<
+	IAuthenticateContainerStateProps,
+	IAuthenticateContainerDispatchProps
+>(mapStateToProps, mapDispatchToProps)(AuthenticateContainer);

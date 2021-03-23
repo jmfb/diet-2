@@ -1,4 +1,4 @@
-@import "../variables";
+@import '~/variables';
 
 .root {
 	h1 {
@@ -27,37 +27,6 @@
 	margin-left: auto;
 }
 
-.container {
-}
-
 .message {
-	font-size: 1.5em;
-	font-weight: 600;
-}
-
-.exceptionType {
 	font-family: monospace;
-}
-
-.exceptionMessage {
-	border-radius: 4px;
-	box-shadow: $box-shadow;
-	border-left: 2px solid transparent;
-	border-left-color: cadetblue;
-	padding: 0.5em;
-	margin-top: 0.5em;
-	margin-bottom: 0.5em;
-	white-space: pre-line;
-	font-family: monospace;
-	font-size: 1em;
-	background-color: white;
-}
-
-.stackTrace {
-	white-space: pre;
-	font-family: monospace;
-	overflow-x: auto;
-	background-color: lightgoldenrodyellow;
-	padding: 1em;
-	border: 1px solid #ccc;
 }

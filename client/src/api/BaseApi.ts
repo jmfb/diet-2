@@ -7,9 +7,4 @@ export default class BaseApi {
 			throw new Error(errorMessage);
 		}
 	}
-
-	static authHeader() {
-		const token = localStorage.getItem('token');
-		return `Token ${token}`;
-	}
 }
