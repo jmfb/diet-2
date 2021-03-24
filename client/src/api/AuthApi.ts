@@ -1,5 +1,5 @@
 import BaseApi from './BaseApi';
-import { ILoginModel } from '~/models';
+import { ISignedInModel } from '~/models';
 import queryString from 'query-string';
 
 const redirectUrl = `${location.origin}/authenticate`;
@@ -16,17 +16,17 @@ export default class AuthApi extends BaseApi {
 		return await response.json() as string;
 	}
 
-	static async login(authorizationCode: string) {
+	static async signIn(authorizationCode: string) {
 		const query = queryString.stringify({
 			redirectUrl,
 			authorizationCode
 		});
-		const response = await fetch(`/api/authentication/login?${query}`, {
+		const response = await fetch(`/api/authentication/sign-in?${query}`, {
 			headers: {
 				Accept: 'application/json'
 			}
 		});
 		await super.checkStatus(response);
-		return await response.json() as ILoginModel;
+		return await response.json() as ISignedInModel;
 	}
 }

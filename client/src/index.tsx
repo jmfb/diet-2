@@ -11,8 +11,8 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 import rootReducer from '~/reducers/rootReducer';
 import './index.scss';
 
-const asyncLoginContainer = lazy(() =>
-	import(/* webpackChunkName: 'LoginContainer' */ '~/containers/LoginContainer'));
+const asyncSignInContainer = lazy(() =>
+	import(/* webpackChunkName: 'SignInContainer' */ '~/containers/SignInContainer'));
 const asyncAuthenticateContainer = lazy(() =>
 	import(/* webpackChunkName: 'AuthenticateContainer' */ '~/containers/AuthenticateContainer'));
 const asyncApplicationContainer = lazy(() =>
@@ -27,7 +27,7 @@ ReactDOM.render(
 			<ErrorBoundary>
 				<Suspense fallback={<PageLoading />}>
 					<Switch>
-						<Route path='/login' component={asyncLoginContainer} />
+						<Route path='/sign-in' component={asyncSignInContainer} />
 						<Route path='/authenticate' component={asyncAuthenticateContainer} />
 						<Route path='/' component={asyncApplicationContainer} />
 					</Switch>

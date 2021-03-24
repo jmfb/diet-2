@@ -7,7 +7,7 @@ import {
 	GetAuthenticationUrlSuccess,
 	GetAuthenticationUrlFailure
 } from '~/actions/GetAuthenticationUrl';
-import { LogOutSuccess } from '~/actions/LogOut';
+import { SignOutSuccess } from '~/actions/SignOut';
 import {
 	AuthenticateRequest,
 	AuthenticateSuccess
@@ -16,7 +16,7 @@ import {
 export interface IAuthState {
 	email?: string;
 	accessToken?: string;
-	redirectToLogin: boolean;
+	redirectToSignIn: boolean;
 	isSigningIn: boolean;
 	url?: string;
 }
@@ -24,7 +24,7 @@ export interface IAuthState {
 const initialState: IAuthState = {
 	email: undefined,
 	accessToken: undefined,
-	redirectToLogin: false,
+	redirectToSignIn: false,
 	isSigningIn: false,
 	url: undefined
 };
@@ -35,7 +35,7 @@ type HandledActions =
 	GetAuthenticationUrlRequest |
 	GetAuthenticationUrlSuccess |
 	GetAuthenticationUrlFailure |
-	LogOutSuccess |
+	SignOutSuccess |
 	AuthenticateRequest |
 	AuthenticateSuccess;
 
@@ -47,11 +47,11 @@ export default function auth(state = initialState, action: HandledActions): IAut
 				...state,
 				email,
 				accessToken,
-				redirectToLogin: false
+				redirectToSignIn: false
 			};
 		}
 		case 'READ_LOCAL_STORAGE_FAILURE':
-			return { ...state, redirectToLogin: true };
+			return { ...state, redirectToSignIn: true };
 		case 'GET_AUTHENTICATION_URL_REQUEST':
 			return { ...state, isSigningIn: true };
 		case 'GET_AUTHENTICATION_URL_SUCCESS': {
@@ -60,12 +60,12 @@ export default function auth(state = initialState, action: HandledActions): IAut
 		}
 		case 'GET_AUTHENTICATION_URL_FAILURE':
 			return { ...state, isSigningIn: false };
-		case 'LOG_OUT_SUCCESS':
+		case 'SIGN_OUT_SUCCESS':
 			return initialState;
 		case 'AUTHENTICATE_REQUEST':
 			return {
 				...state,
-				redirectToLogin: false,
+				redirectToSignIn: false,
 				isSigningIn: false,
 				url: undefined
 			};

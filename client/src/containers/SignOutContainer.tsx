@@ -1,28 +1,28 @@
 import React from 'react';
 import { Redirect } from 'react-router';
 import { connect } from 'react-redux';
-import { logOut } from '~/actions/LogOut';
+import { signOut } from '~/actions/SignOut';
 
 interface ISignOutContainerDispatchProps {
-	logOut(): void;
+	signOut(): void;
 }
 
 type ISignOutContainerProps =
 	ISignOutContainerDispatchProps;
 
 const mapDispatchToProps: ISignOutContainerDispatchProps = {
-	logOut
+	signOut
 };
 
 class SignOutContainer extends React.PureComponent<ISignOutContainerProps> {
 	componentDidMount() {
-		const { logOut } = this.props;
-		logOut();
+		const { signOut } = this.props;
+		signOut();
 	}
 
 	render() {
 		return (
-			<Redirect to='/login' />
+			<Redirect to='/sign-in' />
 		);
 	}
 }

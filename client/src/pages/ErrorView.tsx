@@ -15,11 +15,12 @@ export default class ErrorView extends React.PureComponent<IErrorViewProps> {
 		return (
 			<main className={styles.root}>
 				<section>
-					<h1>Error {action}</h1>
+					<h1>Error</h1>
+					<h2>{action}</h2>
 					<div className={styles.row}>
 						<div className={styles.reason}>
 							This error may be due to your session being out of date.<br />
-							You can dismiss this error or try logging in again.
+							You can dismiss this error or try signing in again.
 						</div>
 						<Button
 							type='primary'
@@ -27,7 +28,7 @@ export default class ErrorView extends React.PureComponent<IErrorViewProps> {
 							className={styles.action}
 							onClick={onClickDismiss}
 							/>
-						<a href='/login' className={styles.login}>Login</a>
+						<a href='/sign-in' className={styles.signIn}>Sign In</a>
 					</div>
 					<div className={styles.message}>
 						{message}

@@ -1,16 +1,16 @@
 import IAction from './IAction';
 import { IState } from '~/reducers/rootReducer';
 
-export type LogOutSuccess = IAction<'LOG_OUT_SUCCESS', {}>;
+export type SignOutSuccess = IAction<'SIGN_OUT_SUCCESS', {}>;
 
-export function logOut() {
+export function signOut() {
 	return (dispatch: Function, getState: () => IState) => {
 		localStorage.removeItem('email');
 		localStorage.removeItem('accessToken');
-		dispatch(logOutSuccess());
+		dispatch(signOutSuccess());
 	};
 }
 
-function logOutSuccess(): LogOutSuccess {
-	return { type: 'LOG_OUT_SUCCESS', payload: {} };
+function signOutSuccess(): SignOutSuccess {
+	return { type: 'SIGN_OUT_SUCCESS', payload: {} };
 }

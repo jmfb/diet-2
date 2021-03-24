@@ -1,39 +1,39 @@
 import React from 'react';
 import { Redirect } from 'react-router';
 import { connect } from 'react-redux';
-import Login from '~/pages/Login';
+import SignIn from '~/pages/SignIn';
 import { IState } from '~/reducers/rootReducer';
 import { getAuthenticationUrl } from '~/actions/GetAuthenticationUrl';
-import { logOut } from '~/actions/LogOut';
+import { signOut } from '~/actions/SignOut';
 
-interface ILoginContainerStateProps {
+interface ISignInContainerStateProps {
 	isSigningIn: boolean;
 	url?: string;
 }
 
-interface ILoginContainerDispatchProps {
+interface ISignInContainerDispatchProps {
 	getAuthenticationUrl(): void;
-	logOut(): void;
+	signOut(): void;
 }
 
-type ILoginContainerProps =
-	ILoginContainerStateProps &
-	ILoginContainerDispatchProps;
+type ISignInContainerProps =
+	ISignInContainerStateProps &
+	ISignInContainerDispatchProps;
 
-function mapStateToProps(state: IState): ILoginContainerStateProps {
+function mapStateToProps(state: IState): ISignInContainerStateProps {
 	const { auth: { isSigningIn, url } } = state;
 	return { isSigningIn, url };
 }
 
-const mapDispatchToProps: ILoginContainerDispatchProps = {
+const mapDispatchToProps: ISignInContainerDispatchProps = {
 	getAuthenticationUrl,
-	logOut
+	signOut
 };
 
-class LoginContainer extends React.PureComponent<ILoginContainerProps> {
+class SignInContainer extends React.PureComponent<ISignInContainerProps> {
 	componentDidMount() {
-		const { logOut } = this.props;
-		logOut();
+		const { signOut } = this.props;
+		signOut();
 	}
 
 	render() {
@@ -44,7 +44,7 @@ class LoginContainer extends React.PureComponent<ILoginContainerProps> {
 			);
 		}
 		return (
-			<Login
+			<SignIn
 				{...{isSigningIn, url}}
 				onClickSignIn={getAuthenticationUrl}
 				/>
@@ -53,6 +53,6 @@ class LoginContainer extends React.PureComponent<ILoginContainerProps> {
 }
 
 export default connect<
-	ILoginContainerStateProps,
-	ILoginContainerDispatchProps
->(mapStateToProps, mapDispatchToProps)(LoginContainer);
+	ISignInContainerStateProps,
+	ISignInContainerDispatchProps
+>(mapStateToProps, mapDispatchToProps)(SignInContainer);

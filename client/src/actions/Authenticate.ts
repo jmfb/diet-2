@@ -10,7 +10,7 @@ export function authenticate(code: string) {
 	return async (dispatch: Function, getState: () => IState) => {
 		dispatch(authenticateRequest(code));
 		try {
-			const { email, accessToken } = await AuthApi.login(code);
+			const { email, accessToken } = await AuthApi.signIn(code);
 			localStorage.setItem('email', email);
 			localStorage.setItem('accessToken', accessToken);
 			dispatch(authenticateSuccess(email, accessToken));

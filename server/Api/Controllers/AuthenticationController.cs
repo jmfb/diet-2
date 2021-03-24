@@ -22,16 +22,16 @@ namespace Diet.Server.Api.Controllers
 			return await AuthenticationService.GetGoogleAuthenticationUrl(redirectUrl);
 		}
 
-		[Route("login")]
+		[Route("sign-in")]
 		[HttpGet]
-		public async Task<LoginModel> Login(string redirectUrl, string authorizationCode)
+		public async Task<SignedInModel> SignIn(string redirectUrl, string authorizationCode)
 		{
 			var googleToken = await AuthenticationService.GetGoogleToken(redirectUrl, authorizationCode);
 			var userInfo = await AuthenticationService.GetUserInfo(googleToken.TokenType, googleToken.AccessToken);
 			var email = userInfo.Email;
 			// TODO: Map email to a unique user ID
 			var userId = 1;
-			return new LoginModel
+			return new SignedInModel
 			{
 				AccessToken = AuthenticationService.CreateAccessToken(userId),
 				Email = email

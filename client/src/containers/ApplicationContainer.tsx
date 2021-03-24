@@ -14,7 +14,7 @@ const asyncSignOutContainer = lazy(() =>
 
 interface IApplicationContainerStateProps {
 	email?: string;
-	redirectToLogin: boolean;
+	redirectToSignIn: boolean;
 	url?: string;
 }
 
@@ -27,8 +27,8 @@ type IApplicationContainerProps =
 	IApplicationContainerDispatchProps;
 
 function mapStateToProps(state: IState): IApplicationContainerStateProps {
-	const { auth: { email, redirectToLogin, url } } = state;
-	return { email, redirectToLogin, url };
+	const { auth: { email, redirectToSignIn, url } } = state;
+	return { email, redirectToSignIn, url };
 }
 
 const mapDispatchToProps: IApplicationContainerDispatchProps = {
@@ -42,10 +42,10 @@ class ApplicationContainer extends React.PureComponent<IApplicationContainerProp
 	}
 
 	render() {
-		const { email, redirectToLogin, url } = this.props;
-		if (redirectToLogin && url === undefined) {
+		const { email, redirectToSignIn, url } = this.props;
+		if (redirectToSignIn && url === undefined) {
 			return (
-				<Redirect to='/login' />
+				<Redirect to='/sign-in' />
 			);
 		}
 		if (email === undefined) {

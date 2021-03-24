@@ -1,4 +1,4 @@
-export interface ILoginModel {
+export interface ISignedInModel {
 	accessToken: string;
 	email: string;
 }
