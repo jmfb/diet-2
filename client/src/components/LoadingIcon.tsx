@@ -14,7 +14,7 @@ export default class LoadingIcon extends React.PureComponent {
 			{ cx: 27, cy: 5 }
 		];
 		return (
-			<svg viewBox='0 0 58 58' xmlns='http://www.w3.org/2000/svg' className='c-icon'>
+			<svg viewBox='0 0 58 58' xmlns='http://www.w3.org/2000/svg' className='loading-icon'>
 				<g fill='none' fillRule='evenodd'>
 					<g transform='translate(2 1)' stroke='currentColor' strokeWidth='1.5'>
 						{circles.map((circle, index) =>
