@@ -17,10 +17,6 @@ body {
 	margin: 0;
 }
 
-button {
-	font-family: 'Lato', sans-serif;
-}
-
 header,
 main,
 footer {
@@ -35,12 +31,6 @@ footer {
 			}
 		}
 	}
-}
-
-header {
-	background-color: $color-background;
-	box-shadow: 0 1px 7px -3px $color-secondary;
-	border-bottom: 1px solid $color-secondary;
 }
 
 main > * {
