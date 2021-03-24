@@ -44,9 +44,11 @@ class ApplicationContainer extends React.PureComponent<IApplicationContainerProp
 			return null;
 		}
 		return (
-			<div>
-				<div>Hello World, {email}</div>
-			</div>
+			<main>
+				<section>
+					<div>Hello World, {email}</div>
+				</section>
+			</main>
 		);
 	}
 }

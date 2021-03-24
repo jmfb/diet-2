@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import { Route, Switch } from 'react-router';
 import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
-import ChunkLoading from '~/components/ChunkLoading';
+import PageLoading from '~/components/PageLoading';
 import ErrorBoundary from '~/containers/ErrorBoundary';
 import { createStore, applyMiddleware } from 'redux';
 import thunkMiddleware from 'redux-thunk';
@@ -25,7 +25,7 @@ ReactDOM.render(
 	<Provider {...{store}}>
 		<BrowserRouter>
 			<ErrorBoundary>
-				<Suspense fallback={<ChunkLoading />}>
+				<Suspense fallback={<PageLoading />}>
 					<Switch>
 						<Route path='/login' component={asyncLoginContainer} />
 						<Route path='/authenticate' component={asyncAuthenticateContainer} />

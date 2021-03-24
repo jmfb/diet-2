@@ -1,7 +1,7 @@
 import React from 'react';
 import { Redirect } from 'react-router';
 import { connect } from 'react-redux';
-import Banner from '~/components/Banner';
+import PageLoading from '~/components/PageLoading';
 import { IState } from '~/reducers/rootReducer';
 import { authenticate } from '~/actions/Authenticate';
 import queryString from 'query-string';
@@ -42,13 +42,11 @@ class AuthenticateContainer extends React.PureComponent<IAuthenticateContainerPr
 			);
 		}
 		return (
-			<div>
-				<main>
-					<div>
-						<Banner type='message' display='Authenticating...' />
-					</div>
-				</main>
-			</div>
+			<main>
+				<section>
+					<PageLoading message='Authenticating...' />
+				</section>
+			</main>
 		);
 	}
 }
