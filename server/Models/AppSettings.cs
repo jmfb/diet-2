@@ -1,7 +1,10 @@
 using System;
+using System.IO;
 using System.Reflection;
 using System.Text;
 using Microsoft.IdentityModel.Tokens;
+using Amazon.KeyManagementService;
+using Amazon.KeyManagementService.Model;
 
 namespace Diet.Server.Models
 {
@@ -32,12 +35,27 @@ namespace Diet.Server.Models
 		private static string GetAndDecryptEnvironmentVariable(string name) =>
 			DecryptEnvironmentVariable(Environment.GetEnvironmentVariable(name));
 
-		private static string DecryptEnvironmentVariable(string value)
+		private static AmazonKeyManagementServiceClient CreateKeyManagementServiceClient() =>
+			new AmazonKeyManagementServiceClient(new AmazonKeyManagementServiceConfig
+			{
+				// Must specify the ClientConfig.HttpClientCacheSize to avoid "Not supported on this platform" error.
+				HttpClientCacheSize = Environment.ProcessorCount
+			});
+
+		private static string DecryptEnvironmentVariable(string ciphertext)
 		{
-			if (string.IsNullOrEmpty(value))
+			if (string.IsNullOrEmpty(ciphertext))
 				return null;
-			// TODO: Use KMS to decrypt value
-			return value;
+			using (var client = CreateKeyManagementServiceClient())
+			using (var ciphertextBlob = new MemoryStream(Convert.FromBase64String(ciphertext)))
+			{
+				var result = client.DecryptAsync(new DecryptRequest
+				{
+					CiphertextBlob = ciphertextBlob
+				}).Result;
+				using (var stringReader = new StreamReader(result.Plaintext))
+					return stringReader.ReadToEnd();
+			}
 		}
 	}
 }

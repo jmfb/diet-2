@@ -14,6 +14,7 @@ To host a React frontend/Lambda backend using AWS free tier services.
 * `choco install dotnet-sdk` (min version 5.0.201)
 * `choco install nodejs` (min version 15.12.0)
 * `choco install yarn` (min version 1.22.5)
+* [Docker for Windows](https://docs.docker.com/docker-for-windows/install/)
 
 ## AWS Bootstrapping
 
@@ -24,6 +25,7 @@ To host a React frontend/Lambda backend using AWS free tier services.
 * Create an S3 Bucket `jmfb-terraform` with versioning enabled.
 * Create a DynamoDB table `tfstate-lock` with primary key `LockID` of type string.
 * Register the `buysse.link` domain in Route 53.
+* Create `diet` ECR repository
 
 ## Google OAuth Setup
 
@@ -51,7 +53,7 @@ Get the following secrets from BitWarden and run in powershell to setup local en
 [Environment]::SetEnvironmentVariable("TokenSecret", "TODO", [EnvironmentVariableTarget]::Machine)
 ```
 
-## Docker Setup
+## Docker Setup (Work in progress)
 
 ```sh
 sudo docker run -it -p 5000:5000 -p 5001:5001 debian
@@ -79,19 +81,33 @@ dotnet run
 
 ### Build
 
-```sh
-TODO
+```PowerShell
+cd client
+yarn install
+yarn run build-prod
+cd ..
+$version = (Get-Date).ToString("y.Mdd.Hmm.s")
+docker build --build-arg version=$version -t diet .
+& aws ecr get-login-password --region us-east-1 | `
+	& docker login --username AWS --password-stdin `
+	862438233085.dkr.ecr.us-east-1.amazonaws.com
+docker tag diet:latest 862438233085.dkr.ecr.us-east-1.amazonaws.com/diet:$version
+docker push 862438233085.dkr.ecr.us-east-1.amazonaws.com/diet:$version
+docker tag diet:latest 862438233085.dkr.ecr.us-east-1.amazonaws.com/diet:latest
+docker push 862438233085.dkr.ecr.us-east-1.amazonaws.com/diet:latest
 ```
 
 ### Plan
 
-```sh
-terraform_0.14.8 init
-terraform_0.14.8 plan -out tfplan
+```PowerShell
+$Env:TF_VAR_token_secret = $Env:TokenSecret
+$Env:TF_VAR_auth_client_secret = $Env:AuthClientSecret
+& terraform_0.14.8 init
+& terraform_0.14.8 plan -out tfplan
 ```
 
 ### Deploy
 
-```sh
-terraform_0.14.8 apply tfplan
+```PowerShell
+& terraform_0.14.8 apply tfplan
 ```
