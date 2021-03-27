@@ -53,6 +53,16 @@ Get the following secrets from BitWarden and run in powershell to setup local en
 [Environment]::SetEnvironmentVariable("TokenSecret", "TODO", [EnvironmentVariableTarget]::Machine)
 ```
 
+## Deployment
+
+```PowerShell
+. .\PublishImage.ps1 -buildClient
+. .\PlanTerraform.ps1
+. .\ApplyTerraform.ps1
+```
+
+NOTE: You can manually clean up old images in the ECR repository to reduce AWS storage.
+
 ## Docker Setup (Work in progress)
 
 ```sh
@@ -75,40 +85,4 @@ yarn install
 yarn build-prod
 cd ../server
 dotnet run
-```
-
-## Deployment
-
-### Build
-
-```PowerShell
-cd client
-yarn install
-yarn run build-prod
-cd ..
-$version = (Get-Date).ToString("y.Mdd.Hmm.s")
-docker build --build-arg version=$version -t diet .
-& aws ecr get-login-password --region us-east-1 | `
-	& docker login --username AWS --password-stdin `
-	862438233085.dkr.ecr.us-east-1.amazonaws.com
-docker tag diet:latest 862438233085.dkr.ecr.us-east-1.amazonaws.com/diet:$version
-docker push 862438233085.dkr.ecr.us-east-1.amazonaws.com/diet:$version
-docker tag diet:latest 862438233085.dkr.ecr.us-east-1.amazonaws.com/diet:latest
-docker push 862438233085.dkr.ecr.us-east-1.amazonaws.com/diet:latest
-```
-
-### Plan
-
-```PowerShell
-cd terraform
-$Env:TF_VAR_token_secret = $Env:TokenSecret
-$Env:TF_VAR_auth_client_secret = $Env:AuthClientSecret
-& terraform_0.14.8 init
-& terraform_0.14.8 plan -out tfplan
-```
-
-### Deploy
-
-```PowerShell
-& terraform_0.14.8 apply tfplan
 ```

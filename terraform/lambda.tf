@@ -8,9 +8,18 @@ data "aws_kms_ciphertext" "auth_client_secret" {
   plaintext = var.auth_client_secret
 }
 
+data "aws_ecr_image" "image" {
+  repository_name = var.name
+  image_tag = "latest"
+}
+
+locals {
+  version = element(tolist(setsubtract(data.aws_ecr_image.image.image_tags, ["latest"])), 0)
+}
+
 resource "aws_lambda_function" "lambda" {
   package_type  = "Image"
-  image_uri     = "862438233085.dkr.ecr.us-east-1.amazonaws.com/diet:latest"
+  image_uri     = "${var.account_id}.dkr.ecr.us-east-1.amazonaws.com/${var.name}:${local.version}"
   function_name = var.name
   description   = "Nutrional Science ASP.NET Core Lambda"
   role          = aws_iam_role.lambda.arn

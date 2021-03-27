@@ -1,9 +1,7 @@
 FROM mcr.microsoft.com/dotnet/sdk:5.0 AS build
 ARG version
 WORKDIR /usr/local/src
-COPY . .
-WORKDIR /usr/local/src/server
-RUN dotnet restore
+COPY ./server .
 RUN dotnet publish \
 	--configuration Release \
 	--runtime linux-x64 \
