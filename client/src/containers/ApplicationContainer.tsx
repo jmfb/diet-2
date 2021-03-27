@@ -2,8 +2,10 @@ import React, { lazy } from 'react';
 import { Redirect, Switch, Route } from 'react-router';
 import { connect } from 'react-redux';
 import Header from '~/components/Header';
+import NewerVersionPrompt from '~/components/NewerVersionPrompt';
 import { IState } from '~/reducers/rootReducer';
 import { readLocalStorage } from '~/actions/ReadLocalStorage';
+import { heartbeat } from '~/actions/Heartbeat';
 
 const asyncHomeContainer = lazy(() =>
 	import(/* webpackChunkName: 'HomeContainer' */ './HomeContainer'));
@@ -16,10 +18,12 @@ interface IApplicationContainerStateProps {
 	email?: string;
 	redirectToSignIn: boolean;
 	url?: string;
+	isHeartbeatInProgress: boolean;
 }
 
 interface IApplicationContainerDispatchProps {
 	readLocalStorage(): void;
+	heartbeat(): void;
 }
 
 type IApplicationContainerProps =
@@ -27,18 +31,34 @@ type IApplicationContainerProps =
 	IApplicationContainerDispatchProps;
 
 function mapStateToProps(state: IState): IApplicationContainerStateProps {
-	const { auth: { email, redirectToSignIn, url } } = state;
-	return { email, redirectToSignIn, url };
+	const {
+		auth: { email, redirectToSignIn, url },
+		heartbeat: { isHeartbeatInProgress }
+	} = state;
+	return {
+		email,
+		redirectToSignIn,
+		url,
+		isHeartbeatInProgress
+	};
 }
 
 const mapDispatchToProps: IApplicationContainerDispatchProps = {
-	readLocalStorage
+	readLocalStorage,
+	heartbeat
 };
 
 class ApplicationContainer extends React.PureComponent<IApplicationContainerProps> {
+	private intervalId: number;
+
 	componentDidMount() {
 		const { readLocalStorage } = this.props;
 		readLocalStorage();
+		this.intervalId = window.setTimeout(this.handleInterval, 60_000);
+	}
+
+	componentWillUnmount() {
+		window.clearInterval(this.intervalId);
 	}
 
 	render() {
@@ -61,11 +81,19 @@ class ApplicationContainer extends React.PureComponent<IApplicationContainerProp
 							<Route path='/profile' component={asyncProfileContainer} />
 							<Route path='/sign-out' component={asyncSignOutContainer} />
 						</Switch>
+						<NewerVersionPrompt />
 					</section>
 				</main>
 			</>
 		);
 	}
+
+	handleInterval = () => {
+		const { isHeartbeatInProgress, heartbeat } = this.props;
+		if (!isHeartbeatInProgress) {
+			heartbeat();
+		}
+	};
 }
 
 export default connect<

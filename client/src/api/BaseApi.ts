@@ -7,4 +7,13 @@ export default class BaseApi {
 			throw new Error(errorMessage);
 		}
 	}
+
+	static getStandardHeaders(accessToken?: string) {
+		return {
+			Accept: 'application/json',
+			...accessToken === undefined ?
+				{} :
+				{ Authorization: `Bearer ${accessToken}` }
+		};
+	}
 }

@@ -1,26 +1,32 @@
 import React from 'react';
-import styles from './Button.scss';
+import LoadingIcon from './LoadingIcon';
 import cx from 'classnames';
+import styles from './Button.scss';
 
 type ButtonType = 'primary' | 'secondary' | 'danger';
 
 interface IButtonProps {
 	className?: string;
-	display: string;
-	element?: 'button' | 'div';
 	type: ButtonType;
 	onClick?(): void;
+	children?: React.ReactNode;
+	isDisabled?: boolean;
+	isProcessing?: boolean;
 }
 
 export default class Button extends React.PureComponent<IButtonProps> {
 	render() {
-		const { className, display, element, type, onClick } = this.props;
-		const buttonProps = {
-			className: cx(styles.button, styles[type], className),
-			onClick
-		};
-		return element === 'div' ?
-			<div {...buttonProps}>{display}</div> :
-			<button {...buttonProps}>{display}</button>;
+		const { className, type, onClick, children, isDisabled, isProcessing } = this.props;
+		return (
+			<button
+				{...{onClick}}
+				className={cx(styles.button, styles[type], className)}
+				disabled={isDisabled}>
+				<div className={cx({ [styles.processing]: isProcessing })}>{children}</div>
+				{isProcessing &&
+					<LoadingIcon />
+				}
+			</button>
+		);
 	}
 }

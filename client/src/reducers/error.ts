@@ -2,6 +2,7 @@ import { DismissError } from '~/actions/DismissError';
 import { GetAuthenticationUrlFailure } from '~/actions/GetAuthenticationUrl';
 import { AuthenticateFailure } from '~/actions/Authenticate';
 import { ReportError } from '~/actions/ReportError';
+import { HeartbeatFailure } from '~/actions/Heartbeat';
 
 export interface IErrorState {
 	showError: boolean;
@@ -21,7 +22,8 @@ type HandledActions =
 	DismissError |
 	ReportError |
 	GetAuthenticationUrlFailure |
-	AuthenticateFailure;
+	AuthenticateFailure |
+	HeartbeatFailure;
 
 export default function error(state = initialState, action: HandledActions): IErrorState {
 	switch (action.type) {
@@ -58,6 +60,15 @@ export default function error(state = initialState, action: HandledActions): IEr
 				...state,
 				showError: true,
 				action: 'Authenticating',
+				message
+			};
+		}
+		case 'HEARTBEAT_FAILURE': {
+			const { payload: { message } } = action;
+			return {
+				...state,
+				showError: true,
+				action: 'Heartbeat',
 				message
 			};
 		}

@@ -1,5 +1,7 @@
 @using Diet.Server.Models
+@using System.Text.Json;
 @model IndexModel
+@{var options = new JsonSerializerOptions { PropertyNamingPolicy = JsonNamingPolicy.CamelCase };}
 <!DOCTYPE html>
 <html lang="en">
 	<head>
@@ -12,7 +14,7 @@
 		<link href="/dist/bundle.css?v=@Model.BundleVersion" rel="stylesheet" type="text/css" />
 	</head>
 	<body>
-		<div id="root"></div>
+		<div id="root" data-initial-state="@JsonSerializer.Serialize(@Model, options)"></div>
 		<script src="/dist/bundle.js?v=@Model.BundleVersion"></script>
 	</body>
 </html>

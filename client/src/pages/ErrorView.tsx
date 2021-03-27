@@ -24,10 +24,10 @@ export default class ErrorView extends React.PureComponent<IErrorViewProps> {
 						</div>
 						<Button
 							type='primary'
-							display='Dismiss'
 							className={styles.action}
-							onClick={onClickDismiss}
-							/>
+							onClick={onClickDismiss}>
+							Dismiss
+						</Button>
 						<a href='/sign-in' className={styles.signIn}>Sign In</a>
 					</div>
 					<div className={styles.message}>

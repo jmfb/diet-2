@@ -2,9 +2,9 @@
 
 .button {
 	font-family: 'Lato', sans-serif;
+	height: 2rem;
 	border: 0;
 	padding: 0.5em 1em;
-	font-size: 1.2em;
 	box-shadow: $box-shadow;
 	color: white;
 	border-radius: 4px;
@@ -13,22 +13,37 @@
 		background-color $timing-reactive linear,
 		box-shadow $timing-reactive linear;
 
-	&:hover,
-	&:focus {
+	&:hover:not([disabled]),
+	&:focus:not([disabled]) {
 		box-shadow: $box-shadow-active;
 	}
 
-	&:active {
+	&:active:not([disabled]) {
 		transition-timing-function: ease-out;
 		box-shadow: none;
+	}
+
+	&:disabled {
+		cursor: not-allowed;
+	}
+
+	:global(.loading-icon) {
+		width: 1rem;
+		height: 1rem;
+		margin: auto;
+		margin-top: -30px;
 	}
 }
 
 @mixin button($color) {
 	background-color: $color;
 
-	&:hover,
-	&:focus {
+	&:disabled {
+		background-color: lighten($color, 20%);
+	}
+
+	&:hover:not([disabled]),
+	&:focus:not([disabled]) {
 		background-color: lighten($color, 5%);
 	}
 
@@ -47,4 +62,8 @@
 
 .danger {
 	@include button($color-danger);
+}
+
+.processing {
+	opacity: 0;
 }

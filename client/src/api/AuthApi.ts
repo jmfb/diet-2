@@ -8,9 +8,7 @@ export default class AuthApi extends BaseApi {
 	static async getAuthenticationUrl() {
 		const query = queryString.stringify({ redirectUrl });
 		const response = await fetch(`/api/authentication/url?${query}`, {
-			headers: {
-				Accept: 'application/json'
-			}
+			headers: super.getStandardHeaders()
 		});
 		await super.checkStatus(response);
 		return await response.json() as string;
@@ -22,9 +20,7 @@ export default class AuthApi extends BaseApi {
 			authorizationCode
 		});
 		const response = await fetch(`/api/authentication/sign-in?${query}`, {
-			headers: {
-				Accept: 'application/json'
-			}
+			headers: super.getStandardHeaders()
 		});
 		await super.checkStatus(response);
 		return await response.json() as ISignedInModel;
