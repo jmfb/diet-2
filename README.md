@@ -100,6 +100,7 @@ docker push 862438233085.dkr.ecr.us-east-1.amazonaws.com/diet:latest
 ### Plan
 
 ```PowerShell
+cd terraform
 $Env:TF_VAR_token_secret = $Env:TokenSecret
 $Env:TF_VAR_auth_client_secret = $Env:AuthClientSecret
 & terraform_0.14.8 init
