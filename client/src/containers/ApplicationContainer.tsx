@@ -54,7 +54,7 @@ class ApplicationContainer extends React.PureComponent<IApplicationContainerProp
 	componentDidMount() {
 		const { readLocalStorage } = this.props;
 		readLocalStorage();
-		this.intervalId = window.setTimeout(this.handleInterval, 60_000);
+		this.intervalId = window.setInterval(this.handleInterval, 60_000);
 	}
 
 	componentWillUnmount() {

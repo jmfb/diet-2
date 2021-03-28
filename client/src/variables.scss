@@ -29,15 +29,3 @@ $font-weight-standard: 400;
 $font-weight-emphasis: 600;
 
 $line-height-base: 1.555;
-
-@mixin clearfix() {
-	&::before,
-	&::after {
-		display: table;
-		content: " ";
-	}
-
-	&::after {
-		clear: both;
-	}
-}
