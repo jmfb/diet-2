@@ -8,9 +8,9 @@ namespace Diet.Server.Api.Controllers
 	[Authorize]
 	public class AuthorizedController : Controller
 	{
-		protected int UserId => int.Parse(User
+		protected string UserId => User
 			.Claims
 			.Single(claim => claim.Type == AuthenticationService.UserIdClaimType)
-			.Value);
+			.Value;
 	}
 }

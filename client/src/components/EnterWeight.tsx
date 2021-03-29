@@ -50,7 +50,8 @@ export default class EnterWeight extends React.PureComponent<IEnterWeightProps, 
 		const { weightInPounds } = this.state;
 		return !weightState?.isSaving &&
 			weightInPounds > 0 &&
-			weightInPounds <= 2000;
+			weightInPounds <= 2000 &&
+			weightInPounds !== weightState?.weightInPounds;
 	};
 
 	handleWeightChanged = (weightInPounds?: number) => {

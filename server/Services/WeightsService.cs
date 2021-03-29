@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Diet.Server.Models;
@@ -10,6 +11,7 @@ namespace Diet.Server.Services
 	{
 		bool TryValidate(Weight weight, out string errorMessage);
 		Task SaveAsync(Weight weight, CancellationToken cancellationToken);
+		Task<IList<Weight>> LoadAllAsync(string userId, CancellationToken cancellationToken);
 	}
 
 	public class WeightsService : IWeightsService
@@ -50,6 +52,11 @@ namespace Diet.Server.Services
 		public async Task SaveAsync(Weight weight, CancellationToken cancellationToken)
 		{
 			await Context.SaveAsync(weight, cancellationToken);
+		}
+
+		public async Task<IList<Weight>> LoadAllAsync(string userId, CancellationToken cancellationToken)
+		{
+			return await Context.QueryAsync<Weight>(userId).GetRemainingAsync(cancellationToken);
 		}
 	}
 }

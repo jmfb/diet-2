@@ -8,7 +8,7 @@ resource "aws_dynamodb_table" "weights" {
 
   attribute {
     name = "UserId"
-    type = "N"
+    type = "S"
   }
 
   attribute {

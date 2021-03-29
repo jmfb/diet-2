@@ -19,10 +19,10 @@ namespace Diet.Server.Services
 {
 	public interface IAuthenticationService
 	{
-		Task<string> GetGoogleAuthenticationUrl(string redirectUrl);
-		Task<TokenModel> GetGoogleToken(string redirectUrl, string authorizationCode);
-		Task<UserInfoModel> GetUserInfo(string tokenType, string accessToken);
-		string CreateAccessToken(int userId);
+		Task<string> GetGoogleAuthenticationUrlAsync(string redirectUrl);
+		Task<TokenModel> GetGoogleTokenAsync(string redirectUrl, string authorizationCode);
+		Task<UserInfoModel> GetUserInfoAsync(string tokenType, string accessToken);
+		string CreateAccessToken(string email);
 	}
 
 	public class AuthenticationService : IAuthenticationService
@@ -48,7 +48,7 @@ namespace Diet.Server.Services
 			ClientSecret = appSettings.AuthClientSecret;
 		}
 
-		private async Task<DiscoveryModel> GetDiscoveryModel()
+		private async Task<DiscoveryModel> GetDiscoveryModelAsync()
 		{
 			var response = await HttpClient.GetAsync("https://accounts.google.com/.well-known/openid-configuration");
 			if (!response.IsSuccessStatusCode)
@@ -57,7 +57,7 @@ namespace Diet.Server.Services
 			return JsonSerializer.Deserialize<DiscoveryModel>(json);
 		}
 
-		public async Task<string> GetGoogleAuthenticationUrl(string redirectUrl)
+		public async Task<string> GetGoogleAuthenticationUrlAsync(string redirectUrl)
 		{
 			var query = HttpUtility.ParseQueryString("");
 			query["redirect_uri"] = redirectUrl;
@@ -66,13 +66,13 @@ namespace Diet.Server.Services
 			query["client_id"] = clientId;
 			query["scope"] = "https://www.googleapis.com/auth/userinfo.email";
 			query["access_type"] = "offline";
-			var discovery = await GetDiscoveryModel();
+			var discovery = await GetDiscoveryModelAsync();
 			return $"{discovery.AuthorizationEndpoint}?{query}";
 		}
 
-		public async Task<TokenModel> GetGoogleToken(string redirectUrl, string authorizationCode)
+		public async Task<TokenModel> GetGoogleTokenAsync(string redirectUrl, string authorizationCode)
 		{
-			var discovery = await GetDiscoveryModel();
+			var discovery = await GetDiscoveryModelAsync();
 			var query = HttpUtility.ParseQueryString("");
 			query["code"] = authorizationCode;
 			query["redirect_uri"] = redirectUrl;
@@ -88,9 +88,9 @@ namespace Diet.Server.Services
 			return JsonSerializer.Deserialize<TokenModel>(json);
 		}
 
-		public async Task<UserInfoModel> GetUserInfo(string tokenType, string accessToken)
+		public async Task<UserInfoModel> GetUserInfoAsync(string tokenType, string accessToken)
 		{
-			var discovery = await GetDiscoveryModel();
+			var discovery = await GetDiscoveryModelAsync();
 			using (var request = new HttpRequestMessage(HttpMethod.Get, discovery.UserInfoEndpoint))
 			{
 				request.Headers.Authorization = new AuthenticationHeaderValue(tokenType, accessToken);
@@ -102,13 +102,13 @@ namespace Diet.Server.Services
 			}
 		}
 
-		public string CreateAccessToken(int userId) => new JwtSecurityTokenHandler()
+		public string CreateAccessToken(string userId) => new JwtSecurityTokenHandler()
 			.WriteToken(new JwtSecurityToken(
 				Issuer,
 				Audience,
 				new[]
 				{
-					new Claim(UserIdClaimType, userId.ToString())
+					new Claim(UserIdClaimType, userId)
 				},
 				signingCredentials: new SigningCredentials(Key, signatureAlgorithm, digestAlgorithm)));
 	}

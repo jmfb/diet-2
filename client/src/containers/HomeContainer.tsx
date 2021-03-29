@@ -4,6 +4,7 @@ import Home from '~/pages/Home';
 import { IWeightsState } from '~/reducers/weights';
 import { IState } from '~/reducers/rootReducer';
 import { saveWeight } from '~/actions/SaveWeight';
+import { loadAllWeights } from '~/actions/LoadAllWeights';
 
 interface IHomeContainerStateProps {
 	weights: IWeightsState;
@@ -11,6 +12,7 @@ interface IHomeContainerStateProps {
 
 interface IHomeContainerDispatchProps {
 	saveWeight(date: string, weightInPounds: number): void;
+	loadAllWeights(): void;
 }
 
 type IHomeContainerProps =
@@ -23,10 +25,18 @@ function mapStateToProps(state: IState): IHomeContainerStateProps {
 }
 
 const mapDispatchToProps: IHomeContainerDispatchProps = {
-	saveWeight
+	saveWeight,
+	loadAllWeights
 };
 
 class HomeContainer extends React.PureComponent<IHomeContainerProps> {
+	componentDidMount() {
+		const { weights: { isLoading, isLoaded }, loadAllWeights } = this.props;
+		if (!isLoading && !isLoaded) {
+			loadAllWeights();
+		}
+	}
+
 	render() {
 		const { weights, saveWeight } = this.props;
 		return (

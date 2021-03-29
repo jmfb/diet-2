@@ -96,7 +96,7 @@ aws dynamodb create-table `
 	--endpoint-url http://localhost:8000 `
 	--table-name "diet-weights" `
 	--attribute-definitions `
-		AttributeName=UserId,AttributeType=N `
+		AttributeName=UserId,AttributeType=S `
 		AttributeName=Date,AttributeType=S `
 	--key-schema `
 		AttributeName=UserId,KeyType=HASH `

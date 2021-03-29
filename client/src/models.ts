@@ -10,3 +10,8 @@ export interface ISignedInModel {
 export interface IHeartbeatModel {
 	bundleVersion: string;
 }
+
+export interface IWeightModel {
+	date: string;
+	weightInPounds: number;
+}

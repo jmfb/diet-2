@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
@@ -18,7 +19,7 @@ namespace Diet.Server.Api.Controllers
 		}
 
 		[HttpPut("{date}")]
-		public async Task<IActionResult> SaveWeight(
+		public async Task<IActionResult> SaveAsync(
 			string date,
 			[FromBody] SaveWeightRequest model,
 			CancellationToken cancellationToken)
@@ -33,6 +34,12 @@ namespace Diet.Server.Api.Controllers
 				return BadRequest(errorMessage);
 			await WeightsService.SaveAsync(weight, cancellationToken);
 			return Ok();
+		}
+
+		[HttpGet]
+		public async Task<IList<Weight>> LoadAllAsync(CancellationToken cancellationToken)
+		{
+			return await WeightsService.LoadAllAsync(UserId, cancellationToken);
 		}
 	}
 }
