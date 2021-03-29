@@ -1,3 +1,13 @@
+param(
+	[Parameter(Mandatory=$false)]
+	[Switch]
+	$clean,
+
+	[Parameter(Mandatory=$false)]
+	[Switch]
+	$init
+)
+
 $ErrorActionPreference = "Stop"
 
 try {
@@ -18,22 +28,26 @@ try {
 	$Env:TF_VAR_auth_client_secret = $Env:AuthClientSecret
 	$Env:TF_VAR_token_secret = $Env:TokenSecret
 
-	Write-Host "[$(Get-Date)] Checking for old plan..."
-	if (Test-Path tfplan) {
-		Write-Host "[$(Get-Date)] Deleting old plan..."
-		Remove-Item tfplan
+	if ($clean) {
+		Write-Host "[$(Get-Date)] Checking for old plan..."
+		if (Test-Path tfplan) {
+			Write-Host "[$(Get-Date)] Deleting old plan..."
+			Remove-Item tfplan
+		}
+
+		Write-Host "[$(Get-Date)] Cleaning up old terraform output..."
+		if (Test-Path .terraform*) {
+			Write-host "[$(Get-Date)] Deleting old terraform output..."
+			Get-Item .terraform* | Remove-Item -Force -Recurse -Confirm:$false
+		}
 	}
 
-	Write-Host "[$(Get-Date)] Cleaning up old terraform output..."
-	if (Test-Path .terraform*) {
-		Write-host "[$(Get-Date)] Deleting old terraform output..."
-		Get-Item .terraform* | Remove-Item -Force -Recurse -Confirm:$false
-	}
-
-	Write-Host "[$(Get-Date)] Initializing terraform..."
-	& terraform_0.14.8 init
-	if ($lastexitcode -ne 0) {
-		exit $lastexitcode
+	if ($init) {
+		Write-Host "[$(Get-Date)] Initializing terraform..."
+		& terraform_0.14.8 init
+		if ($lastexitcode -ne 0) {
+			exit $lastexitcode
+		}
 	}
 
 	Write-Host "[$(Get-Date)] Planning terraform with tfplan output..."

@@ -25,6 +25,16 @@ data "aws_iam_policy_document" "policy" {
     actions   = ["kms:Decrypt"]
     resources = [aws_kms_key.lambda.arn]
   }
+
+  statement {
+    effect    = "Allow"
+    actions   = [
+      "dynamodb:DescribeTable",
+      "dynamodb:Query",
+      "dynamodb:PutItem",
+    ]
+    resources = [aws_dynamodb_table.weights.arn]
+  }
 }
 
 resource "aws_iam_policy" "policy" {

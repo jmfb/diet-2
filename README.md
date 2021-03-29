@@ -57,7 +57,7 @@ Get the following secrets from BitWarden and run in powershell to setup local en
 
 ```PowerShell
 . .\PublishImage.ps1 -buildClient
-. .\PlanTerraform.ps1
+. .\PlanTerraform.ps1 -clean -init
 . .\ApplyTerraform.ps1
 ```
 
