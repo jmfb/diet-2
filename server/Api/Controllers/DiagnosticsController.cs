@@ -15,8 +15,7 @@ namespace Diet.Server.Api.Controllers
 			AppSettings = appSettingsAccessor.Value;
 		}
 
-		[Route("heartbeat")]
-		[HttpGet]
+		[HttpGet("heartbeat")]
 		public HeartbeatModel Heartbeat()
 		{
 			return new HeartbeatModel

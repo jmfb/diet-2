@@ -15,22 +15,19 @@ namespace Diet.Server.Api.Controllers
 			AuthenticationService = authenticationService;
 		}
 
-		[Route("url")]
-		[HttpGet]
+		[HttpGet("url")]
 		public async Task<string> GetAuthenticationUrl(string redirectUrl)
 		{
 			return await AuthenticationService.GetGoogleAuthenticationUrl(redirectUrl);
 		}
 
-		[Route("sign-in")]
-		[HttpGet]
+		[HttpGet("sign-in")]
 		public async Task<SignedInModel> SignIn(string redirectUrl, string authorizationCode)
 		{
 			var googleToken = await AuthenticationService.GetGoogleToken(redirectUrl, authorizationCode);
 			var userInfo = await AuthenticationService.GetUserInfo(googleToken.TokenType, googleToken.AccessToken);
-			var email = userInfo.Email;
-			// TODO: Map email to a unique user ID
-			var userId = 1;
+			var email = userInfo.Email.ToLower();
+			var userId = email.GetHashCode();
 			return new SignedInModel
 			{
 				AccessToken = AuthenticationService.CreateAccessToken(userId),

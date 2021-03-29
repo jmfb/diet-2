@@ -11,6 +11,7 @@ export default class BaseApi {
 	static getStandardHeaders(accessToken?: string) {
 		return {
 			Accept: 'application/json',
+			'Content-Type': 'application/json',
 			...accessToken === undefined ?
 				{} :
 				{ Authorization: `Bearer ${accessToken}` }

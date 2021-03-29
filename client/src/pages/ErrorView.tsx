@@ -15,8 +15,7 @@ export default class ErrorView extends React.PureComponent<IErrorViewProps> {
 		return (
 			<main className={styles.root}>
 				<section>
-					<h1>Error</h1>
-					<h2>{action}</h2>
+					<h1>Error - {action}</h1>
 					<div className={styles.row}>
 						<div className={styles.reason}>
 							This error may be due to your session being out of date.<br />
@@ -33,9 +32,11 @@ export default class ErrorView extends React.PureComponent<IErrorViewProps> {
 					<div className={styles.message}>
 						{message}
 					</div>
-					<div className={styles.context}>
-						{context}
-					</div>
+					{context &&
+						<div className={styles.context}>
+							{context}
+						</div>
+					}
 				</section>
 			</main>
 		);

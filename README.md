@@ -86,3 +86,22 @@ yarn build-prod
 cd ../server
 dotnet run
 ```
+
+## Local Dynamo DB Setup
+
+```PowerShell
+docker pull amazon/dynamodb-local:latest
+docker run -it --rm -p 8000:8000 amazon/dynamodb-local
+aws dynamodb create-table `
+	--endpoint-url http://localhost:8000 `
+	--table-name "diet-weights" `
+	--attribute-definitions `
+		AttributeName=UserId,AttributeType=N `
+		AttributeName=Date,AttributeType=S `
+	--key-schema `
+		AttributeName=UserId,KeyType=HASH `
+		AttributeName=Date,KeyType=RANGE `
+	--provisioned-throughput ReadCapacityUnits=1,WriteCapacityUnits=1
+aws dynamodb list-tables --endpoint-url http://localhost:8000
+aws dynamodb scan --endpoint-url http://localhost:8000 --table-name diet-weights
+```

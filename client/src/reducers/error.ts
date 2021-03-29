@@ -3,6 +3,7 @@ import { GetAuthenticationUrlFailure } from '~/actions/GetAuthenticationUrl';
 import { AuthenticateFailure } from '~/actions/Authenticate';
 import { ReportError } from '~/actions/ReportError';
 import { HeartbeatFailure } from '~/actions/Heartbeat';
+import { SaveWeightFailure } from '~/actions/SaveWeight';
 
 export interface IErrorState {
 	showError: boolean;
@@ -23,7 +24,8 @@ type HandledActions =
 	ReportError |
 	GetAuthenticationUrlFailure |
 	AuthenticateFailure |
-	HeartbeatFailure;
+	HeartbeatFailure |
+	SaveWeightFailure;
 
 export default function error(state = initialState, action: HandledActions): IErrorState {
 	switch (action.type) {
@@ -70,6 +72,16 @@ export default function error(state = initialState, action: HandledActions): IEr
 				showError: true,
 				action: 'Heartbeat',
 				message
+			};
+		}
+		case 'SAVE_WEIGHT_FAILURE': {
+			const { payload: { date, weightInPounds, message } } = action;
+			return {
+				...state,
+				showError: true,
+				action: 'Saving weight',
+				message,
+				context: JSON.stringify({ date, weightInPounds })
 			};
 		}
 		default:
