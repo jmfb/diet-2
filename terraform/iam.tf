@@ -31,7 +31,11 @@ data "aws_iam_policy_document" "policy" {
     actions   = [
       "dynamodb:DescribeTable",
       "dynamodb:Query",
+      "dynamodb:Scan",
       "dynamodb:PutItem",
+      "dynamodb:GetItem",
+      "dynamodb:UpdateItem",
+      "dynamodb:DeleteItem"
     ]
     resources = [aws_dynamodb_table.weights.arn]
   }
