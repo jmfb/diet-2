@@ -12,6 +12,11 @@
 	left: 4rem;
 	border-radius: $border-radius * 2.5;
 	box-shadow: 0 0 23px rgba($color-primary, 0.5);
+
+	@media (max-width: $breakpoint-s) {
+		left: auto;
+		margin-right: 1rem;
+	}
 }
 
 .refresh {

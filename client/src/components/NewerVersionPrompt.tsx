@@ -41,7 +41,7 @@ class NewerVersionPrompt extends React.PureComponent<INewerVersionPromptProps, I
 		return (
 			<div className={styles.root}>
 				<div>
-					<div>There is a newer version of the tool available.</div>
+					<div>There is a new version of the tool available.</div>
 					<div className={styles.versions}>
 						<div>Client Version: {bundleVersion}</div>
 						<div>Server Version: {serverBundleVersion}</div>
