@@ -2,9 +2,11 @@ import React from 'react';
 import EnterWeight from '~/components/EnterWeight';
 import PageLoading from '~/components/PageLoading';
 import { IWeightsState } from '~/reducers/weights';
+import { IProfile } from '~/models';
 
 interface IHomeProps {
 	weights: IWeightsState;
+	profile?: IProfile;
 	onSaveWeight(date: string, weightInPounds: number): void;
 }
 

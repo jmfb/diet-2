@@ -3,6 +3,7 @@ import styles from './WeightInput.scss';
 
 interface IWeightInputProps {
 	value?: number;
+	autoFocus?: boolean;
 	onChange(value?: number): void;
 }
 
@@ -15,19 +16,20 @@ export default class WeightInput extends React.PureComponent<IWeightInputProps, 
 		super(props);
 		const { value } = props;
 		this.state = {
-			text: value === undefined ? '' : value.toString()
+			text: (value === undefined || value === null) ? '' : value.toString()
 		};
 	}
 
 	render() {
+		const { autoFocus } = this.props;
 		const { text } = this.state;
 		return (
 			<input
+				{...{autoFocus}}
 				className={styles.root}
 				type='text'
 				placeholder='lbs...'
 				value={text}
-				autoFocus
 				onChange={this.handleInputChanged}
 				/>
 		);

@@ -33,10 +33,6 @@ footer {
 	}
 }
 
-main > * {
-	padding: 16px;
-}
-
 a {
 	text-decoration: none;
 
@@ -51,6 +47,12 @@ h1 {
 
 h1:first-child {
 	margin-top: 0;
+}
+
+section {
+	display: flex;
+	flex-direction: column;
+	padding-top: 1rem;
 }
 
 @import url(https://fonts.googleapis.com/css?family=Lato:400italic,600italic,400,600,300);

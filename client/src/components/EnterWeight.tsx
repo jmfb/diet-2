@@ -30,6 +30,7 @@ export default class EnterWeight extends React.PureComponent<IEnterWeightProps, 
 			<div className={styles.root}>
 				<div className={styles.date}>{date}</div>
 				<WeightInput
+					autoFocus
 					value={weightInPounds}
 					onChange={this.handleWeightChanged}
 					/>

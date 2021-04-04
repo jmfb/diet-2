@@ -1,0 +1,26 @@
+.root {
+	display: flex;
+	flex-direction: column;
+
+	label {
+		display: flex;
+		flex-direction: row;
+		margin-bottom: 0.5rem;
+
+		> span:first-child {
+			width: 7rem;
+			white-space: nowrap;
+			font-weight: bold;
+		}
+	}
+}
+
+.actions {
+	margin-top: 0.5rem;
+	display: flex;
+	flex-direction: row;
+}
+
+.save {
+	margin-left: auto;
+}

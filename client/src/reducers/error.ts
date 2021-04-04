@@ -5,6 +5,8 @@ import { ReportError } from '~/actions/ReportError';
 import { HeartbeatFailure } from '~/actions/Heartbeat';
 import { SaveWeightFailure } from '~/actions/SaveWeight';
 import { LoadAllWeightsFailure } from '~/actions/LoadAllWeights';
+import { GetProfileFailure } from '~/actions/GetProfile';
+import { SaveProfileFailure } from '~/actions/SaveProfile';
 
 export interface IErrorState {
 	showError: boolean;
@@ -27,7 +29,9 @@ type HandledActions =
 	AuthenticateFailure |
 	HeartbeatFailure |
 	SaveWeightFailure |
-	LoadAllWeightsFailure;
+	LoadAllWeightsFailure |
+	GetProfileFailure |
+	SaveProfileFailure;
 
 export default function error(state = initialState, action: HandledActions): IErrorState {
 	switch (action.type) {
@@ -49,53 +53,42 @@ export default function error(state = initialState, action: HandledActions): IEr
 				message
 			};
 		}
-		case 'GET_AUTHENTICATION_URL_FAILURE': {
-			const { payload: { message } } = action;
-			return {
-				...state,
-				showError: true,
-				action: 'Getting authentication URL',
-				message
-			};
-		}
-		case 'AUTHENTICATE_FAILURE': {
-			const { payload: { message } } = action;
-			return {
-				...state,
-				showError: true,
-				action: 'Authenticating',
-				message
-			};
-		}
-		case 'HEARTBEAT_FAILURE': {
-			const { payload: { message } } = action;
-			return {
-				...state,
-				showError: true,
-				action: 'Heartbeat',
-				message
-			};
-		}
+		case 'GET_AUTHENTICATION_URL_FAILURE':
+			return getErrorState(state, 'Getting authentication URL', action);
+		case 'AUTHENTICATE_FAILURE':
+			return getErrorState(state, 'Authenticating', action);
+		case 'HEARTBEAT_FAILURE':
+			return getErrorState(state, 'Heartbeat', action);
 		case 'SAVE_WEIGHT_FAILURE': {
-			const { payload: { date, weightInPounds, message } } = action;
-			return {
-				...state,
-				showError: true,
-				action: 'Saving weight',
-				message,
-				context: JSON.stringify({ date, weightInPounds })
-			};
+			const { payload: { date, weightInPounds } } = action;
+			return getErrorState(state, 'Saving weight', action, { date, weightInPounds });
 		}
-		case 'LOAD_ALL_WEIGHTS_FAILURE': {
-			const { payload: { message } } = action;
-			return {
-				...state,
-				showError: true,
-				action: 'Loading weights',
-				message
-			};
+		case 'LOAD_ALL_WEIGHTS_FAILURE':
+			return getErrorState(state, 'Loading weights', action);
+		case 'GET_PROFILE_FAILURE':
+			return getErrorState(state, 'Loading profile', action);
+		case 'SAVE_PROFILE_FAILURE': {
+			const { payload: { profile } } = action;
+			return getErrorState(state, 'Saving profile', action, { profile });
 		}
 		default:
 			return state;
 	}
+}
+
+interface IErrorAction {
+	payload: {
+		message: string;
+	};
+}
+
+function getErrorState(state: IErrorState, name: string, action: IErrorAction, context?: any): IErrorState {
+	const { payload: { message } } = action;
+	return {
+		...state,
+		showError: true,
+		action: name,
+		message,
+		context: context ? JSON.stringify(context) : undefined
+	};
 }

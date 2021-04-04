@@ -42,6 +42,7 @@ namespace Diet.Server
 			services.AddSingleton<DynamoDBContext>(provider =>
 				new DynamoDBContext(provider.GetRequiredService<AmazonDynamoDBClient>()));
 			services.AddSingleton<IWeightsService, WeightsService>();
+			services.AddSingleton<IProfileService, ProfileService>();
 			services.AddControllers();
 			services
 				.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)

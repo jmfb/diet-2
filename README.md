@@ -102,6 +102,15 @@ aws dynamodb create-table `
 		AttributeName=UserId,KeyType=HASH `
 		AttributeName=Date,KeyType=RANGE `
 	--provisioned-throughput ReadCapacityUnits=1,WriteCapacityUnits=1
+aws dynamodb create-table `
+	--endpoint-url http://localhost:8000 `
+	--table-name "diet-profiles" `
+	--attribute-definitions `
+		AttributeName=UserId,AttributeType=S `
+	--key-schema `
+		AttributeName=UserId,KeyType=HASH `
+	--provisioned-throughput ReadCapacityUnits=1,WriteCapacityUnits=1
 aws dynamodb list-tables --endpoint-url http://localhost:8000
 aws dynamodb scan --endpoint-url http://localhost:8000 --table-name diet-weights
+aws dynamodb scan --endpoint-url http://localhost:8000 --table-name diet-profiles
 ```
