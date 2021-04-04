@@ -1,4 +1,5 @@
 import React from 'react';
+import dateService from '~/services/dateService';
 
 interface IBirthDateInputProps {
 	value?: string;
@@ -34,10 +35,7 @@ export default class BirthDateInput extends React.PureComponent<IBirthDateInputP
 		const { onChange } = this.props;
 		const { currentTarget: { value } } = event;
 		this.setState({ text: value });
-		const parsedDate = Date.parse(value);
-		const dateValue = Number.isNaN(parsedDate) ?
-			undefined :
-			new Date(parsedDate).toISOString().substr(0, 10);
-		onChange(dateValue);
+		const parsedValue = dateService.parse(value);
+		onChange(parsedValue);
 	};
 }

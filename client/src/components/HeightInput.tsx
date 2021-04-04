@@ -38,7 +38,7 @@ export default class HeightInput extends React.PureComponent<IHeightInputProps, 
 						</option>
 					)}
 				</select>
-				<span className={styles.footLabel}>foot</span>
+				<span className={styles.feetLabel}>feet</span>
 				<select onChange={this.handleInchesChanged} value={inches}>
 					{inchesOptions.map(inchesOption =>
 						<option

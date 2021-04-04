@@ -7,14 +7,14 @@ import { IProfile } from '~/models';
 interface IHomeProps {
 	weights: IWeightsState;
 	profile?: IProfile;
+	today: string;
 	onSaveWeight(date: string, weightInPounds: number): void;
 }
 
 export default class Home extends React.PureComponent<IHomeProps> {
 	render() {
-		const { weights: { weightStateByDate, isLoading, isLoaded }, onSaveWeight } = this.props;
-		const date = new Date().toISOString().substr(0, 10);
-		const weightState = weightStateByDate[date];
+		const { weights: { weightStateByDate, isLoading, isLoaded }, today, onSaveWeight } = this.props;
+		const weightState = weightStateByDate[today];
 		return (
 			<>
 				{isLoading &&
@@ -23,7 +23,8 @@ export default class Home extends React.PureComponent<IHomeProps> {
 				{isLoaded &&
 					<>
 						<EnterWeight
-							{...{date, weightState, onSaveWeight}}
+							{...{weightState, onSaveWeight}}
+							date={today}
 							/>
 						<div>TODO: The rest of home</div>
 					</>

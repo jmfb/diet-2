@@ -12,6 +12,7 @@ interface IHomeContainerStateProps {
 	weights: IWeightsState;
 	loadProfile: boolean;
 	profile?: IProfile;
+	today: string;
 }
 
 interface IHomeContainerDispatchProps {
@@ -25,12 +26,13 @@ type IHomeContainerProps =
 	IHomeContainerDispatchProps;
 
 function mapStateToProps(state: IState): IHomeContainerStateProps {
-	const { weights, profile: { isLoading, profile } } = state;
+	const { weights, profile: { isLoading, profile }, heartbeat: { today } } = state;
 	const loadProfile = !profile && !isLoading;
 	return {
 		weights,
 		loadProfile,
-		profile
+		profile,
+		today
 	};
 }
 
@@ -52,10 +54,10 @@ class HomeContainer extends React.PureComponent<IHomeContainerProps> {
 	}
 
 	render() {
-		const { weights, saveWeight, profile } = this.props;
+		const { weights, saveWeight, profile, today } = this.props;
 		return (
 			<Home
-				{...{weights, profile}}
+				{...{weights, profile, today}}
 				onSaveWeight={saveWeight}
 				/>
 		);

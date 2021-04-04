@@ -4,11 +4,13 @@ import {
 	HeartbeatFailure
 } from '~/actions/Heartbeat';
 import { IIndexModel } from '~/models';
+import dateService from '~/services/dateService';
 
 export interface IHeartbeatState {
 	bundleVersion: string;
 	serverBundleVersion: string;
 	isHeartbeatInProgress: boolean;
+	today: string;
 }
 
 const indexModel = JSON.parse(document.getElementById('root').getAttribute('data-initial-state')) as IIndexModel;
@@ -16,7 +18,8 @@ const indexModel = JSON.parse(document.getElementById('root').getAttribute('data
 const initialState: IHeartbeatState = {
 	bundleVersion: indexModel.bundleVersion,
 	serverBundleVersion: indexModel.bundleVersion,
-	isHeartbeatInProgress: false
+	isHeartbeatInProgress: false,
+	today: dateService.getToday()
 };
 
 type HandledActions =
@@ -29,11 +32,12 @@ export default function heartbeat(state = initialState, action: HandledActions):
 		case 'HEARTBEAT_REQUEST':
 			return { ...state, isHeartbeatInProgress: true };
 		case 'HEARTBEAT_SUCCESS': {
-			const { payload: { heartbeat: { bundleVersion: serverBundleVersion } } } = action;
+			const { payload: { heartbeat: { bundleVersion: serverBundleVersion }, today } } = action;
 			return {
 				...state,
 				serverBundleVersion,
-				isHeartbeatInProgress: false
+				isHeartbeatInProgress: false,
+				today
 			};
 		}
 		case 'HEARTBEAT_FAILURE':
