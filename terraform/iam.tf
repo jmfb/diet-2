@@ -37,7 +37,10 @@ data "aws_iam_policy_document" "policy" {
       "dynamodb:UpdateItem",
       "dynamodb:DeleteItem"
     ]
-    resources = [aws_dynamodb_table.weights.arn]
+    resources = [
+      aws_dynamodb_table.weights.arn,
+      aws_dynamodb_table.profiles.arn
+    ]
   }
 }
 
