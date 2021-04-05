@@ -17,6 +17,12 @@ class DateService {
 			undefined :
 			this.convertTimeToString(time);
 	}
+
+	addDays(value: string, count: number) {
+		const date = new Date(value);
+		date.setDate(date.getDate() + count);
+		return this.convertDateToString(date);
+	}
 }
 
 const dateService = new DateService();

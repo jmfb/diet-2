@@ -1,6 +1,8 @@
 import React from 'react';
 import EnterWeight from '~/components/EnterWeight';
 import PageLoading from '~/components/PageLoading';
+import WeightGraph from '~/components/WeightGraph';
+import dateService from '~/services/dateService';
 import { IWeightsState } from '~/reducers/weights';
 import { IProfile } from '~/models';
 
@@ -15,6 +17,7 @@ export default class Home extends React.PureComponent<IHomeProps> {
 	render() {
 		const { weights: { weightStateByDate, isLoading, isLoaded }, today, onSaveWeight } = this.props;
 		const weightState = weightStateByDate[today];
+		const oneWeekAgo = dateService.addDays(today, -6);
 		return (
 			<>
 				{isLoading &&
@@ -26,7 +29,7 @@ export default class Home extends React.PureComponent<IHomeProps> {
 							{...{weightState, onSaveWeight}}
 							date={today}
 							/>
-						<div>TODO: The rest of home</div>
+						<WeightGraph startDate={oneWeekAgo} />
 					</>
 				}
 			</>
