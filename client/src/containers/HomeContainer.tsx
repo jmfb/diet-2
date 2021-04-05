@@ -44,7 +44,7 @@ const mapDispatchToProps: IHomeContainerDispatchProps = {
 
 class HomeContainer extends React.PureComponent<IHomeContainerProps> {
 	componentDidMount() {
-		const { weights: { isLoading, isLoaded }, loadAllWeights, loadProfile } = this.props;
+		const { weights: { isLoading, isLoaded }, loadAllWeights, loadProfile, getProfile } = this.props;
 		if (!isLoading && !isLoaded) {
 			loadAllWeights();
 		}

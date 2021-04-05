@@ -53,6 +53,14 @@ section {
 	display: flex;
 	flex-direction: column;
 	padding-top: 1rem;
+
+	padding-left: 1rem;
+	padding-right: 1rem;
+
+	@media (min-width: $breakpoint-s) {
+		padding-left: 0;
+		padding-right: 0;
+	}
 }
 
 @import url(https://fonts.googleapis.com/css?family=Lato:400italic,600italic,400,600,300);
