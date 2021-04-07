@@ -1,6 +1,8 @@
 class DateService {
 	getToday() {
-		return this.convertTimeToString(Date.now());
+		const date = new Date(Date.now());
+		date.setMinutes(date.getMinutes() - date.getTimezoneOffset());
+		return this.convertDateToString(date);
 	}
 
 	convertTimeToString(time: number) {
