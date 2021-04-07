@@ -28,3 +28,19 @@
 	font-style: italic;
 	color: #999;
 }
+
+.wrapper {
+	position: relative;
+}
+
+.min {
+	position: absolute;
+	left: 0.5rem;
+	bottom: 0.75rem;
+}
+
+.max {
+	position: absolute;
+	left: 0.5rem;
+	top: 0.5rem;
+}

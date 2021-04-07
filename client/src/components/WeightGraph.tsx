@@ -1,39 +1,15 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import { IState } from '~/reducers/rootReducer';
+import Pill from './Pill';
 import * as d3 from 'd3';
 import styles from './WeightGraph.scss';
 
-interface IWeightGraphOwnProps {
+interface IWeightGraphProps {
 	startDate: string;
-}
-
-interface IWeightGraphStateProps {
 	targetWeightInPounds?: number;
 	weightsInPounds: number[];
 }
 
-type IWeightGraphProps =
-	IWeightGraphOwnProps &
-	IWeightGraphStateProps;
-
-function mapStateToProps(state: IState, ownProps: IWeightGraphOwnProps): IWeightGraphStateProps {
-	const {
-		profile: { profile },
-		weights: { weightStateByDate }
-	} = state;
-	const { startDate } = ownProps;
-	const targetWeightInPounds = profile?.targetWeightInPounds;
-	const weightsInPounds = Object.keys(weightStateByDate)
-		.filter(date => date >= startDate)
-		.map(date => weightStateByDate[date].weightInPounds);
-	return {
-		targetWeightInPounds,
-		weightsInPounds
-	};
-}
-
-class WeightGraph extends React.PureComponent<IWeightGraphProps> {
+export default class WeightGraph extends React.PureComponent<IWeightGraphProps> {
 	private svgRef = React.createRef<SVGSVGElement>();
 
 	componentDidMount() {
@@ -56,8 +32,16 @@ class WeightGraph extends React.PureComponent<IWeightGraphProps> {
 				<div className={styles.root}>No weight records since {startDate}</div>
 			);
 		}
+
+		const minWeight = Math.min(...weightsInPounds);
+		const maxWeight = Math.max(...weightsInPounds);
+
 		return (
-			<svg ref={this.svgRef} className={styles.root} />
+			<div className={styles.wrapper}>
+				<svg ref={this.svgRef} className={styles.root} />
+				<Pill type='info' className={styles.max}>Max {maxWeight} lbs</Pill>
+				<Pill type='info' className={styles.min}>Min {minWeight} lbs</Pill>
+			</div>
 		);
 	}
 
@@ -129,7 +113,3 @@ class WeightGraph extends React.PureComponent<IWeightGraphProps> {
 			.attr('d', lineData);
 	};
 }
-
-export default connect<
-	IWeightGraphStateProps
->(mapStateToProps)(WeightGraph);
