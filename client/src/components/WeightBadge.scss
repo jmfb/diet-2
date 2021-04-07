@@ -1,0 +1,19 @@
+.root {
+	display: flex;
+	flex-direction: column;
+	background-color: #eee;
+	margin-top: 1rem;
+	padding: 0.25rem 0.5rem;
+	border-radius: 0.5rem;
+	border: 1px solid #ccc;
+}
+
+.row {
+	display: flex;
+	flex-direction: row;
+}
+
+.label {
+	font-weight: bold;
+	width: 3.5rem;
+}

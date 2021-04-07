@@ -1,6 +1,7 @@
 import React from 'react';
-import EnterWeight from '~/components/EnterWeight';
 import PageLoading from '~/components/PageLoading';
+import EnterWeight from '~/components/EnterWeight';
+import WeightBadge from '~/components/WeightBadge';
 import WeightSummary from '~/components/WeightSummary';
 import dateService from '~/services/dateService';
 import { IWeightsState } from '~/reducers/weights';
@@ -31,6 +32,7 @@ export default class Home extends React.PureComponent<IHomeProps> {
 							{...{weightState, onSaveWeight}}
 							date={today}
 							/>
+						<WeightBadge />
 						<WeightSummary
 							title='This Week'
 							startDate={oneWeekAgo}

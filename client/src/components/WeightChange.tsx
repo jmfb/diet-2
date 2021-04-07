@@ -1,5 +1,6 @@
 import React from 'react';
 import Pill from './Pill';
+import weightService from '~/services/weightService';
 
 interface IWeightChange {
 	targetWeightInPounds?: number;
@@ -16,7 +17,7 @@ export default class WeightChange extends React.PureComponent<IWeightChange> {
 
 		const startingWeight = weightsInPounds[0];
 		const endingWeight = weightsInPounds[weightsInPounds.length - 1];
-		const changeInWeight = endingWeight - startingWeight;
+		const changeInWeight = weightService.getChange(startingWeight, endingWeight);
 		const isGoalWeightLoss = !targetWeightInPounds || targetWeightInPounds < startingWeight;
 		const isSuccess = changeInWeight < 0 && isGoalWeightLoss;
 		const isWeightGain = changeInWeight >= 0;
