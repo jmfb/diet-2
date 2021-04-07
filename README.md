@@ -53,6 +53,31 @@ Get the following secrets from BitWarden and run in powershell to setup local en
 [Environment]::SetEnvironmentVariable("TokenSecret", "TODO", [EnvironmentVariableTarget]::Machine)
 ```
 
+## Development
+
+Start your client watcher:
+```PowerShell
+cd client
+yarn run start
+```
+
+Start your server watcher:
+```PowerShell
+cd server
+dotnet watch run
+```
+
+Start your local dynamo db:
+```PowerShell
+. .\StartDynamoDb.ps1 -pull
+```
+
+Deploy tables and data to dynamo:
+```PowerShell
+. .\CreateTables.ps1
+. .\CreateData.ps1 -userId "TODO: your Google id here"
+```
+
 ## Deployment
 
 ```PowerShell
@@ -85,32 +110,4 @@ yarn install
 yarn build-prod
 cd ../server
 dotnet run
-```
-
-## Local Dynamo DB Setup
-
-```PowerShell
-docker pull amazon/dynamodb-local:latest
-docker run -it --rm -p 8000:8000 amazon/dynamodb-local
-aws dynamodb create-table `
-	--endpoint-url http://localhost:8000 `
-	--table-name "diet-weights" `
-	--attribute-definitions `
-		AttributeName=UserId,AttributeType=S `
-		AttributeName=Date,AttributeType=S `
-	--key-schema `
-		AttributeName=UserId,KeyType=HASH `
-		AttributeName=Date,KeyType=RANGE `
-	--provisioned-throughput ReadCapacityUnits=1,WriteCapacityUnits=1
-aws dynamodb create-table `
-	--endpoint-url http://localhost:8000 `
-	--table-name "diet-profiles" `
-	--attribute-definitions `
-		AttributeName=UserId,AttributeType=S `
-	--key-schema `
-		AttributeName=UserId,KeyType=HASH `
-	--provisioned-throughput ReadCapacityUnits=1,WriteCapacityUnits=1
-aws dynamodb list-tables --endpoint-url http://localhost:8000
-aws dynamodb scan --endpoint-url http://localhost:8000 --table-name diet-weights
-aws dynamodb scan --endpoint-url http://localhost:8000 --table-name diet-profiles
 ```

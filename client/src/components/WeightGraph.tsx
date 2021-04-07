@@ -29,7 +29,7 @@ export default class WeightGraph extends React.PureComponent<IWeightGraphProps> 
 		const { weightsInPounds, startDate } = this.props;
 		if (weightsInPounds.length === 0) {
 			return (
-				<div className={styles.root}>No weight records since {startDate}</div>
+				<div className={styles.none}>No weight records since {startDate}</div>
 			);
 		}
 
