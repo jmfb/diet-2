@@ -84,6 +84,8 @@ Deploy tables and data to dynamo:
 . .\PublishImage.ps1 -buildClient
 . .\PlanTerraform.ps1 -clean -init
 . .\ApplyTerraform.ps1
+. .\DeleteOldImages.ps1 -dryRun
+. .\DeleteOldImages.ps1
 ```
 
 NOTE: You can manually clean up old images in the ECR repository to reduce AWS storage.
