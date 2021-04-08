@@ -88,8 +88,6 @@ Deploy tables and data to dynamo:
 . .\DeleteOldImages.ps1
 ```
 
-NOTE: You can manually clean up old images in the ECR repository to reduce AWS storage.
-
 ## Docker Setup (Work in progress)
 
 ```sh
