@@ -1,7 +1,7 @@
 import React from 'react';
 import { Redirect } from 'react-router';
 import { connect } from 'react-redux';
-import { signOut } from '~/actions/SignOut';
+import { signOut } from '~/redux/signOut';
 
 interface ISignOutContainerDispatchProps {
 	signOut(): void;

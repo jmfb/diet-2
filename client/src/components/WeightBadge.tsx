@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { IState } from '~/reducers/rootReducer';
+import IState from '~/redux/IState';
 import weightService from '~/services/weightService';
 import { weightCategoryNames } from '~/models';
 import styles from './WeightBadge.scss';

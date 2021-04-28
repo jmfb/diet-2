@@ -4,7 +4,7 @@ import EnterWeight from '~/components/EnterWeight';
 import WeightBadge from '~/components/WeightBadge';
 import WeightSummary from '~/components/WeightSummary';
 import dateService from '~/services/dateService';
-import { IWeightsState } from '~/reducers/weights';
+import { IWeightsState } from '~/redux/weights';
 import { IProfile } from '~/models';
 
 interface IHomeProps {

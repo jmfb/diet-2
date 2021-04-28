@@ -1,7 +1,7 @@
 import React from 'react';
 import WeightInput from './WeightInput';
 import Button from './Button';
-import { IWeightState } from '~/reducers/weights';
+import { IWeightState } from '~/redux/weights';
 import styles from './EnterWeight.scss';
 
 interface IEnterWeightProps {

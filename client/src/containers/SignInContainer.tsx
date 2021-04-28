@@ -2,9 +2,9 @@ import React from 'react';
 import { Redirect } from 'react-router';
 import { connect } from 'react-redux';
 import SignIn from '~/pages/SignIn';
-import { IState } from '~/reducers/rootReducer';
-import { getAuthenticationUrl } from '~/actions/GetAuthenticationUrl';
-import { signOut } from '~/actions/SignOut';
+import IState from '~/redux/IState';
+import { getAuthenticationUrl } from '~/redux/auth';
+import { signOut } from '~/redux/signOut';
 
 interface ISignInContainerStateProps {
 	isSigningIn: boolean;

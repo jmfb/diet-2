@@ -2,10 +2,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import Profile from '~/pages/Profile';
 import { IProfile } from '~/models';
-import { IProfileState } from '~/reducers/profile';
-import { IState } from '~/reducers/rootReducer';
-import { getProfile } from '~/actions/GetProfile';
-import { saveProfile } from '~/actions/SaveProfile';
+import IState from '~/redux/IState';
+import { IProfileState, getProfile, setProfile } from '~/redux/profile';
 
 interface IProfileContainerStateProps {
 	profile: IProfileState;
@@ -13,7 +11,7 @@ interface IProfileContainerStateProps {
 
 interface IProfileContainerDispatchProps {
 	getProfile(): void;
-	saveProfile(profile: IProfile): void;
+	setProfile(profile: IProfile): void;
 }
 
 type IProfileContainerProps =
@@ -29,7 +27,7 @@ function mapStateToProps(state: IState): IProfileContainerStateProps {
 
 const mapDispatchToProps: IProfileContainerDispatchProps = {
 	getProfile,
-	saveProfile
+	setProfile
 };
 
 class ProfileContainer extends React.PureComponent<IProfileContainerProps> {
@@ -42,11 +40,11 @@ class ProfileContainer extends React.PureComponent<IProfileContainerProps> {
 	}
 
 	render() {
-		const { profile: { profile, isSaving }, saveProfile } = this.props;
+		const { profile: { profile, isSaving }, setProfile } = this.props;
 		return (
 			<Profile
 				{...{profile, isSaving}}
-				onSave={saveProfile}
+				onSave={setProfile}
 				/>
 		);
 	}

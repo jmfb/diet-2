@@ -1,12 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import Home from '~/pages/Home';
-import { IProfile } from '~/models';
-import { IWeightsState } from '~/reducers/weights';
-import { IState } from '~/reducers/rootReducer';
-import { saveWeight } from '~/actions/SaveWeight';
-import { loadAllWeights } from '~/actions/LoadAllWeights';
-import { getProfile } from '~/actions/GetProfile';
+import { IProfile, IWeightModel } from '~/models';
+import IState from '~/redux/IState';
+import { IWeightsState, saveWeight, loadAllWeights } from '~/redux/weights';
+import { getProfile } from '~/redux/profile';
 
 interface IHomeContainerStateProps {
 	weights: IWeightsState;
@@ -16,7 +14,7 @@ interface IHomeContainerStateProps {
 }
 
 interface IHomeContainerDispatchProps {
-	saveWeight(date: string, weightInPounds: number): void;
+	saveWeight(weight: IWeightModel): void;
 	loadAllWeights(): void;
 	getProfile(): void;
 }
@@ -54,14 +52,19 @@ class HomeContainer extends React.PureComponent<IHomeContainerProps> {
 	}
 
 	render() {
-		const { weights, saveWeight, profile, today } = this.props;
+		const { weights, profile, today } = this.props;
 		return (
 			<Home
 				{...{weights, profile, today}}
-				onSaveWeight={saveWeight}
+				onSaveWeight={this.handleSaveWeight}
 				/>
 		);
 	}
+
+	handleSaveWeight = (date: string, weightInPounds: number) => {
+		const { saveWeight } = this.props;
+		saveWeight({ date, weightInPounds });
+	};
 }
 
 export default connect<

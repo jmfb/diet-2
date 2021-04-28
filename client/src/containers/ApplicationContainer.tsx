@@ -3,9 +3,9 @@ import { Redirect, Switch, Route } from 'react-router';
 import { connect } from 'react-redux';
 import Header from '~/components/Header';
 import NewerVersionPrompt from '~/components/NewerVersionPrompt';
-import { IState } from '~/reducers/rootReducer';
-import { readLocalStorage } from '~/actions/ReadLocalStorage';
-import { heartbeat } from '~/actions/Heartbeat';
+import IState from '~/redux/IState';
+import { readLocalStorage } from '~/redux/auth';
+import { signal } from '~/redux/heartbeat';
 
 const asyncHomeContainer = lazy(() =>
 	import(/* webpackChunkName: 'HomeContainer' */ './HomeContainer'));
@@ -23,7 +23,7 @@ interface IApplicationContainerStateProps {
 
 interface IApplicationContainerDispatchProps {
 	readLocalStorage(): void;
-	heartbeat(): void;
+	signal(): void;
 }
 
 type IApplicationContainerProps =
@@ -45,7 +45,7 @@ function mapStateToProps(state: IState): IApplicationContainerStateProps {
 
 const mapDispatchToProps: IApplicationContainerDispatchProps = {
 	readLocalStorage,
-	heartbeat
+	signal
 };
 
 class ApplicationContainer extends React.PureComponent<IApplicationContainerProps> {
@@ -89,9 +89,9 @@ class ApplicationContainer extends React.PureComponent<IApplicationContainerProp
 	}
 
 	handleInterval = () => {
-		const { isHeartbeatInProgress, heartbeat } = this.props;
+		const { isHeartbeatInProgress, signal } = this.props;
 		if (!isHeartbeatInProgress) {
-			heartbeat();
+			signal();
 		}
 	};
 }

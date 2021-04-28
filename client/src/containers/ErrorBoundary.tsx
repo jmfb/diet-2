@@ -1,9 +1,8 @@
 import React, { ErrorInfo } from 'react';
 import { connect } from 'react-redux';
 import ErrorView from '~/pages/ErrorView';
-import { IState } from '~/reducers/rootReducer';
-import { dismissError } from '~/actions/DismissError';
-import { reportError } from '~/actions/ReportError';
+import IState from '~/redux/IState';
+import { dismissError, reportError } from '~/redux/error';
 
 interface IErrorBoundaryOwnProps {
 	children?: JSX.Element;
@@ -18,7 +17,7 @@ interface IErrorBoundaryStateProps {
 
 interface IErrorBoundaryDispatchProps {
 	dismissError(): void;
-	reportError(action: string, context: string, message: string): void;
+	reportError(payload: { action: string; context: string; message: string; }): void;
 }
 
 type IErrorBoundaryProps =
@@ -61,7 +60,11 @@ class ErrorBoundary extends React.PureComponent<IErrorBoundaryProps, IErrorBound
 
 	componentDidCatch(error: Error, errorInfo: ErrorInfo) {
 		const { reportError } = this.props;
-		reportError('componentDidCatch', errorInfo.componentStack, error.message);
+		reportError({
+			action: 'componentDidCatch',
+			context: errorInfo.componentStack,
+			message: error.message
+		});
 	}
 
 	render() {

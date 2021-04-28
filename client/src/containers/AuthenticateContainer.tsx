@@ -2,8 +2,8 @@ import React from 'react';
 import { Redirect } from 'react-router';
 import { connect } from 'react-redux';
 import PageLoading from '~/components/PageLoading';
-import { IState } from '~/reducers/rootReducer';
-import { authenticate } from '~/actions/Authenticate';
+import IState from '~/redux/IState';
+import { authenticate } from '~/redux/auth';
 import queryString from 'query-string';
 
 interface IAuthenticateContainerStateProps {

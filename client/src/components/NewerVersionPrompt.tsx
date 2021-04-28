@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 import Button from './Button';
-import { IState } from '~/reducers/rootReducer';
+import IState from '~/redux/IState';
 import styles from './NewerVersionPrompt.scss';
 
 interface INewerVersionPromptStateProps {

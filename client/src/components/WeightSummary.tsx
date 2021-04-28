@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import WeightGraph from './WeightGraph';
 import WeightChange from './WeightChange';
-import { IState } from '~/reducers/rootReducer';
+import IState from '~/redux/IState';
 import styles from './WeightSummary.scss';
 
 interface IWeightSummaryOwnProps {
