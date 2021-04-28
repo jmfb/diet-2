@@ -5,13 +5,13 @@ import WeightBadge from '~/components/WeightBadge';
 import WeightSummary from '~/components/WeightSummary';
 import dateService from '~/services/dateService';
 import { IWeightsState } from '~/redux/weights';
-import { IProfile } from '~/models';
+import { IProfile, IWeightModel } from '~/models';
 
 interface IHomeProps {
 	weights: IWeightsState;
 	profile?: IProfile;
 	today: string;
-	onSaveWeight(date: string, weightInPounds: number): void;
+	onSaveWeight(weight: IWeightModel): void;
 }
 
 export default function Home(props: IHomeProps) {

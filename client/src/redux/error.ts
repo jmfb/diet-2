@@ -3,6 +3,7 @@ import { getAuthenticationUrl, authenticate } from './auth';
 import { signal } from './heartbeat';
 import { loadAllWeights, saveWeight } from './weights';
 import { getProfile, setProfile } from './profile';
+import { IErrorReport } from '~/models';
 
 export interface IErrorState {
 	showError: boolean;
@@ -32,7 +33,7 @@ const slice = createSlice({
 		dismissError(state) {
 			Object.assign(state, initialState);
 		},
-		reportError(state, action: PayloadAction<{ action: string; context: string; message: string; }>) {
+		reportError(state, action: PayloadAction<IErrorReport>) {
 			const { action: errorAction, context, message } = action.payload;
 			state.showError = true;
 			state.action = errorAction;

@@ -2,6 +2,7 @@ import React, { ErrorInfo } from 'react';
 import { connect } from 'react-redux';
 import ErrorView from '~/pages/ErrorView';
 import IState from '~/redux/IState';
+import { IErrorReport } from '~/models';
 import { dismissError, reportError } from '~/redux/error';
 
 interface IErrorBoundaryOwnProps {
@@ -17,7 +18,7 @@ interface IErrorBoundaryStateProps {
 
 interface IErrorBoundaryDispatchProps {
 	dismissError(): void;
-	reportError(payload: { action: string; context: string; message: string; }): void;
+	reportError(errorReport: IErrorReport): void;
 }
 
 type IErrorBoundaryProps =

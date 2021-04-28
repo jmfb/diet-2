@@ -2,12 +2,13 @@ import React, { useState } from 'react';
 import WeightInput from './WeightInput';
 import Button from './Button';
 import { IWeightState } from '~/redux/weights';
+import { IWeightModel } from '~/models';
 import styles from './EnterWeight.scss';
 
 interface IEnterWeightProps {
 	date: string;
 	weightState?: IWeightState;
-	onSaveWeight(date: string, weightInPounds: number): void;
+	onSaveWeight(weight: IWeightModel): void;
 }
 
 export default function EnterWeight(props: IEnterWeightProps) {
@@ -21,7 +22,7 @@ export default function EnterWeight(props: IEnterWeightProps) {
 		weightInPounds !== weightState?.weightInPounds;
 
 	const handleSaveClicked = () => {
-		onSaveWeight(date, weightInPounds);
+		onSaveWeight({ date, weightInPounds });
 	};
 
 	return (

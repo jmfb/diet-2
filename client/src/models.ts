@@ -1,3 +1,9 @@
+export interface IErrorReport {
+	action: string;
+	context: string;
+	message: string;
+}
+
 export interface IIndexModel {
 	bundleVersion: string;
 }

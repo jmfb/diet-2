@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Home from '~/pages/Home';
 import IState from '~/redux/IState';
+import { IWeightModel } from '~/models';
 import { saveWeight, loadAllWeights } from '~/redux/weights';
 import { getProfile } from '~/redux/profile';
 
@@ -20,8 +21,8 @@ export default function HomeContainer() {
 		}
 	}, []);
 
-	const handleWeightSaved = (date: string, weightInPounds: number) => {
-		dispatch(saveWeight({ date, weightInPounds }));
+	const handleWeightSaved = (weight: IWeightModel) => {
+		dispatch(saveWeight(weight));
 	};
 
 	const today = useSelector((state: IState) => state.heartbeat.today);
