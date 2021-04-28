@@ -25,7 +25,7 @@ function useInterval(callback: () => void, timeout: number) {
 	}, [timeout]);
 }
 
-export default function applicationContainer() {
+export default function ApplicationContainer() {
 	const dispatch = useDispatch();
 	const isHeartbeatInProgress = useSelector((state: IState) => state.heartbeat.isHeartbeatInProgress);
 

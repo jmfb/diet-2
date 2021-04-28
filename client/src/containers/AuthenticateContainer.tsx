@@ -6,7 +6,7 @@ import IState from '~/redux/IState';
 import { authenticate } from '~/redux/auth';
 import queryString from 'query-string';
 
-export default function authenticationContainer() {
+export default function AuthenticationContainer() {
 	const dispatch = useDispatch();
 	useEffect(() => {
 		const { code } = queryString.parse(location.search) as { code: string; };

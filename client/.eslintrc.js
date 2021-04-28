@@ -45,6 +45,10 @@ module.exports = {
 				"format": ["camelCase"],
 			},
 			{
+				"selector": "function",
+				"format": ["camelCase", "PascalCase"]
+			},
+			{
 				"selector": ["typeLike", "enumMember"],
 				"format": ["PascalCase"]
 			}

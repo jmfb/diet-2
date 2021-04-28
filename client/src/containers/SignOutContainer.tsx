@@ -3,7 +3,7 @@ import { Redirect } from 'react-router';
 import { useDispatch } from 'react-redux';
 import { signOut } from '~/redux/signOut';
 
-export default function signOutContainer() {
+export default function SignOutContainer() {
 	const dispatch = useDispatch();
 	useEffect(() => {
 		dispatch(signOut());

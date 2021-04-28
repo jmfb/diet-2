@@ -5,7 +5,7 @@ import IState from '~/redux/IState';
 import { saveWeight, loadAllWeights } from '~/redux/weights';
 import { getProfile } from '~/redux/profile';
 
-export default function homeContainer() {
+export default function HomeContainer() {
 	const dispatch = useDispatch();
 	const weights = useSelector((state: IState) => state.weights);
 	const isLoadingProfile = useSelector((state: IState) => state.profile.isLoading);

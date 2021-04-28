@@ -6,7 +6,7 @@ import IState from '~/redux/IState';
 import { getAuthenticationUrl } from '~/redux/auth';
 import { signOut } from '~/redux/signOut';
 
-export default function signInContainer() {
+export default function SignInContainer() {
 	const dispatch = useDispatch();
 	useEffect(() => {
 		dispatch(signOut());
