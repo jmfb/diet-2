@@ -6,18 +6,16 @@ interface IPageLoadingProps {
 	message?: string;
 }
 
-export default class PageLoading extends React.PureComponent<IPageLoadingProps> {
-	render() {
-		const { message } = this.props;
-		return (
-			<>
-				{message &&
-					<div className={styles.message}>{message}</div>
-				}
-				<div className={styles.loading}>
-					<LoadingIcon />
-				</div>
-			</>
-		);
-	}
+export default function PageLoading(props: IPageLoadingProps) {
+	const { message } = props;
+	return (
+		<>
+			{message &&
+				<div className={styles.message}>{message}</div>
+			}
+			<div className={styles.loading}>
+				<LoadingIcon />
+			</div>
+		</>
+	);
 }

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import dateService from '~/services/dateService';
 
 interface IBirthDateInputProps {
@@ -6,36 +6,23 @@ interface IBirthDateInputProps {
 	onChange(value?: string): void;
 }
 
-interface IBirthDateInputState {
-	text: string;
-}
+export default function BirthDateInput(props: IBirthDateInputProps) {
+	const { value, onChange } = props;
+	const [text, setText] = useState((value === undefined || value === null) ? '' : value);
 
-export default class BirthDateInput extends React.PureComponent<IBirthDateInputProps, IBirthDateInputState> {
-	constructor(props: IBirthDateInputProps) {
-		super(props);
-		const { value } = props;
-		this.state = {
-			text: (value === undefined || value === null) ? '' : value
-		};
-	}
-
-	render() {
-		const { text } = this.state;
-		return (
-			<input
-				type='date'
-				value={text}
-				pattern='\d{4}-\d{2}-\d{2}'
-				onChange={this.handleInputChanged}
-				/>
-		);
-	}
-
-	handleInputChanged = (event: React.FormEvent<HTMLInputElement>) => {
-		const { onChange } = this.props;
+	const handleInputChanged = (event: React.FormEvent<HTMLInputElement>) => {
 		const { currentTarget: { value } } = event;
-		this.setState({ text: value });
+		setText(value);
 		const parsedValue = dateService.parse(value);
 		onChange(parsedValue);
 	};
+
+	return (
+		<input
+			type='date'
+			value={text}
+			pattern='\d{4}-\d{2}-\d{2}'
+			onChange={handleInputChanged}
+			/>
+	);
 }

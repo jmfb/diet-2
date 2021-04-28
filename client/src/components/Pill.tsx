@@ -8,13 +8,11 @@ interface IPillProps {
 	children?: React.ReactNode;
 }
 
-export default class Pill extends React.PureComponent<IPillProps> {
-	render() {
-		const { type, className, children } = this.props;
-		return (
-			<div className={cx(styles.root, styles[type], className)}>
-				{children}
-			</div>
-		);
-	}
+export default function Pill(props: IPillProps) {
+	const { type, className, children } = props;
+	return (
+		<div className={cx(styles.root, styles[type], className)}>
+			{children}
+		</div>
+	);
 }

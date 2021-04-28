@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import WeightInput from './WeightInput';
 import Button from './Button';
 import { IWeightState } from '~/redux/weights';
@@ -10,58 +10,36 @@ interface IEnterWeightProps {
 	onSaveWeight(date: string, weightInPounds: number): void;
 }
 
-interface IEnterWeightState {
-	weightInPounds?: number;
-}
+export default function EnterWeight(props: IEnterWeightProps) {
+	const { date, weightState, onSaveWeight } = props;
+	const [weightInPounds, setWeightInPounds] = useState(weightState?.weightInPounds);
 
-export default class EnterWeight extends React.PureComponent<IEnterWeightProps, IEnterWeightState> {
-	constructor(props: IEnterWeightProps) {
-		super(props);
-		const { weightState } = props;
-		this.state = {
-			weightInPounds: weightState?.weightInPounds
-		};
-	}
+	const canSave =
+		!weightState?.isSaving &&
+		weightInPounds > 0 &&
+		weightInPounds <= 2000 &&
+		weightInPounds !== weightState?.weightInPounds;
 
-	render() {
-		const { date, weightState } = this.props;
-		const { weightInPounds } = this.state;
-		return (
-			<div className={styles.root}>
-				<div className={styles.date}>{date}</div>
-				<WeightInput
-					autoFocus
-					value={weightInPounds}
-					onChange={this.handleWeightChanged}
-					/>
-				<Button
-					type='primary'
-					className={styles.save}
-					isDisabled={!this.canSave()}
-					isProcessing={weightState?.isSaving}
-					onClick={this.handleSaveClicked}>
-					Save
-				</Button>
-			</div>
-		);
-	}
-
-	canSave = () => {
-		const { weightState } = this.props;
-		const { weightInPounds } = this.state;
-		return !weightState?.isSaving &&
-			weightInPounds > 0 &&
-			weightInPounds <= 2000 &&
-			weightInPounds !== weightState?.weightInPounds;
-	};
-
-	handleWeightChanged = (weightInPounds?: number) => {
-		this.setState({ weightInPounds });
-	};
-
-	handleSaveClicked = () => {
-		const { date, onSaveWeight } = this.props;
-		const { weightInPounds } = this.state;
+	const handleSaveClicked = () => {
 		onSaveWeight(date, weightInPounds);
 	};
+
+	return (
+		<div className={styles.root}>
+			<div className={styles.date}>{date}</div>
+			<WeightInput
+				autoFocus
+				value={weightInPounds}
+				onChange={setWeightInPounds}
+				/>
+			<Button
+				type='primary'
+				className={styles.save}
+				isDisabled={!canSave}
+				isProcessing={weightState?.isSaving}
+				onClick={handleSaveClicked}>
+				Save
+			</Button>
+		</div>
+	);
 }

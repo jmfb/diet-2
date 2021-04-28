@@ -7,13 +7,11 @@ interface ICardProps {
 	children?: React.ReactNode;
 }
 
-export default class Card extends React.PureComponent<ICardProps> {
-	render() {
-		const { className, children } = this.props;
-		return (
-			<div className={cx(styles.root, className)}>
-				{children}
-			</div>
-		);
-	}
+export default function Card(props: ICardProps) {
+	const { className, children } = props;
+	return (
+		<div className={cx(styles.root, className)}>
+			{children}
+		</div>
+	);
 }

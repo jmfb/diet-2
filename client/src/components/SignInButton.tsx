@@ -9,18 +9,16 @@ interface ISignInButtonProps {
 	onClick(): void;
 }
 
-export default class SignInButton extends React.PureComponent<ISignInButtonProps> {
-	render() {
-		const { disabled, style, className, onClick } = this.props;
-		return (
-			<div
-				className={cx(
-					styles.root,
-					styles[style],
-					{ [styles.disabled]: disabled },
-					className)}
-				onClick={onClick}>
-			</div>
-		);
-	}
+export default function SignInButton(props: ISignInButtonProps) {
+	const { disabled, style, className, onClick } = props;
+	return (
+		<div
+			className={cx(
+				styles.root,
+				styles[style],
+				{ [styles.disabled]: disabled },
+				className)}
+			onClick={onClick}>
+		</div>
+	);
 }

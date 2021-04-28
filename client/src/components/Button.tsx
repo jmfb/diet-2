@@ -14,19 +14,17 @@ interface IButtonProps {
 	isProcessing?: boolean;
 }
 
-export default class Button extends React.PureComponent<IButtonProps> {
-	render() {
-		const { className, type, onClick, children, isDisabled, isProcessing } = this.props;
-		return (
-			<button
-				{...{onClick}}
-				className={cx(styles.button, styles[type], className)}
-				disabled={isDisabled}>
-				<div className={cx({ [styles.processing]: isProcessing })}>{children}</div>
-				{isProcessing &&
-					<LoadingIcon />
-				}
-			</button>
-		);
-	}
+export default function Button(props: IButtonProps) {
+	const { className, type, onClick, children, isDisabled, isProcessing } = props;
+	return (
+		<button
+			{...{onClick}}
+			className={cx(styles.button, styles[type], className)}
+			disabled={isDisabled}>
+			<div className={cx({ [styles.processing]: isProcessing })}>{children}</div>
+			{isProcessing &&
+				<LoadingIcon />
+			}
+		</button>
+	);
 }

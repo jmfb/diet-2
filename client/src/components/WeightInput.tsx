@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styles from './WeightInput.scss';
 
 interface IWeightInputProps {
@@ -7,39 +7,25 @@ interface IWeightInputProps {
 	onChange(value?: number): void;
 }
 
-interface IWeightInputState {
-	text: string;
-}
+export default function WeightInput(props: IWeightInputProps) {
+	const { value, autoFocus, onChange } = props;
+	const [text, setText] = useState((value === undefined || value === null) ? '' : value.toString());
 
-export default class WeightInput extends React.PureComponent<IWeightInputProps, IWeightInputState> {
-	constructor(props: IWeightInputProps) {
-		super(props);
-		const { value } = props;
-		this.state = {
-			text: (value === undefined || value === null) ? '' : value.toString()
-		};
-	}
-
-	render() {
-		const { autoFocus } = this.props;
-		const { text } = this.state;
-		return (
-			<input
-				{...{autoFocus}}
-				className={styles.root}
-				type='text'
-				placeholder='lbs...'
-				value={text}
-				onChange={this.handleInputChanged}
-				/>
-		);
-	}
-
-	handleInputChanged = (event: React.FormEvent<HTMLInputElement>) => {
-		const { onChange } = this.props;
+	const handleInputChanged = (event: React.FormEvent<HTMLInputElement>) => {
 		const { currentTarget: { value } } = event;
-		this.setState({ text: value });
+		setText(value);
 		const weightInPounds = Number.parseFloat(value);
 		onChange(Number.isNaN(weightInPounds) ? undefined : weightInPounds);
 	};
+
+	return (
+		<input
+			{...{autoFocus}}
+			className={styles.root}
+			type='text'
+			placeholder='lbs...'
+			value={text}
+			onChange={handleInputChanged}
+			/>
+	);
 }

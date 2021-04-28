@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef, useEffect } from 'react';
 import Pill from './Pill';
 import * as d3 from 'd3';
 import styles from './WeightGraph.scss';
@@ -9,61 +9,16 @@ interface IWeightGraphProps {
 	weightsInPounds: number[];
 }
 
-export default class WeightGraph extends React.PureComponent<IWeightGraphProps> {
-	private svgRef = React.createRef<SVGSVGElement>();
+export default function WeightGraph(props: IWeightGraphProps) {
+	const { startDate, weightsInPounds, targetWeightInPounds } = props;
+	const svgRef = useRef<SVGSVGElement>();
 
-	componentDidMount() {
-		this.createGraph();
-		window.addEventListener('resize', this.recreateGraph);
-	}
-
-	componentDidUpdate(prevProps: IWeightGraphProps) {
-		this.recreateGraph();
-	}
-
-	componentWillUnmount() {
-		window.removeEventListener('event', this.recreateGraph);
-	}
-
-	render() {
-		const { weightsInPounds, startDate } = this.props;
-		if (weightsInPounds.length === 0) {
-			return (
-				<div className={styles.none}>No weight records since {startDate}</div>
-			);
-		}
-
-		const minWeight = Math.min(...weightsInPounds);
-		const maxWeight = Math.max(...weightsInPounds);
-
-		return (
-			<div className={styles.wrapper}>
-				<svg ref={this.svgRef} className={styles.root} />
-				<Pill type='info' className={styles.max}>Max {maxWeight} lbs</Pill>
-				<Pill type='info' className={styles.min}>Min {minWeight} lbs</Pill>
-			</div>
-		);
-	}
-
-	recreateGraph = () => {
-		this.destroyGraph();
-		this.createGraph();
-	};
-
-	destroyGraph = () => {
-		const rootNode = this.svgRef.current;
-		while (rootNode && rootNode.firstChild) {
-			rootNode.removeChild(rootNode.firstChild);
-		}
-	};
-
-	createGraph = () => {
-		const { weightsInPounds, targetWeightInPounds } = this.props;
+	const createGraph = () => {
 		if (weightsInPounds.length === 0) {
 			return;
 		}
 
-		const rootNode = this.svgRef.current;
+		const rootNode = svgRef.current;
 		const width = rootNode.clientWidth;
 		const height = rootNode.clientHeight;
 		const y = d3.scaleLinear().range([height, 0]);
@@ -112,4 +67,42 @@ export default class WeightGraph extends React.PureComponent<IWeightGraphProps> 
 			.attr('class', styles.line)
 			.attr('d', lineData);
 	};
+
+	const destroyGraph = () => {
+		const rootNode = svgRef.current;
+		while (rootNode && rootNode.firstChild) {
+			rootNode.removeChild(rootNode.firstChild);
+		}
+	};
+
+	const recreateGraph = () => {
+		destroyGraph();
+		createGraph();
+	};
+
+	useEffect(() => {
+		createGraph();
+		window.addEventListener('resize', recreateGraph);
+		return () => {
+			window.removeEventListener('resize', recreateGraph);
+			destroyGraph();
+		};
+	}, [weightsInPounds, targetWeightInPounds]);
+
+	if (weightsInPounds.length === 0) {
+		return (
+			<div className={styles.none}>No weight records since {startDate}</div>
+		);
+	}
+
+	const minWeight = Math.min(...weightsInPounds);
+	const maxWeight = Math.max(...weightsInPounds);
+
+	return (
+		<div className={styles.wrapper}>
+			<svg ref={svgRef} className={styles.root} />
+			<Pill type='info' className={styles.max}>Max {maxWeight} lbs</Pill>
+			<Pill type='info' className={styles.min}>Min {minWeight} lbs</Pill>
+		</div>
+	);
 }

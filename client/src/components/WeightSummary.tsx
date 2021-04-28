@@ -1,67 +1,42 @@
 import React from 'react';
-import { connect } from 'react-redux';
+import { useSelector } from 'react-redux';
 import WeightGraph from './WeightGraph';
 import WeightChange from './WeightChange';
 import IState from '~/redux/IState';
 import styles from './WeightSummary.scss';
 
-interface IWeightSummaryOwnProps {
+interface IWeightSummaryProps {
 	title: string;
 	startDate: string;
 }
 
-interface IWeightSummaryStateProps {
-	targetWeightInPounds?: number;
-	weightsInPounds: number[];
-}
-
-type IWeightSummaryProps =
-	IWeightSummaryOwnProps &
-	IWeightSummaryStateProps;
-
-function mapStateToProps(state: IState, ownProps: IWeightSummaryOwnProps): IWeightSummaryStateProps {
-	const {
-		profile: { profile },
-		weights: { weightStateByDate }
-	} = state;
-	const { startDate } = ownProps;
-	const targetWeightInPounds = profile?.targetWeightInPounds;
-	const weightsInPounds = Object.keys(weightStateByDate)
+export default function WeightSummary(props: IWeightSummaryProps) {
+	const { title, startDate } = props;
+	const targetWeightInPounds = useSelector((state: IState) => state.profile.profile?.targetWeightInPounds);
+	const weightsInPounds = useSelector((state: IState) => Object
+		.keys(state.weights.weightStateByDate)
 		.filter(date => date >= startDate)
-		.map(date => weightStateByDate[date].weightInPounds);
-	return {
-		targetWeightInPounds,
-		weightsInPounds
-	};
-}
+		.map(date => state.weights.weightStateByDate[date].weightInPounds));
 
-class WeightSummary extends React.PureComponent<IWeightSummaryProps> {
-	render() {
-		const { title, startDate, targetWeightInPounds, weightsInPounds } = this.props;
-		return (
-			<div className={styles.root}>
-				<h2>
-					{title}
-					<WeightChange
-						{...{
-							targetWeightInPounds,
-							weightsInPounds
-						}}
-						className={styles.change}
-						/>
-				</h2>
-				<WeightGraph
+	return (
+		<div className={styles.root}>
+			<h2>
+				{title}
+				<WeightChange
 					{...{
-						startDate,
 						targetWeightInPounds,
 						weightsInPounds
 					}}
+					className={styles.change}
 					/>
-			</div>
-		);
-	}
+			</h2>
+			<WeightGraph
+				{...{
+					startDate,
+					targetWeightInPounds,
+					weightsInPounds
+				}}
+				/>
+		</div>
+	);
 }
-
-export default connect<
-	IWeightSummaryStateProps
->(mapStateToProps)(WeightSummary);
