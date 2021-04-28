@@ -9,38 +9,36 @@ interface IErrorViewProps {
 	onClickDismiss(): void;
 }
 
-export default class ErrorView extends React.PureComponent<IErrorViewProps> {
-	render() {
-		const { action, context, message, onClickDismiss } = this.props;
-		return (
-			<main className={styles.root}>
-				<section>
-					<h1>Error - {action}</h1>
-					<div className={styles.row}>
-						<div className={styles.reason}>
-							This error may be due to your session being out of date.<br />
-							You can dismiss this error or try signing in again.
-						</div>
-						<div className={styles.actions}>
-							<Button
-								type='primary'
-								className={styles.action}
-								onClick={onClickDismiss}>
-								Dismiss
-							</Button>
-							<a href='/sign-in' className={styles.signIn}>Sign In</a>
-						</div>
+export default function ErrorView(props: IErrorViewProps) {
+	const { action, context, message, onClickDismiss } = props;
+	return (
+		<main className={styles.root}>
+			<section>
+				<h1>Error - {action}</h1>
+				<div className={styles.row}>
+					<div className={styles.reason}>
+						This error may be due to your session being out of date.<br />
+						You can dismiss this error or try signing in again.
 					</div>
-					<div className={styles.message}>
-						{message}
+					<div className={styles.actions}>
+						<Button
+							type='primary'
+							className={styles.action}
+							onClick={onClickDismiss}>
+							Dismiss
+						</Button>
+						<a href='/sign-in' className={styles.signIn}>Sign In</a>
 					</div>
-					{context &&
-						<div className={styles.context}>
-							{context}
-						</div>
-					}
-				</section>
-			</main>
-		);
-	}
+				</div>
+				<div className={styles.message}>
+					{message}
+				</div>
+				{context &&
+					<div className={styles.context}>
+						{context}
+					</div>
+				}
+			</section>
+		</main>
+	);
 }

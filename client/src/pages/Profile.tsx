@@ -11,22 +11,20 @@ interface IProfileProps {
 	onSave(profile: IProfile): void;
 }
 
-export default class Profile extends React.PureComponent<IProfileProps> {
-	render() {
-		const { profile, onSave, isSaving } = this.props;
-		if (profile === undefined) {
-			return (
-				<PageLoading message='Loading profile...' />
-			);
-		}
+export default function Profile(props: IProfileProps) {
+	const { profile, onSave, isSaving } = props;
+	if (profile === undefined) {
 		return (
-			<Card className={styles.root}>
-				<h1>Profile</h1>
-				<ProfileForm
-					{...{onSave, isSaving}}
-					initialValue={profile}
-					/>
-			</Card>
+			<PageLoading message='Loading profile...' />
 		);
 	}
+	return (
+		<Card className={styles.root}>
+			<h1>Profile</h1>
+			<ProfileForm
+				{...{onSave, isSaving}}
+				initialValue={profile}
+				/>
+		</Card>
+	);
 }
