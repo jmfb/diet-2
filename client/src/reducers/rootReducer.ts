@@ -1,4 +1,3 @@
-import { combineReducers } from 'redux';
 import error, { IErrorState } from './error';
 import auth, { IAuthState } from './auth';
 import heartbeat, { IHeartbeatState } from './heartbeat';
@@ -13,10 +12,14 @@ export interface IState {
 	profile: IProfileState;
 }
 
-export default combineReducers<IState>({
+type IReducer = {
+	[K in keyof IState]: (state: IState[K], action: any) => IState[K];
+};
+
+export const reducer: IReducer = {
 	error,
 	auth,
 	heartbeat,
 	weights,
 	profile
-});
+};
