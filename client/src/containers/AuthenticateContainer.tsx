@@ -1,57 +1,29 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Redirect } from 'react-router';
-import { connect } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import PageLoading from '~/components/PageLoading';
 import IState from '~/redux/IState';
 import { authenticate } from '~/redux/auth';
 import queryString from 'query-string';
 
-interface IAuthenticateContainerStateProps {
-	email?: string;
-}
-
-interface IAuthenticateContainerDispatchProps {
-	authenticate(code: string): void;
-}
-
-type IAuthenticateContainerProps =
-	IAuthenticateContainerStateProps &
-	IAuthenticateContainerDispatchProps;
-
-function mapStateToProps(state: IState): IAuthenticateContainerStateProps {
-	const { auth: { email } } = state;
-	return { email };
-}
-
-const mapDispatchToProps: IAuthenticateContainerDispatchProps = {
-	authenticate
-};
-
-class AuthenticateContainer extends React.PureComponent<IAuthenticateContainerProps> {
-	componentDidMount() {
-		const { authenticate } = this.props;
+export default function authenticationContainer() {
+	const dispatch = useDispatch();
+	useEffect(() => {
 		const { code } = queryString.parse(location.search) as { code: string; };
-		authenticate(code);
-	}
+		dispatch(authenticate(code));
+	}, []);
 
-	render() {
-		const { email } = this.props;
-		if (email !== undefined) {
-			return (
-				<Redirect to='/' />
-			);
-		}
+	const email = useSelector((state: IState) => state.auth.email);
+	if (email !== undefined) {
 		return (
-			<main>
-				<section>
-					<PageLoading message='Authenticating...' />
-				</section>
-			</main>
+			<Redirect to='/' />
 		);
 	}
+	return (
+		<main>
+			<section>
+				<PageLoading message='Authenticating...' />
+			</section>
+		</main>
+	);
 }
-
-export default connect<
-	IAuthenticateContainerStateProps,
-	IAuthenticateContainerDispatchProps
->(mapStateToProps, mapDispatchToProps)(AuthenticateContainer);

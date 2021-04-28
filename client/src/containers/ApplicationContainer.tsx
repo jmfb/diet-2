@@ -1,6 +1,6 @@
-import React, { lazy } from 'react';
+import React, { lazy, useEffect, useRef } from 'react';
 import { Redirect, Switch, Route } from 'react-router';
-import { connect } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import Header from '~/components/Header';
 import NewerVersionPrompt from '~/components/NewerVersionPrompt';
 import IState from '~/redux/IState';
@@ -14,89 +14,58 @@ const asyncProfileContainer = lazy(() =>
 const asyncSignOutContainer = lazy(() =>
 	import(/* webpackChunkName: 'SignOutContainer' */ './SignOutContainer'));
 
-interface IApplicationContainerStateProps {
-	email?: string;
-	redirectToSignIn: boolean;
-	url?: string;
-	isHeartbeatInProgress: boolean;
+function useInterval(callback: () => void, timeout: number) {
+	const callbackRef = useRef(null as typeof callback);
+	useEffect(() => {
+		callbackRef.current = callback;
+	}, [callback]);
+	useEffect(() => {
+		const intervalId = window.setInterval(() => callbackRef.current(), timeout);
+		return () => window.clearInterval(intervalId);
+	}, [timeout]);
 }
 
-interface IApplicationContainerDispatchProps {
-	readLocalStorage(): void;
-	signal(): void;
-}
+export default function applicationContainer() {
+	const dispatch = useDispatch();
+	const isHeartbeatInProgress = useSelector((state: IState) => state.heartbeat.isHeartbeatInProgress);
 
-type IApplicationContainerProps =
-	IApplicationContainerStateProps &
-	IApplicationContainerDispatchProps;
+	useEffect(() => {
+		dispatch(readLocalStorage());
+	}, []);
 
-function mapStateToProps(state: IState): IApplicationContainerStateProps {
-	const {
-		auth: { email, redirectToSignIn, url },
-		heartbeat: { isHeartbeatInProgress }
-	} = state;
-	return {
-		email,
-		redirectToSignIn,
-		url,
-		isHeartbeatInProgress
-	};
-}
-
-const mapDispatchToProps: IApplicationContainerDispatchProps = {
-	readLocalStorage,
-	signal
-};
-
-class ApplicationContainer extends React.PureComponent<IApplicationContainerProps> {
-	private intervalId: number;
-
-	componentDidMount() {
-		const { readLocalStorage } = this.props;
-		readLocalStorage();
-		this.intervalId = window.setInterval(this.handleInterval, 60_000);
-	}
-
-	componentWillUnmount() {
-		window.clearInterval(this.intervalId);
-	}
-
-	render() {
-		const { email, redirectToSignIn, url } = this.props;
-		if (redirectToSignIn && url === undefined) {
-			return (
-				<Redirect to='/sign-in' />
-			);
+	useInterval(() => {
+		if (!isHeartbeatInProgress) {
+			console.log('heartbeat...');
+			dispatch(signal());
 		}
-		if (email === undefined) {
-			return null;
-		}
+	}, 60_000);
+
+	const redirectToSignIn = useSelector((state: IState) => state.auth.redirectToSignIn);
+	const url = useSelector((state: IState) => state.auth.url);
+	if (redirectToSignIn && url === undefined) {
 		return (
-			<>
-				<Header {...{email}} />
-				<main>
-					<section>
-						<Switch>
-							<Route exact path='/' component={asyncHomeContainer} />
-							<Route path='/profile' component={asyncProfileContainer} />
-							<Route path='/sign-out' component={asyncSignOutContainer} />
-						</Switch>
-						<NewerVersionPrompt />
-					</section>
-				</main>
-			</>
+			<Redirect to='/sign-in' />
 		);
 	}
 
-	handleInterval = () => {
-		const { isHeartbeatInProgress, signal } = this.props;
-		if (!isHeartbeatInProgress) {
-			signal();
-		}
-	};
-}
+	const email = useSelector((state: IState) => state.auth.email);
+	if (email === undefined) {
+		return null;
+	}
 
-export default connect<
-	IApplicationContainerStateProps,
-	IApplicationContainerDispatchProps
->(mapStateToProps, mapDispatchToProps)(ApplicationContainer);
+	return (
+		<>
+			<Header {...{email}} />
+			<main>
+				<section>
+					<Switch>
+						<Route exact path='/' component={asyncHomeContainer} />
+						<Route path='/profile' component={asyncProfileContainer} />
+						<Route path='/sign-out' component={asyncSignOutContainer} />
+					</Switch>
+					<NewerVersionPrompt />
+				</section>
+			</main>
+		</>
+	);
+}
