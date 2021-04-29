@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import IState from '~/redux/IState';
 import weightService from '~/services/weightService';
 import { weightCategoryNames } from '~/models';
-import styles from './WeightBadge.scss';
+import styles from './WeightBadge.css';
 
 export default function WeightBadge() {
 	const { weightStateByDate, profile } = useSelector((state: IState) => ({

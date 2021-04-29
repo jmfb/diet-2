@@ -1,6 +1,7 @@
 import React from 'react';
 import SvgCircle from './SvgCircle';
-import './LoadingIcon.scss';
+import cx from 'classnames';
+import styles from './LoadingIcon.css';
 
 export default function LoadingIcon() {
 	const circles = [
@@ -14,7 +15,7 @@ export default function LoadingIcon() {
 		{ cx: 27, cy: 5 }
 	];
 	return (
-		<svg viewBox='0 0 58 58' xmlns='http://www.w3.org/2000/svg' className='loading-icon'>
+		<svg viewBox='0 0 58 58' xmlns='http://www.w3.org/2000/svg' className={cx('loading-icon', styles.loadingIcon)}>
 			<g fill='none' fillRule='evenodd'>
 				<g transform='translate(2 1)' stroke='currentColor' strokeWidth='1.5'>
 					{circles.map(({ cx, cy }, index) =>

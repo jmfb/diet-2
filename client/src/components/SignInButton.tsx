@@ -1,6 +1,6 @@
 import React from 'react';
-import styles from './SignInButton.scss';
 import cx from 'classnames';
+import styles from './SignInButton.css';
 
 interface ISignInButtonProps {
 	disabled: boolean;

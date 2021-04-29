@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import WeightGraph from './WeightGraph';
 import WeightChange from './WeightChange';
 import IState from '~/redux/IState';
-import styles from './WeightSummary.scss';
+import styles from './WeightSummary.css';
 
 interface IWeightSummaryProps {
 	title: string;
@@ -20,7 +20,7 @@ export default function WeightSummary(props: IWeightSummaryProps) {
 
 	return (
 		<div className={styles.root}>
-			<h2>
+			<h2 className={styles.h2}>
 				{title}
 				<WeightChange
 					{...{

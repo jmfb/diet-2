@@ -66,7 +66,7 @@ module.exports = {
 				}
 			},
 			{
-				test: /\.scss$/,
+				test: /\.css$/,
 				exclude: /node_modules/,
 				use: [
 					MiniCssExtractPlugin.loader,
@@ -87,12 +87,6 @@ module.exports = {
 							postcssOptions: {
 								plugins: [autoprefixer()]
 							}
-						}
-					},
-					{
-						loader: 'sass-loader',
-						options: {
-							sourceMap: isDebug
 						}
 					}
 				]

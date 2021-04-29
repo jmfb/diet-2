@@ -1,6 +1,6 @@
 import React from 'react';
 import Button from '~/components/Button';
-import styles from './ErrorView.scss';
+import styles from './ErrorView.css';
 
 interface IErrorViewProps {
 	action?: string;
@@ -22,7 +22,6 @@ export default function ErrorView(props: IErrorViewProps) {
 					</div>
 					<div className={styles.actions}>
 						<Button
-							type='primary'
 							className={styles.action}
 							onClick={onClickDismiss}>
 							Dismiss

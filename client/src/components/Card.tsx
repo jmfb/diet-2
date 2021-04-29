@@ -1,6 +1,6 @@
 import React from 'react';
-import styles from './Card.scss';
 import cx from 'classnames';
+import styles from './Card.css';
 
 interface ICardProps {
 	className?: string;

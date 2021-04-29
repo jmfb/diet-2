@@ -3,7 +3,7 @@ import Card from '~/components/Card';
 import PageLoading from '~/components/PageLoading';
 import ProfileForm from '~/components/ProfileForm';
 import { IProfile } from '~/models';
-import styles from './Profile.scss';
+import styles from './Profile.css';
 
 interface IProfileProps {
 	profile?: IProfile;

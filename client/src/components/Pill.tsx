@@ -1,6 +1,6 @@
 import React from 'react';
 import cx from 'classnames';
-import styles from './Pill.scss';
+import styles from './Pill.css';
 
 interface IPillProps {
 	type: 'info' | 'danger' | 'success';

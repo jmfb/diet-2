@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import styles from './HeightInput.scss';
+import styles from './HeightInput.css';
 
 interface IHeightInputProps {
 	value?: number;

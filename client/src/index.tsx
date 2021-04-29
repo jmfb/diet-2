@@ -6,7 +6,7 @@ import { Provider } from 'react-redux';
 import PageLoading from '~/components/PageLoading';
 import ErrorBoundary from '~/containers/ErrorBoundary';
 import { createStore } from '~/redux/store';
-import './index.scss';
+import './index.css';
 
 const asyncSignInContainer = lazy(() =>
 	import(/* webpackChunkName: 'SignInContainer' */ '~/containers/SignInContainer'));

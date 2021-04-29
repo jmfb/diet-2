@@ -1,6 +1,6 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-import styles from './Header.scss';
+import styles from './Header.css';
 
 interface IHeaderProps {
 	email: string;

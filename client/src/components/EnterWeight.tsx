@@ -3,7 +3,7 @@ import WeightInput from './WeightInput';
 import Button from './Button';
 import { IWeightState } from '~/redux/weights';
 import { IWeightModel } from '~/models';
-import styles from './EnterWeight.scss';
+import styles from './EnterWeight.css';
 
 interface IEnterWeightProps {
 	date: string;
@@ -34,7 +34,6 @@ export default function EnterWeight(props: IEnterWeightProps) {
 				onChange={setWeightInPounds}
 				/>
 			<Button
-				type='primary'
 				className={styles.save}
 				isDisabled={!canSave}
 				isProcessing={weightState?.isSaving}

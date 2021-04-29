@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import styles from './WeightInput.scss';
+import styles from './WeightInput.css';
 
 interface IWeightInputProps {
 	value?: number;

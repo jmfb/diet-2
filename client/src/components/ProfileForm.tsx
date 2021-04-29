@@ -5,7 +5,7 @@ import BirthDateInput from './BirthDateInput';
 import HeightInput from './HeightInput';
 import GenderInput from './GenderInput';
 import { IProfile } from '~/models';
-import styles from './ProfileForm.scss';
+import styles from './ProfileForm.css';
 
 interface IProfileFormProps {
 	initialValue: IProfile;
@@ -66,7 +66,6 @@ export default function ProfileForm(props: IProfileFormProps) {
 			</div>
 			<div className={styles.actions}>
 				<Button
-					type='primary'
 					className={styles.save}
 					onClick={handleSaveClicked}
 					isDisabled={!canSave}

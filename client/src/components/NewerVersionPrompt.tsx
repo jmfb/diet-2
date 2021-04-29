@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import Button from './Button';
 import IState from '~/redux/IState';
-import styles from './NewerVersionPrompt.scss';
+import styles from './NewerVersionPrompt.css';
 
 export default function NewerVersionPrompt() {
 	const [isRefreshing, setIsRefreshing] = useState(false);
@@ -27,7 +27,6 @@ export default function NewerVersionPrompt() {
 				</div>
 			</div>
 			<Button
-				type='primary'
 				isDisabled={isRefreshing}
 				isProcessing={isRefreshing}
 				className={styles.refresh}

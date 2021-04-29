@@ -1,0 +1,17 @@
+.root {
+	margin-top: 1rem;
+}
+
+.h2 {
+	margin: 0;
+	margin-bottom: 0.25rem;
+	display: flex;
+	flex-direction: row;
+	align-items: baseline;
+}
+
+.change {
+	margin-left: 1rem;
+	font-size: 0.875rem;
+	font-weight: normal;
+}
