@@ -12,7 +12,7 @@ To host a React frontend/Lambda backend using AWS free tier services.
 * `choco install awscli` (min version 2.1.29)
 * `choco install dotnet` (min version 5.0.4)
 * `choco install dotnet-sdk` (min version 5.0.201)
-* `choco install nodejs` (min version 15.12.0)
+* `choco install nodejs` (min version 16.0.0)
 * `choco install yarn` (min version 1.22.5)
 * [Docker for Windows](https://docs.docker.com/docker-for-windows/install/)
 
