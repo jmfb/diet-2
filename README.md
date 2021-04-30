@@ -58,13 +58,13 @@ Get the following secrets from BitWarden and run in powershell to setup local en
 Start your client watcher:
 ```PowerShell
 cd client
-yarn run start
+& yarn run start
 ```
 
 Start your server watcher:
 ```PowerShell
 cd server
-dotnet watch run
+& dotnet watch run
 ```
 
 Start your local dynamo db:
@@ -76,6 +76,12 @@ Deploy tables and data to dynamo:
 ```PowerShell
 . .\CreateTables.ps1
 . .\CreateData.ps1 -userId "TODO: your Google id here"
+```
+
+Run your storybook watcher:
+```PowerShell
+cd client
+& yarn run storybook
 ```
 
 ## Deployment
