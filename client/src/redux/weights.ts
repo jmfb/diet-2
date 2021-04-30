@@ -9,7 +9,7 @@ export interface IWeightState {
 	weightInPounds: number;
 }
 
-interface IWeightStateByDate {
+export interface IWeightStateByDate {
 	[date: string]: IWeightState;
 }
 

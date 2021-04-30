@@ -2,7 +2,7 @@ import React from 'react';
 import Pill from '~/components/Pill';
 import weightService from '~/services/weightService';
 
-interface IWeightChangeProps {
+export interface IWeightChangeProps {
 	targetWeightInPounds?: number;
 	weightsInPounds: number[];
 	className?: string;
@@ -17,15 +17,15 @@ export default function WeightChange(props: IWeightChangeProps) {
 	const startingWeight = weightsInPounds[0];
 	const endingWeight = weightsInPounds[weightsInPounds.length - 1];
 	const changeInWeight = weightService.getChange(startingWeight, endingWeight);
-	const isGoalWeightLoss = !targetWeightInPounds || targetWeightInPounds < startingWeight;
-	const isSuccess = changeInWeight < 0 && isGoalWeightLoss;
-	const isWeightGain = changeInWeight >= 0;
+	const isGoalWeightGain = targetWeightInPounds > startingWeight;
+	const isSuccess = isGoalWeightGain ?
+		changeInWeight >= 0 :
+		changeInWeight <= 0;
+	const isWeightGain = changeInWeight > 0;
+	const sign = isWeightGain ? '+' : '';
 	return (
-		<Pill type={isSuccess ? 'success' : 'danger'} className={className}>
-			{isWeightGain &&
-				'+'
-			}
-			{changeInWeight} lbs
+		<Pill type={isSuccess ? 'success' : 'danger'} {...{className}}>
+			{sign}{changeInWeight} lbs
 		</Pill>
 	);
 }

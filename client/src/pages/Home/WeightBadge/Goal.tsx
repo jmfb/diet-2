@@ -3,7 +3,7 @@ import Row from './Row';
 import Change from './Change';
 import weightService from '~/services/weightService';
 
-interface IGoalProps {
+export interface IGoalProps {
 	mostRecentWeight: number;
 	targetWeightInPounds: number;
 }

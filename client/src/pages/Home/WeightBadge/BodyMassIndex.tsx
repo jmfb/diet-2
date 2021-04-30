@@ -3,7 +3,7 @@ import Row from './Row';
 import weightService from '~/services/weightService';
 import { weightCategories } from '~/models';
 
-interface IBodyMassIndexProps {
+export interface IBodyMassIndexProps {
 	heightInInches: number;
 	mostRecentWeight: number;
 }

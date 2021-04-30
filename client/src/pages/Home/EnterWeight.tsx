@@ -5,7 +5,7 @@ import { IWeightState } from '~/redux/weights';
 import { IWeightModel } from '~/models';
 import styles from './EnterWeight.css';
 
-interface IEnterWeightProps {
+export interface IEnterWeightProps {
 	date: string;
 	weightState?: IWeightState;
 	onSaveWeight(weight: IWeightModel): void;

@@ -3,7 +3,7 @@ import Pill from '~/components/Pill';
 import * as d3 from 'd3';
 import styles from './WeightGraph.css';
 
-interface IWeightGraphProps {
+export interface IWeightGraphProps {
 	startDate: string;
 	targetWeightInPounds?: number;
 	weightsInPounds: number[];

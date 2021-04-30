@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './Row.css';
 
-interface IRowProps {
+export interface IRowProps {
 	label: string;
 	children: React.ReactNode;
 }

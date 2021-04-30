@@ -1,17 +1,18 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
-import IState from '~/redux/IState';
 import Weight from './Weight';
 import BodyMassIndex from './BodyMassIndex';
 import Goal from './Goal';
+import { IWeightStateByDate } from '~/redux/weights';
 import styles from './WeightBadge.css';
 
-export default function WeightBadge() {
-	const profile = useSelector((state: IState) => state.profile.profile);
-	const weightStateByDate = useSelector((state: IState) => state.weights.weightStateByDate);
+export interface IWeightBadgeProps {
+	targetWeightInPounds?: number;
+	heightInInches?: number;
+	weightStateByDate: IWeightStateByDate;
+}
 
-	const targetWeightInPounds = profile?.targetWeightInPounds;
-	const heightInInches = profile?.heightInInches;
+export default function WeightBadge(props: IWeightBadgeProps) {
+	const { targetWeightInPounds, heightInInches, weightStateByDate } = props;
 	const dates = Object.keys(weightStateByDate).sort();
 	const minDate = dates[0];
 	const maxDate = dates[dates.length - 1];
