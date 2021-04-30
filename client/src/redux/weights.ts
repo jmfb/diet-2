@@ -30,12 +30,13 @@ export const loadAllWeights = createAsyncThunk('weights/loadAll', async (unused,
 	return await WeightsApi.loadAllWeights(accessToken);
 });
 
-export const saveWeight = createAsyncThunk('weights/save', async ({ date, weightInPounds }: IWeightModel, { getState }) => {
+export const saveWeight = createAsyncThunk('weights/save', async (weight: IWeightModel, { getState }) => {
 	const { auth: { accessToken } } = getState() as IState;
+	const { date, weightInPounds } = weight;
 	await WeightsApi.saveWeight(accessToken, date, weightInPounds);
 });
 
-const slice = createSlice({
+const { reducer } = createSlice({
 	name: 'weights',
 	initialState,
 	reducers: {},
@@ -80,7 +81,5 @@ const slice = createSlice({
 			Object.assign(state, initialState);
 		})
 });
-
-const { reducer } = slice;
 
 export default reducer;

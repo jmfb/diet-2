@@ -44,7 +44,7 @@ export const authenticate = createAsyncThunk('auth/authenticate', async (code: s
 	return { email, accessToken };
 });
 
-const slice = createSlice({
+const { reducer } = createSlice({
 	name: 'auth',
 	initialState,
 	reducers: {},
@@ -85,7 +85,5 @@ const slice = createSlice({
 			state.accessToken = accessToken;
 		})
 });
-
-const { reducer } = slice;
 
 export default reducer;

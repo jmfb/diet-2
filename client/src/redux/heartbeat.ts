@@ -33,7 +33,7 @@ export const signal = createAsyncThunk('heartbeat/signal', async (unused, { getS
 	return { ...model, today };
 });
 
-const slice = createSlice({
+const { reducer } = createSlice({
 	name: 'heartbeat',
 	initialState,
 	reducers: {},
@@ -51,7 +51,5 @@ const slice = createSlice({
 			state.isHeartbeatInProgress = false;
 		})
 });
-
-const { reducer } = slice;
 
 export default reducer;

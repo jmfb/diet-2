@@ -26,7 +26,7 @@ function setErrorState(state: IErrorState, name: string, message: string, contex
 	state.context = context ? JSON.stringify(context) : undefined;
 }
 
-const slice = createSlice({
+const { actions, reducer } = createSlice({
 	name: 'error',
 	initialState,
 	reducers: {
@@ -64,8 +64,6 @@ const slice = createSlice({
 			setErrorState(state, 'Saving profile', action.error.message, action.meta.arg);
 		})
 });
-
-const { actions, reducer } = slice;
 
 export const {
 	dismissError,

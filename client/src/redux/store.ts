@@ -7,7 +7,7 @@ import profile from './profile';
 import IState from './IState';
 
 export function createStore() {
-	return configureStore({
+	return configureStore<IState>({
 		reducer: {
 			error,
 			auth,
@@ -17,11 +17,3 @@ export function createStore() {
 		}
 	});
 };
-
-type IStateValid =
-	(<T>() => T extends IState ? 0 : 1) extends
-	(<T>() => T extends ReturnType<ReturnType<typeof createStore>['getState']> ? 0 : 1) ?
-		unknown :
-		never;
-
-((unused: IStateValid) => { /* Assertion: createStore().getState(): IState */ })(void 0);

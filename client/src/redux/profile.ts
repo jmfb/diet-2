@@ -27,7 +27,7 @@ export const setProfile = createAsyncThunk('profile/set', async (profile: IProfi
 	return profile;
 });
 
-const slice = createSlice({
+const { reducer } = createSlice({
 	name: 'profile',
 	initialState,
 	reducers: {},
@@ -58,7 +58,5 @@ const slice = createSlice({
 			Object.assign(state, initialState);
 		})
 });
-
-const { reducer } = slice;
 
 export default reducer;
