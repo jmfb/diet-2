@@ -35,9 +35,9 @@ resource "aws_lambda_function" "lambda" {
     }
   }
 
-  tags = merge(var.tags, map(
-    "Name", var.name
-  ))
+  tags = merge(var.tags, tomap({
+    "Name" = var.name
+  }))
 
   depends_on = [aws_cloudwatch_log_group.logs]
 }

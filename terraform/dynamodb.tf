@@ -16,9 +16,9 @@ resource "aws_dynamodb_table" "weights" {
     type = "S"
   }
 
-  tags = merge(var.tags, map(
-    "Name", "diet-weights"
-  ))
+  tags = merge(var.tags, tomap({
+    "Name" = "diet-weights"
+  }))
 }
 
 resource "aws_dynamodb_table" "profiles" {
@@ -33,7 +33,7 @@ resource "aws_dynamodb_table" "profiles" {
     type = "S"
   }
 
-  tags = merge(var.tags, map(
-    "Name", "diet-profiles"
-  ))
+  tags = merge(var.tags, tomap({
+    "Name" = "diet-profiles"
+  }))
 }

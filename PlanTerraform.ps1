@@ -44,14 +44,14 @@ try {
 
 	if ($init) {
 		Write-Host "[$(Get-Date)] Initializing terraform..."
-		& terraform_0.14.8 init
+		& terraform_0.15.1 init
 		if ($lastexitcode -ne 0) {
 			exit $lastexitcode
 		}
 	}
 
 	Write-Host "[$(Get-Date)] Planning terraform with tfplan output..."
-	& terraform_0.14.8 plan -out tfplan
+	& terraform_0.15.1 plan -out tfplan
 	if ($lastexitcode -ne 0) {
 		exit $lastexitcode
 	}

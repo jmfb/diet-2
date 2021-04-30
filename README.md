@@ -8,7 +8,7 @@ To host a React frontend/Lambda backend using AWS free tier services.
 
 ## Prerequisites
 
-* Download terraform 0.14.8 and alias to terraform_0.14.8
+* Download [terraform 0.15.1](https://releases.hashicorp.com/terraform/0.15.1/terraform_0.15.1_windows_amd64.zip) and alias to terraform_0.15.1
 * `choco install awscli` (min version 2.1.29)
 * `choco install dotnet` (min version 5.0.4)
 * `choco install dotnet-sdk` (min version 5.0.201)

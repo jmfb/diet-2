@@ -5,7 +5,7 @@ try {
 	Push-Location "$PSScriptRoot\terraform"
 
 	Write-Host "[$(Get-Date)] Applying terraform plan..."
-	& terraform_0.14.8 apply tfplan
+	& terraform_0.15.1 apply tfplan
 	if ($lastexitcode -ne 0) {
 		exit $lastexitcode
 	}
