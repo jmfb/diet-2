@@ -4,7 +4,7 @@ import Button, { IButtonProps } from './Button';
 
 export default {
 	title: 'Components/Button',
-	component: Button,
+	component: Button
 } as Meta;
 
 const Template: Story<IButtonProps> = props =>

@@ -3,7 +3,7 @@ import { Story, Meta } from '@storybook/react';
 import NewerVersionPrompt, { INewerVersionPromptProps } from './NewerVersionPrompt';
 
 export default {
-	title: 'Components/NewerVersionPrompt',
+	title: 'Containers/Application/NewerVersionPrompt',
 	component: NewerVersionPrompt,
 } as Meta;
 

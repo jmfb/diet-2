@@ -2,7 +2,7 @@ import React from 'react';
 import LoadingIcon from './LoadingIcon';
 import styles from './PageLoading.css';
 
-interface IPageLoadingProps {
+export interface IPageLoadingProps {
 	message?: string;
 }
 

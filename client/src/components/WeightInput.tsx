@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styles from './WeightInput.css';
 
-interface IWeightInputProps {
+export interface IWeightInputProps {
 	value?: number;
 	autoFocus?: boolean;
 	onChange(value?: number): void;

@@ -2,7 +2,7 @@ import React from 'react';
 import cx from 'classnames';
 import styles from './Pill.css';
 
-interface IPillProps {
+export interface IPillProps {
 	type: 'info' | 'danger' | 'success';
 	className?: string;
 	children?: React.ReactNode;
