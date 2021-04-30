@@ -1,6 +1,7 @@
 import React from 'react';
 import { Story, Meta } from '@storybook/react';
 import LoadingIcon from './LoadingIcon';
+import '~/index.css';
 
 export default {
 	title: 'Components/LoadingIcon',

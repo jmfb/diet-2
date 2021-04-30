@@ -2,23 +2,30 @@ import React from 'react';
 import cx from 'classnames';
 import styles from './SignInButton.css';
 
-interface ISignInButtonProps {
-	disabled: boolean;
-	style: 'dark' | 'light';
+export interface ISignInButtonProps {
+	isDisabled: boolean;
+	type: 'dark' | 'light';
 	className?: string;
 	onClick(): void;
 }
 
 export default function SignInButton(props: ISignInButtonProps) {
-	const { disabled, style, className, onClick } = props;
+	const { isDisabled, type, className, onClick } = props;
+
+	const handleClicked = () => {
+		if (!isDisabled) {
+			onClick();
+		}
+	};
+
 	return (
 		<div
 			className={cx(
 				styles.root,
-				styles[style],
-				{ [styles.disabled]: disabled },
+				styles[type],
+				{ [styles.disabled]: isDisabled },
 				className)}
-			onClick={onClick}>
+			onClick={handleClicked}>
 		</div>
 	);
 }

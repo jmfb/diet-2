@@ -5,7 +5,7 @@ import ProfileForm from './ProfileForm';
 import { IProfile } from '~/models';
 import styles from './Profile.css';
 
-interface IProfileProps {
+export interface IProfileProps {
 	profile?: IProfile;
 	isSaving: boolean;
 	onSave(profile: IProfile): void;

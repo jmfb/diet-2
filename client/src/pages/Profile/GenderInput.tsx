@@ -1,7 +1,7 @@
 import React from 'react';
 import { Gender } from '~/models';
 
-interface IGenderInputProps {
+export interface IGenderInputProps {
 	value?: Gender;
 	onChange(value?: Gender): void;
 }
@@ -10,8 +10,8 @@ export default function GenderInput(props: IGenderInputProps) {
 	const { value, onChange } = props;
 
 	const handleSelectChanged = (event: React.FormEvent<HTMLSelectElement>) => {
-		const { currentTarget: { value } } = event;
-		onChange(value === '' ? undefined : (+value as Gender));
+		const { currentTarget: { value: gender } } = event;
+		onChange(gender === '' ? undefined : (+gender as Gender));
 	};
 
 	return (

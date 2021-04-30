@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styles from './HeightInput.css';
 
-interface IHeightInputProps {
+export interface IHeightInputProps {
 	value?: number;
 	onChange(value?: number): void;
 }
@@ -17,18 +17,18 @@ export default function HeightInput(props: IHeightInputProps) {
 	const handleChanged = (newFeet: number, newInches: number) => {
 		setFeet(newFeet);
 		setInches(newInches);
-		const heightInInches = feet * 12 + inches;
+		const heightInInches = newFeet * 12 + newInches;
 		onChange(heightInInches === 0 ? undefined : heightInInches);
 	};
 
 	const handleFeetChanged = (event: React.FormEvent<HTMLSelectElement>) => {
-		const { currentTarget: { value } } = event;
-		handleChanged(+value, inches);
+		const { currentTarget: { value: newFeet } } = event;
+		handleChanged(+newFeet, inches);
 	};
 
 	const handleInchesChanged = (event: React.FormEvent<HTMLSelectElement>) => {
-		const { currentTarget: { value } } = event;
-		handleChanged(feet, +value);
+		const { currentTarget: { value: newInches } } = event;
+		handleChanged(feet, +newInches);
 	};
 
 	return (

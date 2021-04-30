@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import dateService from '~/services/dateService';
 
-interface IBirthDateInputProps {
+export interface IBirthDateInputProps {
 	value?: string;
 	onChange(value?: string): void;
 }

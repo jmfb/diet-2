@@ -2,6 +2,7 @@ import React from 'react';
 import { BrowserRouter } from 'react-router-dom';
 import { Meta, Story } from '@storybook/react';
 import Header, { IHeaderProps } from './Header';
+import '~/index.css';
 
 export default {
 	title: 'Containers/Application/Header',

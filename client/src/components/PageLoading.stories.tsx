@@ -1,6 +1,7 @@
 import React from 'react';
 import { Story, Meta } from '@storybook/react';
 import PageLoading, { IPageLoadingProps } from './PageLoading';
+import '~/index.css';
 
 export default {
 	title: 'Components/PageLoading',

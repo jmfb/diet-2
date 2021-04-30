@@ -7,7 +7,7 @@ import GenderInput from './GenderInput';
 import { IProfile } from '~/models';
 import styles from './ProfileForm.css';
 
-interface IProfileFormProps {
+export interface IProfileFormProps {
 	initialValue: IProfile;
 	isSaving: boolean;
 	onSave(profile: IProfile): void;

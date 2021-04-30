@@ -2,7 +2,7 @@ import React from 'react';
 import Button from '~/components/Button';
 import styles from './ErrorView.css';
 
-interface IErrorViewProps {
+export interface IErrorViewProps {
 	action?: string;
 	context?: string;
 	message?: string;
