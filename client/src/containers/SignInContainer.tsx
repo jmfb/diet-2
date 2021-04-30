@@ -8,20 +8,21 @@ import { signOut } from '~/redux/signOut';
 
 export default function SignInContainer() {
 	const dispatch = useDispatch();
+	const { isSigningIn, url } = useSelector((state: IState) => state.auth);
+
 	useEffect(() => {
 		dispatch(signOut());
 	}, []);
 
-	const { isSigningIn, url } = useSelector((state: IState) => state.auth);
+	const handleSignInClicked = () => {
+		dispatch(getAuthenticationUrl());
+	};
+
 	if (url !== undefined) {
 		return (
 			<Redirect to={url} />
 		);
 	}
-
-	const handleSignInClicked = () => {
-		dispatch(getAuthenticationUrl());
-	};
 
 	return (
 		<SignIn

@@ -8,12 +8,13 @@ import queryString from 'query-string';
 
 export default function AuthenticationContainer() {
 	const dispatch = useDispatch();
+	const email = useSelector((state: IState) => state.auth.email);
+
 	useEffect(() => {
 		const { code } = queryString.parse(location.search) as { code: string; };
 		dispatch(authenticate(code));
 	}, []);
 
-	const email = useSelector((state: IState) => state.auth.email);
 	if (email !== undefined) {
 		return (
 			<Redirect to='/' />

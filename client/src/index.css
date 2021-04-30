@@ -34,11 +34,11 @@ footer > * {
 	}
 }
 
-@media (min-width: 90rem) {
+@media (min-width: 60rem) {
 	header > *,
 	main > *,
 	footer > * {
-		width: 90rem;
+		width: 60rem;
 	}
 }
 

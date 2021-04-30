@@ -1,4 +1,4 @@
-import React, { lazy, useEffect, useRef } from 'react';
+import React, { lazy, useEffect } from 'react';
 import { Redirect, Switch, Route } from 'react-router';
 import { useDispatch, useSelector } from 'react-redux';
 import Header from '~/components/Header';
@@ -6,6 +6,7 @@ import NewerVersionPrompt from '~/components/NewerVersionPrompt';
 import IState from '~/redux/IState';
 import { readLocalStorage } from '~/redux/auth';
 import { signal } from '~/redux/heartbeat';
+import useInterval from '~/hooks/useInterval';
 
 const asyncHomeContainer = lazy(() =>
 	import(/* webpackChunkName: 'HomeContainer' */ './HomeContainer'));
@@ -14,20 +15,12 @@ const asyncProfileContainer = lazy(() =>
 const asyncSignOutContainer = lazy(() =>
 	import(/* webpackChunkName: 'SignOutContainer' */ './SignOutContainer'));
 
-function useInterval(callback: () => void, timeout: number) {
-	const callbackRef = useRef(null as typeof callback);
-	useEffect(() => {
-		callbackRef.current = callback;
-	}, [callback]);
-	useEffect(() => {
-		const intervalId = window.setInterval(() => callbackRef.current(), timeout);
-		return () => window.clearInterval(intervalId);
-	}, [timeout]);
-}
-
 export default function ApplicationContainer() {
 	const dispatch = useDispatch();
 	const isHeartbeatInProgress = useSelector((state: IState) => state.heartbeat.isHeartbeatInProgress);
+	const redirectToSignIn = useSelector((state: IState) => state.auth.redirectToSignIn);
+	const url = useSelector((state: IState) => state.auth.url);
+	const email = useSelector((state: IState) => state.auth.email);
 
 	useEffect(() => {
 		dispatch(readLocalStorage());
@@ -40,15 +33,12 @@ export default function ApplicationContainer() {
 		}
 	}, 60_000);
 
-	const redirectToSignIn = useSelector((state: IState) => state.auth.redirectToSignIn);
-	const url = useSelector((state: IState) => state.auth.url);
 	if (redirectToSignIn && url === undefined) {
 		return (
 			<Redirect to='/sign-in' />
 		);
 	}
 
-	const email = useSelector((state: IState) => state.auth.email);
 	if (email === undefined) {
 		return null;
 	}

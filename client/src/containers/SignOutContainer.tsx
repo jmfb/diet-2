@@ -5,6 +5,7 @@ import { signOut } from '~/redux/signOut';
 
 export default function SignOutContainer() {
 	const dispatch = useDispatch();
+
 	useEffect(() => {
 		dispatch(signOut());
 	}, []);

@@ -8,6 +8,7 @@ import { getProfile, setProfile } from '~/redux/profile';
 export default function ProfileContainer() {
 	const dispatch = useDispatch();
 	const { profile, isLoading, isSaving } = useSelector((state: IState) => state.profile);
+
 	useEffect(() => {
 		if (!profile && !isLoading) {
 			dispatch(getProfile());

@@ -6,16 +6,16 @@ import styles from './NewerVersionPrompt.css';
 
 export default function NewerVersionPrompt() {
 	const [isRefreshing, setIsRefreshing] = useState(false);
-
 	const { bundleVersion, serverBundleVersion } = useSelector((state: IState) => state.heartbeat);
-	if (bundleVersion === serverBundleVersion) {
-		return null;
-	}
 
 	const handleRefreshClicked = () => {
 		setIsRefreshing(true);
 		window.location.reload(true);
 	};
+
+	if (bundleVersion === serverBundleVersion) {
+		return null;
+	}
 
 	return (
 		<div className={styles.root}>
