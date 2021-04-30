@@ -21,5 +21,6 @@ Disabled.args = {
 
 export const Processing = Template.bind({});
 Processing.args = {
+	isDisabled: true,
 	isProcessing: true
 };

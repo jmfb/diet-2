@@ -1,16 +1,20 @@
 import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
-import Button from './Button';
-import IState from '~/redux/IState';
+import Button from '~/components/Button';
 import styles from './NewerVersionPrompt.css';
 
-export default function NewerVersionPrompt() {
+export interface INewerVersionPromptProps {
+	bundleVersion: string;
+	serverBundleVersion: string;
+	onClickRefresh(): void;
+}
+
+export default function NewerVersionPrompt(props: INewerVersionPromptProps) {
+	const { bundleVersion, serverBundleVersion, onClickRefresh } = props;
 	const [isRefreshing, setIsRefreshing] = useState(false);
-	const { bundleVersion, serverBundleVersion } = useSelector((state: IState) => state.heartbeat);
 
 	const handleRefreshClicked = () => {
 		setIsRefreshing(true);
-		window.location.reload(true);
+		onClickRefresh();
 	};
 
 	if (bundleVersion === serverBundleVersion) {
