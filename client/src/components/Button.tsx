@@ -3,7 +3,7 @@ import LoadingIcon from './LoadingIcon';
 import cx from 'classnames';
 import styles from './Button.css';
 
-interface IButtonProps {
+export interface IButtonProps {
 	className?: string;
 	onClick?(): void;
 	children?: React.ReactNode;
