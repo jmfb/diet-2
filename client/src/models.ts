@@ -45,24 +45,46 @@ export enum WeightCategory {
 	ObeseClass3 = 7
 }
 
-export const weightCategoryNames = {
-	[WeightCategory.SevereThinness]: 'Severe Thinness',
-	[WeightCategory.ModerateThinness]: 'Moderate Thinness',
-	[WeightCategory.MildThinness]: 'Mild Thinness',
-	[WeightCategory.Normal]: 'Normal',
-	[WeightCategory.Overweight]: 'Overweight',
-	[WeightCategory.ObeseClass1]: 'Obese Class I',
-	[WeightCategory.ObeseClass2]: 'Obese Class II',
-	[WeightCategory.ObeseClass3]: 'Obese Class III'
+interface IWeightCategoryMetadata {
+	name: string;
+	upperBoundBodyMassIndex: number;
+}
+
+type IWeightCategories = {
+	[K in WeightCategory]: IWeightCategoryMetadata;
 };
 
-export const weightCategoryExclusiveUpperBound = {
-	[WeightCategory.SevereThinness]: 16,
-	[WeightCategory.ModerateThinness]: 17,
-	[WeightCategory.MildThinness]: 18.5,
-	[WeightCategory.Normal]: 25,
-	[WeightCategory.Overweight]: 30,
-	[WeightCategory.ObeseClass1]: 35,
-	[WeightCategory.ObeseClass2]: 40,
-	[WeightCategory.ObeseClass3]: Number.MAX_VALUE
+export const weightCategories: IWeightCategories = {
+	[WeightCategory.SevereThinness]: {
+		name: 'Severe Thinness',
+		upperBoundBodyMassIndex: 16
+	},
+	[WeightCategory.ModerateThinness]: {
+		name: 'Moderate Thinness',
+		upperBoundBodyMassIndex: 17
+	},
+	[WeightCategory.MildThinness]: {
+		name: 'Mild Thinness',
+		upperBoundBodyMassIndex: 18.5
+	},
+	[WeightCategory.Normal]: {
+		name: 'Normal',
+		upperBoundBodyMassIndex: 25
+	},
+	[WeightCategory.Overweight]: {
+		name: 'Overweight',
+		upperBoundBodyMassIndex: 30
+	},
+	[WeightCategory.ObeseClass1]: {
+		name: 'Obese Class I',
+		upperBoundBodyMassIndex: 35
+	},
+	[WeightCategory.ObeseClass2]: {
+		name: 'Obese Class II',
+		upperBoundBodyMassIndex: 40
+	},
+	[WeightCategory.ObeseClass3]: {
+		name: 'Obese Class III',
+		upperBoundBodyMassIndex: Number.MAX_VALUE
+	}
 };

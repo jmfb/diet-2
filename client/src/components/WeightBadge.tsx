@@ -2,7 +2,7 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import IState from '~/redux/IState';
 import weightService from '~/services/weightService';
-import { weightCategoryNames } from '~/models';
+import { weightCategories } from '~/models';
 import styles from './WeightBadge.css';
 
 export default function WeightBadge() {
@@ -28,6 +28,8 @@ export default function WeightBadge() {
 	const bodyMassIndex = heightInInches ?
 		weightService.computeBodyMassIndex(mostRecentWeight, heightInInches) :
 		undefined;
+	const weightCategory = weightService.getWeightCategory(bodyMassIndex);
+	const weightCategoryName = weightCategories[weightCategory].name;
 
 	return (
 		<div className={styles.root}>
@@ -38,7 +40,7 @@ export default function WeightBadge() {
 			{heightInInches &&
 				<div className={styles.row}>
 					<span className={styles.label}>BMI</span>
-					{bodyMassIndex} kg/m² ({weightCategoryNames[weightService.getWeightCategory(bodyMassIndex)]})
+					{bodyMassIndex} kg/m² ({weightCategoryName})
 				</div>
 			}
 			{targetWeightInPounds &&

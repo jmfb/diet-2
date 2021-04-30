@@ -1,4 +1,4 @@
-import { WeightCategory, weightCategoryExclusiveUpperBound } from '~/models';
+import { WeightCategory, weightCategories } from '~/models';
 
 class WeightService {
 	getChange(startingWeight: number, endingWeight: number) {
@@ -14,9 +14,9 @@ class WeightService {
 
 	getWeightCategory(bodyMassIndex: number) {
 		const weightCategoryString = Object
-			.entries(weightCategoryExclusiveUpperBound)
-			.filter(([weightCategory, exclusiveUpperBound]) => bodyMassIndex < exclusiveUpperBound)
-			.sort(([,a], [,b]) => a - b)
+			.entries(weightCategories)
+			.filter(([, metadata]) => bodyMassIndex < metadata.upperBoundBodyMassIndex)
+			.sort(([,a], [,b]) => a.upperBoundBodyMassIndex - b.upperBoundBodyMassIndex)
 			[0][0];
 		return Number.parseInt(weightCategoryString, 10) as WeightCategory;
 	}
