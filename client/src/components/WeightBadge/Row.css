@@ -1,0 +1,9 @@
+.root {
+	display: flex;
+	flex-direction: row;
+}
+
+.label {
+	font-weight: bold;
+	width: 3.5rem;
+}

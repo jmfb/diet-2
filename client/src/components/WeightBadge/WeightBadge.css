@@ -7,13 +7,3 @@
 	border-radius: 0.5rem;
 	border: 1px solid #ccc;
 }
-
-.row {
-	display: flex;
-	flex-direction: row;
-}
-
-.label {
-	font-weight: bold;
-	width: 3.5rem;
-}
