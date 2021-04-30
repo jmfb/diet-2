@@ -87,11 +87,11 @@ cd client
 ## Deployment
 
 ```PowerShell
-. .\PublishImage.ps1 -buildClient
-. .\PlanTerraform.ps1 -clean -init
-. .\ApplyTerraform.ps1
-. .\DeleteOldImages.ps1 -dryRun
-. .\DeleteOldImages.ps1
+. .\Release.ps1
+... (review terraform plan) ...
+> apply
+... (review images to delete) ...
+> delete
 ```
 
 ## Docker Setup (Work in progress)
