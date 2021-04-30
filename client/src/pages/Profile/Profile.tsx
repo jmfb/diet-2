@@ -1,7 +1,7 @@
 import React from 'react';
 import Card from '~/components/Card';
 import PageLoading from '~/components/PageLoading';
-import ProfileForm from '~/components/ProfileForm';
+import ProfileForm from './ProfileForm';
 import { IProfile } from '~/models';
 import styles from './Profile.css';
 

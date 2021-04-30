@@ -1,5 +1,5 @@
 import React from 'react';
-import Pill from './Pill';
+import Pill from '~/components/Pill';
 import weightService from '~/services/weightService';
 
 interface IWeightChangeProps {

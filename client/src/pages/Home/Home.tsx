@@ -1,8 +1,8 @@
 import React from 'react';
 import PageLoading from '~/components/PageLoading';
-import EnterWeight from '~/components/EnterWeight';
-import WeightBadge from '~/components/WeightBadge';
-import WeightSummary from '~/components/WeightSummary';
+import EnterWeight from './EnterWeight';
+import WeightBadge from './WeightBadge';
+import WeightSummary from './WeightSummary';
 import dateService from '~/services/dateService';
 import { IWeightsState } from '~/redux/weights';
 import { IProfile, IWeightModel } from '~/models';

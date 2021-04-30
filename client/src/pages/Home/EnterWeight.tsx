@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import WeightInput from './WeightInput';
-import Button from './Button';
+import WeightInput from '~/components/WeightInput';
+import Button from '~/components/Button';
 import { IWeightState } from '~/redux/weights';
 import { IWeightModel } from '~/models';
 import styles from './EnterWeight.css';

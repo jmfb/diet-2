@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import Button from './Button';
-import WeightInput from './WeightInput';
+import Button from '~/components/Button';
+import WeightInput from '~/components/WeightInput';
 import BirthDateInput from './BirthDateInput';
 import HeightInput from './HeightInput';
 import GenderInput from './GenderInput';

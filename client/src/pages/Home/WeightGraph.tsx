@@ -1,5 +1,5 @@
 import React, { useRef, useEffect } from 'react';
-import Pill from './Pill';
+import Pill from '~/components/Pill';
 import * as d3 from 'd3';
 import styles from './WeightGraph.css';
 

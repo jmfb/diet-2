@@ -1,5 +1,5 @@
 import React from 'react';
-import SignInButton from '~/components/SignInButton';
+import SignInButton from './SignInButton';
 import PageLoading from '~/components/PageLoading';
 
 interface ISignInProps {

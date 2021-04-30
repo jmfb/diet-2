@@ -1,19 +1,19 @@
 import React, { lazy, useEffect } from 'react';
 import { Redirect, Switch, Route } from 'react-router';
 import { useDispatch, useSelector } from 'react-redux';
-import Header from '~/components/Header';
-import NewerVersionPrompt from '~/components/NewerVersionPrompt';
+import Header from './Header';
+import NewerVersionPrompt from './NewerVersionPrompt';
 import IState from '~/redux/IState';
 import { readLocalStorage } from '~/redux/auth';
 import { signal } from '~/redux/heartbeat';
 import useInterval from '~/hooks/useInterval';
 
 const asyncHomeContainer = lazy(() =>
-	import(/* webpackChunkName: 'HomeContainer' */ './HomeContainer'));
+	import(/* webpackChunkName: 'HomeContainer' */ '~/containers/HomeContainer'));
 const asyncProfileContainer = lazy(() =>
-	import(/* webpackChunkName: 'ProfileContainer' */ './ProfileContainer'));
+	import(/* webpackChunkName: 'ProfileContainer' */ '~/containers/ProfileContainer'));
 const asyncSignOutContainer = lazy(() =>
-	import(/* webpackChunkName: 'SignOutContainer' */ './SignOutContainer'));
+	import(/* webpackChunkName: 'SignOutContainer' */ '~/containers/SignOutContainer'));
 
 export default function ApplicationContainer() {
 	const dispatch = useDispatch();
