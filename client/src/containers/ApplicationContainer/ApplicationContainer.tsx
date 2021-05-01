@@ -5,7 +5,7 @@ import Header from './Header';
 import NewerVersionPrompt from './NewerVersionPrompt';
 import IState from '~/redux/IState';
 import { readLocalStorage } from '~/redux/auth';
-import { signal } from '~/redux/heartbeat';
+import { heartbeat } from '~/redux/diagnostics';
 import useInterval from '~/hooks/useInterval';
 
 const asyncHomeContainer = lazy(() =>
@@ -17,7 +17,7 @@ const asyncSignOutContainer = lazy(() =>
 
 export default function ApplicationContainer() {
 	const dispatch = useDispatch();
-	const isHeartbeatInProgress = useSelector((state: IState) => state.heartbeat.isHeartbeatInProgress);
+	const isHeartbeatInProgress = useSelector((state: IState) => state.diagnostics.isHeartbeatInProgress);
 	const redirectToSignIn = useSelector((state: IState) => state.auth.redirectToSignIn);
 	const url = useSelector((state: IState) => state.auth.url);
 	const email = useSelector((state: IState) => state.auth.email);
@@ -29,7 +29,7 @@ export default function ApplicationContainer() {
 	useInterval(() => {
 		if (!isHeartbeatInProgress) {
 			console.log('heartbeat...');
-			dispatch(signal());
+			dispatch(heartbeat());
 		}
 	}, 60_000);
 

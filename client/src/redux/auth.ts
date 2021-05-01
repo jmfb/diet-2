@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { signOut } from './signOut';
-import AuthApi from '~/api/AuthApi';
+import authHub from './auth.hub';
 
 export interface IAuthState {
 	email?: string;
@@ -32,13 +32,13 @@ export const readLocalStorage = createAsyncThunk('auth/readLocalStorage', () => 
 });
 
 export const getAuthenticationUrl = createAsyncThunk('auth/getAuthenticationUrl', async () => {
-	const url = await AuthApi.getAuthenticationUrl();
+	const url = await authHub.getAuthenticationUrl();
 	window.location.href = url;
 	return url;
 });
 
 export const authenticate = createAsyncThunk('auth/authenticate', async (code: string) => {
-	const { email, accessToken } = await AuthApi.signIn(code);
+	const { email, accessToken } = await authHub.signIn(code);
 	localStorage.setItem('email', email);
 	localStorage.setItem('accessToken', accessToken);
 	return { email, accessToken };

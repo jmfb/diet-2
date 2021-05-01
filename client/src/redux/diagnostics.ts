@@ -1,17 +1,17 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { IIndexModel } from '~/models';
 import IState from './IState';
-import DiagnosticsApi from '~/api/DiagnosticsApi';
+import diagnosticsHub from './diagnostics.hub';
 import dateService from '~/services/dateService';
 
-export interface IHeartbeatState {
+export interface IDiagnosticsState {
 	bundleVersion: string;
 	serverBundleVersion: string;
 	isHeartbeatInProgress: boolean;
 	today: string;
 }
 
-function makeInitialState(): IHeartbeatState {
+function makeInitialState(): IDiagnosticsState {
 	const rootContainer = document.getElementById('root');
 	const indexModelJson = rootContainer.getAttribute('data-initial-state');
 	const indexModel: IIndexModel = JSON.parse(indexModelJson);
@@ -26,28 +26,28 @@ function makeInitialState(): IHeartbeatState {
 
 const initialState = makeInitialState();
 
-export const signal = createAsyncThunk('heartbeat/signal', async (unused, { getState }) => {
+export const heartbeat = createAsyncThunk('diagnostics/heartbeat', async (unused, { getState }) => {
 	const { auth: { accessToken } } = getState() as IState;
-	const model = await DiagnosticsApi.heartbeat(accessToken);
+	const model = await diagnosticsHub.heartbeat(accessToken);
 	const today = dateService.getToday();
 	return { ...model, today };
 });
 
 const { reducer } = createSlice({
-	name: 'heartbeat',
+	name: 'diagnostics',
 	initialState,
 	reducers: {},
 	extraReducers: builder => builder
-		.addCase(signal.pending, state => {
+		.addCase(heartbeat.pending, state => {
 			state.isHeartbeatInProgress = true;
 		})
-		.addCase(signal.fulfilled, (state, action) => {
+		.addCase(heartbeat.fulfilled, (state, action) => {
 			const { bundleVersion, today } = action.payload;
 			state.isHeartbeatInProgress = false;
 			state.serverBundleVersion = bundleVersion;
 			state.today = today;
 		})
-		.addCase(signal.rejected, state => {
+		.addCase(heartbeat.rejected, state => {
 			state.isHeartbeatInProgress = false;
 		})
 });

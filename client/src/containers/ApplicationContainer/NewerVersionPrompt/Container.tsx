@@ -4,8 +4,8 @@ import NewerVersionPrompt from './NewerVersionPrompt';
 import IState from '~/redux/IState';
 
 export default function Container() {
-	const bundleVersion = useSelector((state: IState) => state.heartbeat.bundleVersion);
-	const serverBundleVersion = useSelector((state: IState) => state.heartbeat.serverBundleVersion);
+	const bundleVersion = useSelector((state: IState) => state.diagnostics.bundleVersion);
+	const serverBundleVersion = useSelector((state: IState) => state.diagnostics.serverBundleVersion);
 
 	const handleRefreshClicked = () => {
 		window.location.reload(true);

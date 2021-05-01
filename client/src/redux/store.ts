@@ -1,7 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit';
 import error from './error';
 import auth from './auth';
-import heartbeat from './heartbeat';
+import diagnostics from './diagnostics';
 import weights from './weights';
 import profile from './profile';
 import IState from './IState';
@@ -11,7 +11,7 @@ export function createStore() {
 		reducer: {
 			error,
 			auth,
-			heartbeat,
+			diagnostics,
 			weights,
 			profile
 		}

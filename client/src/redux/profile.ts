@@ -2,7 +2,7 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { IProfile } from '~/models';
 import IState from './IState';
 import { signOut } from './signOut';
-import ProfileApi from '~/api/ProfileApi';
+import profileHub from './profile.hub';
 
 export interface IProfileState {
 	isLoading: boolean;
@@ -18,12 +18,12 @@ const initialState: IProfileState = {
 
 export const getProfile = createAsyncThunk('profile/get', async (unused, { getState }) => {
 	const { auth: { accessToken } } = getState() as IState;
-	return await ProfileApi.getProfile(accessToken);
+	return await profileHub.getProfile(accessToken);
 });
 
 export const setProfile = createAsyncThunk('profile/set', async (profile: IProfile, { getState }) => {
 	const { auth: { accessToken } } = getState() as IState;
-	await ProfileApi.setProfile(accessToken, profile);
+	await profileHub.setProfile(accessToken, profile);
 	return profile;
 });
 

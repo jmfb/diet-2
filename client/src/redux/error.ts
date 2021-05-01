@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { getAuthenticationUrl, authenticate } from './auth';
-import { signal } from './heartbeat';
+import { heartbeat } from './diagnostics';
 import { loadAllWeights, saveWeight } from './weights';
 import { getProfile, setProfile } from './profile';
 import { IErrorReport } from '~/models';
@@ -48,7 +48,7 @@ const { actions, reducer } = createSlice({
 		.addCase(authenticate.rejected, (state, action) => {
 			setErrorState(state, 'Authenticating', action.error.message);
 		})
-		.addCase(signal.rejected, (state, action) => {
+		.addCase(heartbeat.rejected, (state, action) => {
 			setErrorState(state, 'Heartbeat', action.error.message);
 		})
 		.addCase(saveWeight.rejected, (state, action) => {

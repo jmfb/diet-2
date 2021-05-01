@@ -11,7 +11,7 @@ export default function HomeContainer() {
 	const weights = useSelector((state: IState) => state.weights);
 	const isLoadingProfile = useSelector((state: IState) => state.profile.isLoading);
 	const profile = useSelector((state: IState) => state.profile.profile);
-	const today = useSelector((state: IState) => state.heartbeat.today);
+	const today = useSelector((state: IState) => state.diagnostics.today);
 	const { isLoading, isLoaded } = weights;
 
 	useEffect(() => {
