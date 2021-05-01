@@ -1,19 +1,19 @@
 import { configureStore } from '@reduxjs/toolkit';
-import error from './error';
-import auth from './auth';
-import diagnostics from './diagnostics';
-import weights from './weights';
-import profile from './profile';
+import * as errorDuck from './error.duck';
+import * as authDuck from './auth.duck';
+import * as diagnosticsDuck from './diagnostics.duck';
+import * as weightsDuck from './weights.duck';
+import * as profileDuck from './profile.duck';
 import IState from './IState';
 
 export function createStore() {
 	return configureStore<IState>({
 		reducer: {
-			error,
-			auth,
-			diagnostics,
-			weights,
-			profile
+			[errorDuck.name]: errorDuck.reducer,
+			[authDuck.name]: authDuck.reducer,
+			[diagnosticsDuck.name]: diagnosticsDuck.reducer,
+			[weightsDuck.name]: weightsDuck.reducer,
+			[profileDuck.name]: profileDuck.reducer
 		}
 	});
 };

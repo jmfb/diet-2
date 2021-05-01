@@ -1,11 +1,9 @@
 import { get } from './hub';
 import { IHeartbeatModel } from '~/models';
 
-const hub = {
-	heartbeat: async (accessToken: string) => get<IHeartbeatModel>({
+export async function heartbeat(accessToken: string) {
+	return await get<IHeartbeatModel>({
 		endpoint: '/api/diagnostics/heartbeat',
 		accessToken
-	})
-};
-
-export default hub;
+	});
+}

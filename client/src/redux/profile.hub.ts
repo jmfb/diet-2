@@ -1,16 +1,17 @@
 import { get, put } from './hub';
 import { IProfile } from '~/models';
 
-const hub = {
-	getProfile: async (accessToken: string) => get<IProfile>({
+export async function getProfile(accessToken: string) {
+	return await get<IProfile>({
 		endpoint: '/api/profile',
 		accessToken
-	}),
-	setProfile: async (accessToken: string, profile: IProfile) => put({
+	});
+}
+
+export async function setProfile(accessToken: string, profile: IProfile) {
+	await put({
 		endpoint: '/api/profile',
 		accessToken,
 		body: profile
-	})
-};
-
-export default hub;
+	});
+}

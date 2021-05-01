@@ -2,13 +2,13 @@ import React from 'react';
 import Weight from './Weight';
 import BodyMassIndex from './BodyMassIndex';
 import Goal from './Goal';
-import { IWeightStateByDate } from '~/redux/weights';
+import { weightsDuck } from '~/redux';
 import styles from './WeightBadge.css';
 
 export interface IWeightBadgeProps {
 	targetWeightInPounds?: number;
 	heightInInches?: number;
-	weightStateByDate: IWeightStateByDate;
+	weightStateByDate: weightsDuck.IWeightStateByDate;
 }
 
 export default function WeightBadge(props: IWeightBadgeProps) {

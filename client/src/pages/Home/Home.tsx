@@ -4,11 +4,11 @@ import EnterWeight from './EnterWeight';
 import WeightBadge from './WeightBadge';
 import WeightSummary from './WeightSummary';
 import dateService from '~/services/dateService';
-import { IWeightsState } from '~/redux/weights';
+import { weightsDuck } from '~/redux';
 import { IProfile, IWeightModel } from '~/models';
 
 export interface IHomeProps {
-	weights: IWeightsState;
+	weights: weightsDuck.IWeightsState;
 	profile?: IProfile;
 	today: string;
 	onSaveWeight(weight: IWeightModel): void;

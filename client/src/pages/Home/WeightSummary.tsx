@@ -1,14 +1,14 @@
 import React from 'react';
 import WeightGraph from './WeightGraph';
 import WeightChange from './WeightChange';
-import { IWeightStateByDate } from '~/redux/weights';
+import { weightsDuck } from '~/redux';
 import styles from './WeightSummary.css';
 
 export interface IWeightSummaryProps {
 	title: string;
 	startDate: string;
 	targetWeightInPounds?: number;
-	weightStateByDate: IWeightStateByDate;
+	weightStateByDate: weightsDuck.IWeightStateByDate;
 }
 
 export default function WeightSummary(props: IWeightSummaryProps) {

@@ -1,8 +1,9 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { IWeightModel } from '~/models';
-import IState from './IState';
-import { signOut } from './signOut';
-import weightsHub from './weights.hub';
+import { createSlice } from '@reduxjs/toolkit';
+import { signOut } from './auth.actions';
+import {
+	loadAllWeights,
+	saveWeight
+} from './weights.actions';
 
 export interface IWeightState {
 	isSaving: boolean;
@@ -25,18 +26,7 @@ const initialState: IWeightsState = {
 	weightStateByDate: {}
 };
 
-export const loadAllWeights = createAsyncThunk('weights/loadAll', async (unused, { getState }) => {
-	const { auth: { accessToken } } = getState() as IState;
-	return await weightsHub.loadAllWeights(accessToken);
-});
-
-export const saveWeight = createAsyncThunk('weights/save', async (weight: IWeightModel, { getState }) => {
-	const { auth: { accessToken } } = getState() as IState;
-	const { date, weightInPounds } = weight;
-	await weightsHub.saveWeight(accessToken, date, weightInPounds);
-});
-
-const { reducer } = createSlice({
+export const { name, reducer } = createSlice({
 	name: 'weights',
 	initialState,
 	reducers: {},
@@ -82,4 +72,7 @@ const { reducer } = createSlice({
 		})
 });
 
-export default reducer;
+export const actions = {
+	loadAllWeights,
+	saveWeight
+};

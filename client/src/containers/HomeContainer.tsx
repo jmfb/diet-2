@@ -1,10 +1,8 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Home from '~/pages/Home';
-import IState from '~/redux/IState';
 import { IWeightModel } from '~/models';
-import { saveWeight, loadAllWeights } from '~/redux/weights';
-import { getProfile } from '~/redux/profile';
+import { IState, weightsDuck, profileDuck } from '~/redux';
 
 export default function HomeContainer() {
 	const dispatch = useDispatch();
@@ -16,15 +14,15 @@ export default function HomeContainer() {
 
 	useEffect(() => {
 		if (!isLoading && !isLoaded) {
-			dispatch(loadAllWeights());
+			dispatch(weightsDuck.actions.loadAllWeights());
 		}
 		if (!profile && !isLoadingProfile) {
-			dispatch(getProfile());
+			dispatch(profileDuck.actions.getProfile());
 		}
 	}, []);
 
 	const handleWeightSaved = (weight: IWeightModel) => {
-		dispatch(saveWeight(weight));
+		dispatch(weightsDuck.actions.saveWeight(weight));
 	};
 
 	return (

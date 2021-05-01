@@ -1,13 +1,13 @@
 import React, { useEffect } from 'react';
 import { Redirect } from 'react-router';
 import { useDispatch } from 'react-redux';
-import { signOut } from '~/redux/signOut';
+import { authDuck } from '~/redux';
 
 export default function SignOutContainer() {
 	const dispatch = useDispatch();
 
 	useEffect(() => {
-		dispatch(signOut());
+		dispatch(authDuck.actions.signOut());
 	}, []);
 
 	return (

@@ -1,8 +1,8 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { getAuthenticationUrl, authenticate } from './auth';
-import { heartbeat } from './diagnostics';
-import { loadAllWeights, saveWeight } from './weights';
-import { getProfile, setProfile } from './profile';
+import { getAuthenticationUrl, authenticate } from './auth.actions';
+import { heartbeat } from './diagnostics.actions';
+import { loadAllWeights, saveWeight } from './weights.actions';
+import { getProfile, setProfile } from './profile.actions';
 import { IErrorReport } from '~/models';
 
 export interface IErrorState {
@@ -26,7 +26,7 @@ function setErrorState(state: IErrorState, name: string, message: string, contex
 	state.context = context ? JSON.stringify(context) : undefined;
 }
 
-const { actions, reducer } = createSlice({
+export const { name, reducer, actions } = createSlice({
 	name: 'error',
 	initialState,
 	reducers: {
@@ -64,10 +64,3 @@ const { actions, reducer } = createSlice({
 			setErrorState(state, 'Saving profile', action.error.message, action.meta.arg);
 		})
 });
-
-export const {
-	dismissError,
-	reportError
-} = actions;
-
-export default reducer;

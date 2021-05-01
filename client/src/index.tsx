@@ -5,7 +5,7 @@ import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import PageLoading from '~/components/PageLoading';
 import ErrorBoundary from '~/containers/ErrorBoundary';
-import { createStore } from '~/redux/store';
+import { createStore } from '~/redux';
 import './index.css';
 
 const asyncSignInContainer = lazy(() =>

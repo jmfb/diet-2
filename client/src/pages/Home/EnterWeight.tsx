@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import WeightInput from '~/components/WeightInput';
 import Button from '~/components/Button';
-import { IWeightState } from '~/redux/weights';
+import { weightsDuck } from '~/redux';
 import { IWeightModel } from '~/models';
 import styles from './EnterWeight.css';
 
 export interface IEnterWeightProps {
 	date: string;
-	weightState?: IWeightState;
+	weightState?: weightsDuck.IWeightState;
 	onSaveWeight(weight: IWeightModel): void;
 }
 

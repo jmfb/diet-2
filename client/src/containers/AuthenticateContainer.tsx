@@ -2,8 +2,7 @@ import React, { useEffect } from 'react';
 import { Redirect } from 'react-router';
 import { useSelector, useDispatch } from 'react-redux';
 import PageLoading from '~/components/PageLoading';
-import IState from '~/redux/IState';
-import { authenticate } from '~/redux/auth';
+import { IState, authDuck } from '~/redux';
 import queryString from 'query-string';
 
 export default function AuthenticationContainer() {
@@ -12,7 +11,7 @@ export default function AuthenticationContainer() {
 
 	useEffect(() => {
 		const { code } = queryString.parse(location.search) as { code: string; };
-		dispatch(authenticate(code));
+		dispatch(authDuck.actions.authenticate(code));
 	}, []);
 
 	if (email !== undefined) {

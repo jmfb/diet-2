@@ -2,8 +2,7 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Profile from '~/pages/Profile';
 import { IProfile } from '~/models';
-import IState from '~/redux/IState';
-import { getProfile, setProfile } from '~/redux/profile';
+import { IState, profileDuck } from '~/redux';
 
 export default function ProfileContainer() {
 	const dispatch = useDispatch();
@@ -11,12 +10,12 @@ export default function ProfileContainer() {
 
 	useEffect(() => {
 		if (!profile && !isLoading) {
-			dispatch(getProfile());
+			dispatch(profileDuck.actions.getProfile());
 		}
 	}, []);
 
 	const handleSaved = (profile: IProfile) => {
-		dispatch(setProfile(profile));
+		dispatch(profileDuck.actions.setProfile(profile));
 	};
 
 	return (

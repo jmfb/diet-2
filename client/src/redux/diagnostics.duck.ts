@@ -1,8 +1,7 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
 import { IIndexModel } from '~/models';
-import IState from './IState';
-import diagnosticsHub from './diagnostics.hub';
 import dateService from '~/services/dateService';
+import { heartbeat } from './diagnostics.actions';
 
 export interface IDiagnosticsState {
 	bundleVersion: string;
@@ -24,18 +23,9 @@ function makeInitialState(): IDiagnosticsState {
 	};
 }
 
-const initialState = makeInitialState();
-
-export const heartbeat = createAsyncThunk('diagnostics/heartbeat', async (unused, { getState }) => {
-	const { auth: { accessToken } } = getState() as IState;
-	const model = await diagnosticsHub.heartbeat(accessToken);
-	const today = dateService.getToday();
-	return { ...model, today };
-});
-
-const { reducer } = createSlice({
+export const { name, reducer } = createSlice({
 	name: 'diagnostics',
-	initialState,
+	initialState: makeInitialState(),
 	reducers: {},
 	extraReducers: builder => builder
 		.addCase(heartbeat.pending, state => {
@@ -52,4 +42,6 @@ const { reducer } = createSlice({
 		})
 });
 
-export default reducer;
+export const actions = {
+	heartbeat
+};

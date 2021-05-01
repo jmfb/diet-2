@@ -3,9 +3,7 @@ import { Redirect, Switch, Route } from 'react-router';
 import { useDispatch, useSelector } from 'react-redux';
 import Header from './Header';
 import NewerVersionPrompt from './NewerVersionPrompt';
-import IState from '~/redux/IState';
-import { readLocalStorage } from '~/redux/auth';
-import { heartbeat } from '~/redux/diagnostics';
+import { IState, authDuck, diagnosticsDuck } from '~/redux';
 import useInterval from '~/hooks/useInterval';
 
 const asyncHomeContainer = lazy(() =>
@@ -23,13 +21,13 @@ export default function ApplicationContainer() {
 	const email = useSelector((state: IState) => state.auth.email);
 
 	useEffect(() => {
-		dispatch(readLocalStorage());
+		dispatch(authDuck.actions.readLocalStorage());
 	}, []);
 
 	useInterval(() => {
 		if (!isHeartbeatInProgress) {
 			console.log('heartbeat...');
-			dispatch(heartbeat());
+			dispatch(diagnosticsDuck.actions.heartbeat());
 		}
 	}, 60_000);
 

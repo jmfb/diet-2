@@ -1,6 +1,10 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { signOut } from './signOut';
-import authHub from './auth.hub';
+import { createSlice } from '@reduxjs/toolkit';
+import {
+	readLocalStorage,
+	getAuthenticationUrl,
+	authenticate,
+	signOut
+} from './auth.actions';
 
 export interface IAuthState {
 	email?: string;
@@ -18,33 +22,7 @@ const initialState: IAuthState = {
 	url: undefined
 };
 
-export const readLocalStorage = createAsyncThunk('auth/readLocalStorage', () => {
-	const email = localStorage.getItem('email');
-	if (email === null) {
-		localStorage.removeItem('accessToken');
-	}
-	const accessToken = localStorage.getItem('accessToken');
-	if (accessToken === null) {
-		return Promise.reject();
-	} else {
-		return Promise.resolve({ email, accessToken });
-	}
-});
-
-export const getAuthenticationUrl = createAsyncThunk('auth/getAuthenticationUrl', async () => {
-	const url = await authHub.getAuthenticationUrl();
-	window.location.href = url;
-	return url;
-});
-
-export const authenticate = createAsyncThunk('auth/authenticate', async (code: string) => {
-	const { email, accessToken } = await authHub.signIn(code);
-	localStorage.setItem('email', email);
-	localStorage.setItem('accessToken', accessToken);
-	return { email, accessToken };
-});
-
-const { reducer } = createSlice({
+export const { name, reducer } = createSlice({
 	name: 'auth',
 	initialState,
 	reducers: {},
@@ -86,4 +64,9 @@ const { reducer } = createSlice({
 		})
 });
 
-export default reducer;
+export const actions = {
+	readLocalStorage,
+	getAuthenticationUrl,
+	authenticate,
+	signOut
+};

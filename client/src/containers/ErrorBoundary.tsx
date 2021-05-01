@@ -1,9 +1,8 @@
 import React, { ErrorInfo } from 'react';
 import { connect } from 'react-redux';
 import ErrorView from '~/pages/ErrorView';
-import IState from '~/redux/IState';
 import { IErrorReport } from '~/models';
-import { dismissError, reportError } from '~/redux/error';
+import { IState, errorDuck } from '~/redux';
 
 interface IErrorBoundaryOwnProps {
 	children?: JSX.Element;
@@ -41,8 +40,7 @@ function mapStateToProps(state: IState): IErrorBoundaryStateProps {
 }
 
 const mapDispatchToProps: IErrorBoundaryDispatchProps = {
-	dismissError,
-	reportError
+	...errorDuck.actions
 };
 
 class ErrorBoundary extends React.PureComponent<IErrorBoundaryProps, IErrorBoundaryState> {
