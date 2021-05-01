@@ -29,6 +29,7 @@ export default function EnterWeight(props: IEnterWeightProps) {
 		<div className={styles.root}>
 			<div className={styles.date}>{date}</div>
 			<WeightInput
+				{...{date}}
 				autoFocus
 				value={weightInPounds}
 				onChange={setWeightInPounds}

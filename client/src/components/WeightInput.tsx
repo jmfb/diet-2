@@ -1,15 +1,23 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styles from './WeightInput.css';
 
 export interface IWeightInputProps {
 	value?: number;
 	autoFocus?: boolean;
+	date?: string;
 	onChange(value?: number): void;
 }
 
 export default function WeightInput(props: IWeightInputProps) {
-	const { value, autoFocus, onChange } = props;
-	const [text, setText] = useState((value === undefined || value === null) ? '' : value.toString());
+	const { value, autoFocus, date, onChange } = props;
+	const initialValue = (value === undefined || value === null) ? '' : value.toString();
+	const [text, setText] = useState(initialValue);
+
+	useEffect(() => {
+		if (text !== initialValue) {
+			setText(initialValue);
+		}
+	}, [date]);
 
 	const handleInputChanged = (event: React.FormEvent<HTMLInputElement>) => {
 		const { currentTarget: { value } } = event;
