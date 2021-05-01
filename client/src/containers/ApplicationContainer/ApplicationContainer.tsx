@@ -19,6 +19,8 @@ export default function ApplicationContainer() {
 	const redirectToSignIn = useSelector((state: IState) => state.auth.redirectToSignIn);
 	const url = useSelector((state: IState) => state.auth.url);
 	const email = useSelector((state: IState) => state.auth.email);
+	const bundleVersion = useSelector((state: IState) => state.diagnostics.bundleVersion);
+	const serverBundleVersion = useSelector((state: IState) => state.diagnostics.serverBundleVersion);
 
 	useEffect(() => {
 		dispatch(authDuck.actions.readLocalStorage());
@@ -26,10 +28,13 @@ export default function ApplicationContainer() {
 
 	useInterval(() => {
 		if (!isHeartbeatInProgress) {
-			console.log('heartbeat...');
 			dispatch(diagnosticsDuck.actions.heartbeat());
 		}
 	}, 60_000);
+
+	const handleRefreshClicked = () => {
+		window.location.reload(true);
+	};
 
 	if (redirectToSignIn && url === undefined) {
 		return (
@@ -51,7 +56,13 @@ export default function ApplicationContainer() {
 						<Route path='/profile' component={asyncProfileContainer} />
 						<Route path='/sign-out' component={asyncSignOutContainer} />
 					</Switch>
-					<NewerVersionPrompt />
+					<NewerVersionPrompt
+						{...{
+							bundleVersion,
+							serverBundleVersion
+						}}
+						onClickRefresh={handleRefreshClicked}
+						/>
 				</section>
 			</main>
 		</>
