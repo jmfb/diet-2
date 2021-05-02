@@ -22,6 +22,15 @@ export interface IWeightModel {
 	weightInPounds: number;
 }
 
+export interface IWeightState {
+	isSaving: boolean;
+	weightInPounds: number;
+}
+
+export interface IWeightStateByDate {
+	[date: string]: IWeightState;
+}
+
 export enum Gender {
 	Male = 0,
 	Female = 1

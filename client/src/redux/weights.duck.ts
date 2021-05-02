@@ -1,18 +1,10 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { IWeightStateByDate } from '~/models';
 import { signOut } from './auth.actions';
 import {
 	loadAllWeights,
 	saveWeight
 } from './weights.actions';
-
-export interface IWeightState {
-	isSaving: boolean;
-	weightInPounds: number;
-}
-
-export interface IWeightStateByDate {
-	[date: string]: IWeightState;
-}
 
 export interface IWeightsState {
 	isLoading: boolean;

@@ -1,5 +1,5 @@
 import { WeightCategory, weightCategories } from '~/models';
-import { weightsDuck } from '~/redux';
+import { IWeightStateByDate } from '~/models';
 
 export function round(value: number, places?: number) {
 	if (places === undefined) {
@@ -37,13 +37,13 @@ export function getWeightCategory(bodyMassIndex: number) {
 	return Number.parseInt(weightCategoryString, 10) as WeightCategory;
 }
 
-export function getStartingWeight(weightStateByDate: weightsDuck.IWeightStateByDate) {
+export function getStartingWeight(weightStateByDate: IWeightStateByDate) {
 	const dates = Object.keys(weightStateByDate).sort();
 	const minDate = dates[0];
 	return weightStateByDate[minDate]?.weightInPounds;
 }
 
-export function getMostRecentWeight(weightStateByDate: weightsDuck.IWeightStateByDate) {
+export function getMostRecentWeight(weightStateByDate: IWeightStateByDate) {
 	const dates = Object.keys(weightStateByDate).sort();
 	const maxDate = dates[dates.length - 1];
 	return weightStateByDate[maxDate]?.weightInPounds;
