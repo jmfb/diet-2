@@ -1,7 +1,7 @@
 import React from 'react';
 import Row from './Row';
 import Change from './Change';
-import weightService from '~/services/weightService';
+import * as weightService from '~/services/weightService';
 
 export interface IWeightProps {
 	startingWeight: number;

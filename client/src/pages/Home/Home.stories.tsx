@@ -9,7 +9,11 @@ export default {
 } as Meta;
 
 const Template: Story<IHomeProps> = props =>
-	<Home {...props} />;
+	<main>
+		<section>
+			<Home {...props} />
+		</section>
+	</main>;
 
 export const LoadingProfile = Template.bind({});
 LoadingProfile.args = {

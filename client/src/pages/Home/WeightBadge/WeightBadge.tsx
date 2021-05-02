@@ -3,6 +3,7 @@ import Weight from './Weight';
 import BodyMassIndex from './BodyMassIndex';
 import Goal from './Goal';
 import { weightsDuck } from '~/redux';
+import * as weightService from '~/services/weightService';
 import styles from './WeightBadge.css';
 
 export interface IWeightBadgeProps {
@@ -13,11 +14,8 @@ export interface IWeightBadgeProps {
 
 export default function WeightBadge(props: IWeightBadgeProps) {
 	const { targetWeightInPounds, heightInInches, weightStateByDate } = props;
-	const dates = Object.keys(weightStateByDate).sort();
-	const minDate = dates[0];
-	const maxDate = dates[dates.length - 1];
-	const startingWeight = weightStateByDate[minDate]?.weightInPounds;
-	const mostRecentWeight = weightStateByDate[maxDate]?.weightInPounds;
+	const startingWeight = weightService.getStartingWeight(weightStateByDate);
+	const mostRecentWeight = weightService.getMostRecentWeight(weightStateByDate);
 	if (!startingWeight) {
 		return null;
 	}

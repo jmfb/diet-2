@@ -1,6 +1,6 @@
 import React from 'react';
 import Row from './Row';
-import weightService from '~/services/weightService';
+import * as weightService from '~/services/weightService';
 import { weightCategories } from '~/models';
 
 export interface IBodyMassIndexProps {

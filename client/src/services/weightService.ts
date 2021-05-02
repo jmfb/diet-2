@@ -1,26 +1,50 @@
 import { WeightCategory, weightCategories } from '~/models';
+import { weightsDuck } from '~/redux';
 
-class WeightService {
-	getChange(startingWeight: number, endingWeight: number) {
-		return Math.round((endingWeight - startingWeight) * 10) / 10;
+export function round(value: number, places?: number) {
+	if (places === undefined) {
+		return value;
 	}
-
-	computeBodyMassIndex(weightInPounds: number, heightInInches: number) {
-		const weightInKilograms = weightInPounds * 0.453592;
-		const heightInMeters = heightInInches * 0.0254;
-		const bodyMassIndex = weightInKilograms / Math.pow(heightInMeters, 2);
-		return Math.round(bodyMassIndex * 10) / 10;
-	}
-
-	getWeightCategory(bodyMassIndex: number) {
-		const weightCategoryString = Object
-			.entries(weightCategories)
-			.filter(([, metadata]) => bodyMassIndex < metadata.upperBoundBodyMassIndex)
-			.sort(([,a], [,b]) => a.upperBoundBodyMassIndex - b.upperBoundBodyMassIndex)
-			[0][0];
-		return Number.parseInt(weightCategoryString, 10) as WeightCategory;
-	}
+	const pow10 = Math.pow(10, places);
+	return Math.round(value * pow10) / pow10;
 }
 
-const weightService = new WeightService();
-export default weightService;
+export function getChange(startingWeight: number, endingWeight: number) {
+	return round(endingWeight - startingWeight, 1);
+}
+
+export function toKilograms(pounds: number, places = 1) {
+	return round(pounds * 0.453592, places);
+}
+
+export function toMeters(inches: number, places = 1) {
+	return round(inches * 0.0254, places);
+}
+
+export function computeBodyMassIndex(weightInPounds: number, heightInInches: number) {
+	const weightInKilograms = toKilograms(weightInPounds, undefined);
+	const heightInMeters = toMeters(heightInInches, undefined);
+	const bodyMassIndex = weightInKilograms / Math.pow(heightInMeters, 2);
+	return round(bodyMassIndex, 1);
+}
+
+export function getWeightCategory(bodyMassIndex: number) {
+	const weightCategoryString = Object
+		.entries(weightCategories)
+		.filter(([, metadata]) => bodyMassIndex < metadata.upperBoundBodyMassIndex)
+		.sort(([,a], [,b]) => a.upperBoundBodyMassIndex - b.upperBoundBodyMassIndex)
+		[0][0];
+	return Number.parseInt(weightCategoryString, 10) as WeightCategory;
+}
+
+export function getStartingWeight(weightStateByDate: weightsDuck.IWeightStateByDate) {
+	const dates = Object.keys(weightStateByDate).sort();
+	const minDate = dates[0];
+	return weightStateByDate[minDate]?.weightInPounds;
+}
+
+export function getMostRecentWeight(weightStateByDate: weightsDuck.IWeightStateByDate) {
+	const dates = Object.keys(weightStateByDate).sort();
+	const maxDate = dates[dates.length - 1];
+	return weightStateByDate[maxDate]?.weightInPounds;
+}

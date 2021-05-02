@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import dateService from '~/services/dateService';
+import * as dateService from '~/services/dateService';
 
 export interface IBirthDateInputProps {
 	value?: string;

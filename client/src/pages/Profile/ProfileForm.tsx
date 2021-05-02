@@ -20,10 +20,17 @@ export default function ProfileForm(props: IProfileFormProps) {
 	const [heightInInches, setHeightInInches] = useState(initialValue.heightInInches);
 	const [gender, setGender] = useState(initialValue.gender);
 
-	const canSave = !isSaving;
+	const currentValue = { targetWeightInPounds, birthDate, heightInInches, gender };
+	const isDifferent = (a: IProfile, b: IProfile) => {
+		return a.targetWeightInPounds !== b.targetWeightInPounds ||
+			a.birthDate !== b.birthDate ||
+			a.heightInInches !== b.heightInInches ||
+			a.gender !== b.gender;
+	};
+	const canSave = !isSaving && isDifferent(initialValue, currentValue);
 
 	const handleSaveClicked = () => {
-		onSave({ targetWeightInPounds, birthDate, heightInInches, gender });
+		onSave(currentValue);
 	};
 
 	return (

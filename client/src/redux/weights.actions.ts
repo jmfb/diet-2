@@ -6,6 +6,13 @@ import * as hub from './weights.hub';
 export const loadAllWeights = createAsyncThunk('weights/loadAll', async (unused, { getState }) => {
 	const { auth: { accessToken } } = getState() as IState;
 	return await hub.loadAllWeights(accessToken);
+}, {
+	condition: (unused, { getState }) => {
+		const { weights: { isLoading, isLoaded } } = getState() as IState;
+		if (isLoading || isLoaded) {
+			return false;
+		}
+	}
 });
 
 export const saveWeight = createAsyncThunk('weights/save', async (weight: IWeightModel, { getState }) => {

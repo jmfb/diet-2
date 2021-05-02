@@ -10,11 +10,16 @@ export default {
 } as Meta;
 
 const Template: Story<IProfileProps> = props =>
-	<Profile {...props} />;
+	<main>
+		<section>
+			<Profile {...props} />
+		</section>
+	</main>;
 
 export const Default = Template.bind({});
 Default.args = {
 	profile: undefined,
+	weightInPounds: undefined,
 	isSaving: false
 };
 
@@ -26,6 +31,7 @@ BlankProfile.args = {
 		gender: undefined,
 		heightInInches: undefined
 	},
+	weightInPounds: undefined,
 	isSaving: false
 };
 
@@ -37,6 +43,7 @@ FilledIn.args = {
 		gender: Gender.Male,
 		heightInInches: 70
 	},
+	weightInPounds: undefined,
 	isSaving: false
 };
 
@@ -48,5 +55,18 @@ Saving.args = {
 		gender: Gender.Male,
 		heightInInches: 70
 	},
+	weightInPounds: undefined,
 	isSaving: true
+};
+
+export const WithStatistics = Template.bind({});
+WithStatistics.args = {
+	profile: {
+		targetWeightInPounds: 200,
+		birthDate: '1980-01-01',
+		gender: Gender.Male,
+		heightInInches: 70
+	},
+	weightInPounds: 250,
+	isSaving: false
 };

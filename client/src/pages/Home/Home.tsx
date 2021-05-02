@@ -3,7 +3,7 @@ import PageLoading from '~/components/PageLoading';
 import EnterWeight from './EnterWeight';
 import WeightBadge from './WeightBadge';
 import WeightSummary from './WeightSummary';
-import dateService from '~/services/dateService';
+import * as dateService from '~/services/dateService';
 import { weightsDuck } from '~/redux';
 import { IProfile, IWeightModel } from '~/models';
 
