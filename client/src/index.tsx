@@ -8,14 +8,14 @@ import ErrorBoundary from '~/containers/ErrorBoundary';
 import { createStore } from '~/redux';
 import './index.css';
 
-const asyncSignInContainer = lazy(() =>
-	import(/* webpackChunkName: 'SignInContainer' */ '~/containers/SignInContainer'));
-const asyncAuthenticateContainer = lazy(() =>
-	import(/* webpackChunkName: 'AuthenticateContainer' */ '~/containers/AuthenticateContainer'));
-const asyncApplicationContainer = lazy(() =>
-	import(/* webpackChunkName: 'ApplicationContainer' */ '~/containers/ApplicationContainer'));
-
 function start() {
+	const asyncSignInContainer = lazy(() =>
+		import(/* webpackChunkName: 'SignInContainer' */ '~/containers/SignInContainer'));
+	const asyncAuthenticateContainer = lazy(() =>
+		import(/* webpackChunkName: 'AuthenticateContainer' */ '~/containers/AuthenticateContainer'));
+	const asyncApplicationContainer = lazy(() =>
+		import(/* webpackChunkName: 'ApplicationContainer' */ '~/containers/ApplicationContainer'));
+
 	const store = createStore();
 	const rootContainer = document.getElementById('root');
 	const rootElement =
