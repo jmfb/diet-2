@@ -1,6 +1,7 @@
 const AssetsPlugin = require('assets-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const CssMinimizerWebpackPlugin = require('css-minimizer-webpack-plugin');
 const EsLintPlugin = require('eslint-webpack-plugin');
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 const path = require('path');
@@ -90,7 +91,7 @@ module.exports = {
 		]
 	},
 	plugins: [
-		new MiniCssExtractPlugin({ filename: isTest ? '[name].css' : '[name].css?[contenthash]' }),
+		new MiniCssExtractPlugin({ filename: isTest ? '[name].css' : '[name].[contenthash].css' }),
 		new EsLintPlugin({
 			extensions: ['ts', 'tsx'],
 			failOnWarning: treatWarningsAsErrors,
@@ -116,5 +117,11 @@ module.exports = {
 		cached: isVerbose,
 		cachedAssets: isVerbose,
 		children: isVerbose
+	},
+	optimization: {
+		minimizer: [
+			'...',
+			...isProduction ? [new CssMinimizerWebpackPlugin()] : []
+		]
 	}
 };
