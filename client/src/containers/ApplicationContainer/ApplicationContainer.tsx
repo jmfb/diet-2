@@ -1,5 +1,5 @@
 import React, { lazy, useEffect } from 'react';
-import { Redirect, Switch, Route } from 'react-router';
+import { Redirect, Switch, Route, useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import Header from './Header';
 import NewerVersionPrompt from './NewerVersionPrompt';
@@ -15,6 +15,7 @@ export default function ApplicationContainer() {
 		import(/* webpackChunkName: 'SignOutContainer' */ '~/containers/SignOutContainer'));
 
 	const dispatch = useDispatch();
+	const history = useHistory();
 	const isHeartbeatInProgress = useSelector((state: IState) => state.diagnostics.isHeartbeatInProgress);
 	const redirectToSignIn = useSelector((state: IState) => state.auth.redirectToSignIn);
 	const url = useSelector((state: IState) => state.auth.url);
@@ -33,7 +34,7 @@ export default function ApplicationContainer() {
 	}, 60_000);
 
 	const handleRefreshClicked = () => {
-		window.location.reload(true);
+		history.go(0);
 	};
 
 	if (redirectToSignIn && url === undefined) {
@@ -55,6 +56,9 @@ export default function ApplicationContainer() {
 						<Route exact path='/' component={asyncHomeContainer} />
 						<Route path='/profile' component={asyncProfileContainer} />
 						<Route path='/sign-out' component={asyncSignOutContainer} />
+						<Route>
+							<Redirect to='/' />
+						</Route>
 					</Switch>
 					<NewerVersionPrompt
 						{...{

@@ -1,7 +1,6 @@
 import React, { Suspense, lazy } from 'react';
 import ReactDOM from 'react-dom';
-import { Route, Switch } from 'react-router';
-import { BrowserRouter } from 'react-router-dom';
+import { Route, Switch, BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import PageLoading from '~/components/PageLoading';
 import ErrorBoundary from '~/containers/ErrorBoundary';
@@ -26,7 +25,7 @@ function start() {
 						<Switch>
 							<Route path='/sign-in' component={asyncSignInContainer} />
 							<Route path='/authenticate' component={asyncAuthenticateContainer} />
-							<Route path='/' component={asyncApplicationContainer} />
+							<Route component={asyncApplicationContainer} />
 						</Switch>
 					</Suspense>
 				</ErrorBoundary>
