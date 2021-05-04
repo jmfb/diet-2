@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import Header from './Header';
 import NewerVersionPrompt from './NewerVersionPrompt';
 import { IState, authDuck, diagnosticsDuck } from '~/redux';
-import useInterval from '~/hooks/useInterval';
+import { useInterval } from '~/hooks';
 
 const asyncHomeContainer = lazy(() =>
 	import(/* webpackChunkName: 'HomeContainer' */ '~/containers/HomeContainer'));

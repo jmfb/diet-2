@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { IIndexModel } from '~/models';
-import * as dateService from '~/services/dateService';
+import { dateService } from '~/services';
 import { heartbeat } from './diagnostics.actions';
 
 export interface IDiagnosticsState {

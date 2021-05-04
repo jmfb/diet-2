@@ -1,6 +1,6 @@
 import React from 'react';
-import Pill from '~/components/Pill';
-import * as weightService from '~/services/weightService';
+import { Pill } from '~/components';
+import { weightService } from '~/services';
 
 export interface IWeightChangeProps {
 	targetWeightInPounds?: number;

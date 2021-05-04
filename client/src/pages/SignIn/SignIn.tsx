@@ -1,6 +1,6 @@
 import React from 'react';
 import SignInButton from './SignInButton';
-import PageLoading from '~/components/PageLoading';
+import { PageLoading } from '~/components';
 
 export interface ISignInProps {
 	isSigningIn: boolean;

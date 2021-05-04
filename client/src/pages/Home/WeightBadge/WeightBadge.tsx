@@ -3,7 +3,7 @@ import Weight from './Weight';
 import BodyMassIndex from './BodyMassIndex';
 import Goal from './Goal';
 import { IWeightStateByDate } from '~/models';
-import * as weightService from '~/services/weightService';
+import { weightService } from '~/services';
 import styles from './WeightBadge.css';
 
 export interface IWeightBadgeProps {

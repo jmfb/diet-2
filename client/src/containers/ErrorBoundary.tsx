@@ -1,6 +1,6 @@
 import React, { ErrorInfo } from 'react';
 import { connect } from 'react-redux';
-import ErrorView from '~/pages/ErrorView';
+import { ErrorView } from '~/pages';
 import { IErrorReport } from '~/models';
 import { IState, errorDuck } from '~/redux';
 

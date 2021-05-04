@@ -24,8 +24,9 @@ export default function SignInButton(props: ISignInButtonProps) {
 				styles.root,
 				styles[type],
 				{ [styles.disabled]: isDisabled },
-				className)}
-			onClick={handleClicked}>
-		</div>
+				className
+			)}
+			onClick={handleClicked}
+			/>
 	);
 }

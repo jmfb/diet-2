@@ -1,6 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import IState from './IState';
-import * as dateService from '~/services/dateService';
+import { dateService } from '~/services';
 import * as hub from './diagnostics.hub';
 
 export const heartbeat = createAsyncThunk('diagnostics/heartbeat', async (unused, { getState }) => {

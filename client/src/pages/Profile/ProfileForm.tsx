@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-import Button from '~/components/Button';
-import WeightInput from '~/components/WeightInput';
+import { Button, WeightInput } from '~/components';
 import BirthDateInput from './BirthDateInput';
 import HeightInput from './HeightInput';
 import GenderInput from './GenderInput';
@@ -20,17 +19,15 @@ export default function ProfileForm(props: IProfileFormProps) {
 	const [heightInInches, setHeightInInches] = useState(initialValue.heightInInches);
 	const [gender, setGender] = useState(initialValue.gender);
 
-	const currentValue = { targetWeightInPounds, birthDate, heightInInches, gender };
-	const isDifferent = (a: IProfile, b: IProfile) => {
-		return a.targetWeightInPounds !== b.targetWeightInPounds ||
-			a.birthDate !== b.birthDate ||
-			a.heightInInches !== b.heightInInches ||
-			a.gender !== b.gender;
-	};
-	const canSave = !isSaving && isDifferent(initialValue, currentValue);
+	const isDifferent =
+		initialValue.targetWeightInPounds !== targetWeightInPounds ||
+		initialValue.birthDate !== birthDate ||
+		initialValue.heightInInches !== heightInInches ||
+		initialValue.gender !== gender;
+	const canSave = !isSaving && isDifferent;
 
 	const handleSaveClicked = () => {
-		onSave(currentValue);
+		onSave({ targetWeightInPounds, birthDate, heightInInches, gender });
 	};
 
 	return (

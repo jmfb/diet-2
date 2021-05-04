@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import Home from '~/pages/Home';
+import { Home } from '~/pages';
 import { IWeightModel } from '~/models';
 import { IState, weightsDuck, profileDuck } from '~/redux';
 

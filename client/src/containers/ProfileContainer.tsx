@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import Profile from '~/pages/Profile';
+import { Profile } from '~/pages';
 import { IProfile } from '~/models';
 import { IState, profileDuck, weightsDuck } from '~/redux';
-import * as weightService from '~/services/weightService';
+import { weightService } from '~/services';
 
 export default function ProfileContainer() {
 	const dispatch = useDispatch();

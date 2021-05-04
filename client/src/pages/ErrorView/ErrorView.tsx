@@ -1,5 +1,5 @@
 import React from 'react';
-import Button from '~/components/Button';
+import { Button } from '~/components';
 import styles from './ErrorView.css';
 
 export interface IErrorViewProps {

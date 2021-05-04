@@ -1,7 +1,6 @@
 import React from 'react';
 import { IProfile, weightCategories } from '~/models';
-import * as weightService from '~/services/weightService';
-import * as dateService from '~/services/dateService';
+import { dateService, weightService } from '~/services';
 import styles from './Statistics.css';
 
 export interface IStatisticsProps {

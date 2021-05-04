@@ -1,6 +1,5 @@
 import React from 'react';
-import Card from '~/components/Card';
-import PageLoading from '~/components/PageLoading';
+import { Card, PageLoading } from '~/components';
 import ProfileForm from './ProfileForm';
 import Statistics from './Statistics';
 import { IProfile } from '~/models';

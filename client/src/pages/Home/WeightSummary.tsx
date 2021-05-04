@@ -2,6 +2,7 @@ import React from 'react';
 import WeightGraph from './WeightGraph';
 import WeightChange from './WeightChange';
 import { IWeightStateByDate } from '~/models';
+import { weightService } from '~/services';
 import styles from './WeightSummary.css';
 
 export interface IWeightSummaryProps {
@@ -13,11 +14,7 @@ export interface IWeightSummaryProps {
 
 export default function WeightSummary(props: IWeightSummaryProps) {
 	const { title, startDate, targetWeightInPounds, weightStateByDate } = props;
-	const weightsInPounds = Object
-		.keys(weightStateByDate)
-		.filter(date => date >= startDate)
-		.sort()
-		.map(date => weightStateByDate[date].weightInPounds);
+	const weightsInPounds = weightService.getWeightsOnOrAfter(weightStateByDate, startDate);
 
 	return (
 		<div className={styles.root}>

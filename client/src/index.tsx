@@ -2,7 +2,7 @@ import React, { Suspense, lazy } from 'react';
 import ReactDOM from 'react-dom';
 import { Route, Switch, BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
-import PageLoading from '~/components/PageLoading';
+import { PageLoading } from '~/components';
 import ErrorBoundary from '~/containers/ErrorBoundary';
 import { createStore } from '~/redux';
 import './index.css';

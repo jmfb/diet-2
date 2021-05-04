@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { Redirect, useLocation } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import PageLoading from '~/components/PageLoading';
+import { PageLoading } from '~/components';
 import { IState, authDuck } from '~/redux';
 import queryString from 'query-string';
 

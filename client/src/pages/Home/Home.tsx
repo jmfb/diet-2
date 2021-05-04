@@ -1,9 +1,9 @@
 import React from 'react';
-import PageLoading from '~/components/PageLoading';
+import { PageLoading } from '~/components';
 import EnterWeight from './EnterWeight';
 import WeightBadge from './WeightBadge';
 import WeightSummary from './WeightSummary';
-import * as dateService from '~/services/dateService';
+import { dateService } from '~/services';
 import { weightsDuck } from '~/redux';
 import { IProfile, IWeightModel } from '~/models';
 
@@ -25,12 +25,14 @@ export default function Home(props: IHomeProps) {
 		return null;
 	}
 
-	const targetWeightInPounds = profile?.targetWeightInPounds;
-	const heightInInches = profile?.heightInInches;
+	const targetWeightInPounds = profile.targetWeightInPounds;
+	const heightInInches = profile.heightInInches;
 	const weightState = weightStateByDate[today];
-	const oneWeekAgo = dateService.addDays(today, -6);
-	const oneMonthAgo = dateService.addDays(today, -30);
-	const oneYearAgo = dateService.addDays(today, -365);
+	const graphs = {
+		['This Week']: 6,
+		['This Month']: 30,
+		['This Year']: 365
+	};
 
 	return (
 		<>
@@ -48,30 +50,17 @@ export default function Home(props: IHomeProps) {
 					weightStateByDate
 				}}
 				/>
-			<WeightSummary
-				{...{
-					targetWeightInPounds,
-					weightStateByDate
-				}}
-				title='This Week'
-				startDate={oneWeekAgo}
-				/>
-			<WeightSummary
-				{...{
-					targetWeightInPounds,
-					weightStateByDate
-				}}
-				title='This Month'
-				startDate={oneMonthAgo}
-				/>
-			<WeightSummary
-				{...{
-					targetWeightInPounds,
-					weightStateByDate
-				}}
-				title='This Year'
-				startDate={oneYearAgo}
-				/>
+			{Object.entries(graphs).map(([title, daysAgo]) =>
+				<WeightSummary
+					key={daysAgo}
+					{...{
+						targetWeightInPounds,
+						weightStateByDate,
+						title
+					}}
+					startDate={dateService.addDays(today, -daysAgo)}
+					/>
+			)}
 		</>
 	);
 }

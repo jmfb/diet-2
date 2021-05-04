@@ -48,3 +48,11 @@ export function getMostRecentWeight(weightStateByDate: IWeightStateByDate) {
 	const maxDate = dates[dates.length - 1];
 	return weightStateByDate[maxDate]?.weightInPounds;
 }
+
+export function getWeightsOnOrAfter(weightStateByDate: IWeightStateByDate, startDate: string) {
+	return Object
+		.keys(weightStateByDate)
+		.filter(date => date >= startDate)
+		.sort()
+		.map(date => weightStateByDate[date].weightInPounds);
+}

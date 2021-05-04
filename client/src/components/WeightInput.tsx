@@ -10,7 +10,7 @@ export interface IWeightInputProps {
 
 export default function WeightInput(props: IWeightInputProps) {
 	const { value, autoFocus, date, onChange } = props;
-	const initialValue = (value === undefined || value === null) ? '' : value.toString();
+	const initialValue = value?.toString() ?? '';
 	const [text, setText] = useState(initialValue);
 
 	useEffect(() => {
