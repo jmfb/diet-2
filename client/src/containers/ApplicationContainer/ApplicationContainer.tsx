@@ -6,14 +6,14 @@ import NewerVersionPrompt from './NewerVersionPrompt';
 import { IState, authDuck, diagnosticsDuck } from '~/redux';
 import useInterval from '~/hooks/useInterval';
 
-export default function ApplicationContainer() {
-	const asyncHomeContainer = lazy(() =>
-		import(/* webpackChunkName: 'HomeContainer' */ '~/containers/HomeContainer'));
-	const asyncProfileContainer = lazy(() =>
-		import(/* webpackChunkName: 'ProfileContainer' */ '~/containers/ProfileContainer'));
-	const asyncSignOutContainer = lazy(() =>
-		import(/* webpackChunkName: 'SignOutContainer' */ '~/containers/SignOutContainer'));
+const asyncHomeContainer = lazy(() =>
+	import(/* webpackChunkName: 'HomeContainer' */ '~/containers/HomeContainer'));
+const asyncProfileContainer = lazy(() =>
+	import(/* webpackChunkName: 'ProfileContainer' */ '~/containers/ProfileContainer'));
+const asyncSignOutContainer = lazy(() =>
+	import(/* webpackChunkName: 'SignOutContainer' */ '~/containers/SignOutContainer'));
 
+export default function ApplicationContainer() {
 	const dispatch = useDispatch();
 	const history = useHistory();
 	const redirectToSignIn = useSelector((state: IState) => state.auth.redirectToSignIn);
