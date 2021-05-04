@@ -22,12 +22,27 @@ export default function WeightBadge(props: IWeightBadgeProps) {
 
 	return (
 		<div className={styles.root}>
-			<Weight {...{startingWeight, mostRecentWeight}} />
+			<Weight
+				{...{
+					startingWeight,
+					mostRecentWeight
+				}}
+				/>
 			{heightInInches &&
-				<BodyMassIndex {...{heightInInches, mostRecentWeight}} />
+				<BodyMassIndex
+					{...{
+						heightInInches,
+						mostRecentWeight
+					}}
+					/>
 			}
 			{targetWeightInPounds &&
-				<Goal {...{mostRecentWeight, targetWeightInPounds}} />
+				<Goal
+					{...{
+						mostRecentWeight,
+						targetWeightInPounds
+					}}
+					/>
 			}
 		</div>
 	);

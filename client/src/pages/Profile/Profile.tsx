@@ -34,21 +34,25 @@ export default function Profile(props: IProfileProps) {
 			<Card className={styles.root}>
 				<h1>Profile</h1>
 				<ProfileForm
-					{...{onSave, isSaving}}
+					{...{
+						onSave,
+						isSaving
+					}}
 					initialValue={profile}
 					/>
 			</Card>
-			{!canComputeStatistics &&
-				<div className={styles.finishProfile}>
-					Finish filling in your profile to view statistics.
-				</div>
-			}
-			{canComputeStatistics &&
+			{canComputeStatistics ?
 				<div className={styles.root}>
 					<h2>Statistics</h2>
 					<Statistics
-						{...{profile, weightInPounds}}
+						{...{
+							profile,
+							weightInPounds
+						}}
 						/>
+				</div> :
+				<div className={styles.finishProfile}>
+					Finish filling in your profile to view statistics.
 				</div>
 			}
 		</>
