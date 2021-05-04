@@ -16,7 +16,6 @@ export default function ApplicationContainer() {
 
 	const dispatch = useDispatch();
 	const history = useHistory();
-	const isHeartbeatInProgress = useSelector((state: IState) => state.diagnostics.isHeartbeatInProgress);
 	const redirectToSignIn = useSelector((state: IState) => state.auth.redirectToSignIn);
 	const url = useSelector((state: IState) => state.auth.url);
 	const email = useSelector((state: IState) => state.auth.email);
@@ -28,9 +27,7 @@ export default function ApplicationContainer() {
 	}, []);
 
 	useInterval(() => {
-		if (!isHeartbeatInProgress) {
-			dispatch(diagnosticsDuck.actions.heartbeat());
-		}
+		dispatch(diagnosticsDuck.actions.heartbeat());
 	}, 60_000);
 
 	const handleRefreshClicked = () => {

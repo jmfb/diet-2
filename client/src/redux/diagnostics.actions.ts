@@ -8,4 +8,11 @@ export const heartbeat = createAsyncThunk('diagnostics/heartbeat', async (unused
 	const model = await hub.heartbeat(accessToken);
 	const today = dateService.getToday();
 	return { ...model, today };
+}, {
+	condition: (unused, { getState }) => {
+		const { diagnostics: { isHeartbeatInProgress } } = getState() as IState;
+		if (isHeartbeatInProgress) {
+			return false;
+		}
+	}
 });
