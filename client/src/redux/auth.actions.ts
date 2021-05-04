@@ -25,6 +25,12 @@ export const authenticate = createAsyncThunk('auth/authenticate', async (code: s
 	localStorage.setItem('email', email);
 	localStorage.setItem('accessToken', accessToken);
 	return { email, accessToken };
+}, {
+	condition: (code: string) => {
+		if (!code) {
+			return false;
+		}
+	}
 });
 
 export const signOut = createAsyncThunk('auth/signOut', () => {

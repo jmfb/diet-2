@@ -12,9 +12,7 @@ export default function AuthenticationContainer() {
 	const { code } = queryString.parse(location.search) as { code: string; };
 
 	useEffect(() => {
-		if (code) {
-			dispatch(authDuck.actions.authenticate(code));
-		}
+		dispatch(authDuck.actions.authenticate(code));
 	}, [code]);
 
 	if (email !== undefined || !code) {
