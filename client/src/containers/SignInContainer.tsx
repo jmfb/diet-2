@@ -6,7 +6,8 @@ import { IState, authDuck } from '~/redux';
 
 export default function SignInContainer() {
 	const dispatch = useDispatch();
-	const { isSigningIn, url } = useSelector((state: IState) => state.auth);
+	const isSigningIn = useSelector((state: IState) => state.auth.isSigningIn);
+	const url = useSelector((state: IState) => state.auth.url);
 
 	useEffect(() => {
 		dispatch(authDuck.actions.signOut());
