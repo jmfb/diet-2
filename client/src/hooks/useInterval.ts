@@ -3,7 +3,7 @@ import { useRef, useEffect } from 'react';
 type Action = () => void;
 
 export default function useInterval(callback: Action, timeout: number) {
-	const callbackRef = useRef<Action>(null);
+	const callbackRef = useRef<Action>();
 
 	useEffect(() => {
 		callbackRef.current = callback;
