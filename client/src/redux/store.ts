@@ -16,4 +16,4 @@ export function createStore() {
 			[profileDuck.name]: profileDuck.reducer
 		}
 	});
-};
+}

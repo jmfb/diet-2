@@ -6,7 +6,9 @@ const redirectUrl = `${location.origin}/authenticate`;
 export async function getAuthenticationUrl() {
 	return await get<string>({
 		endpoint: '/api/authentication/url',
-		query: { redirectUrl }
+		query: {
+			redirectUrl
+		}
 	});
 }
 
