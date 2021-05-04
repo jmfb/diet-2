@@ -25,7 +25,10 @@ export default function SignInContainer() {
 
 	return (
 		<SignIn
-			{...{isSigningIn, url}}
+			{...{
+				isSigningIn,
+				url
+			}}
 			onClickSignIn={handleSignInClicked}
 			/>
 	);

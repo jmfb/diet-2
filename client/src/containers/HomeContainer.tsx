@@ -21,7 +21,11 @@ export default function HomeContainer() {
 
 	return (
 		<Home
-			{...{weights, profile, today}}
+			{...{
+				weights,
+				profile,
+				today
+			}}
 			onSaveWeight={handleWeightSaved}
 			/>
 	);
