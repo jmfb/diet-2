@@ -91,7 +91,7 @@ module.exports = {
 		]
 	},
 	plugins: [
-		new MiniCssExtractPlugin({ filename: isTest ? '[name].css' : '[name].[contenthash].css' }),
+		new MiniCssExtractPlugin({ filename: isTest ? '[name].css' : '[name].css?[contenthash]' }),
 		new EsLintPlugin({
 			extensions: ['ts', 'tsx'],
 			failOnWarning: treatWarningsAsErrors,
