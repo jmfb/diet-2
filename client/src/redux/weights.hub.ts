@@ -10,7 +10,7 @@ export async function loadAllWeights(accessToken: string) {
 
 export async function saveWeight(accessToken: string, date: string, weightInPounds: number) {
 	await put({
-		endpoint: `/api/weights/${date}`,
+		endpoint: `/api/weights/${encodeURIComponent(date)}`,
 		accessToken,
 		body: { weightInPounds }
 	});
