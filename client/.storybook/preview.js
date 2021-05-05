@@ -1,6 +1,6 @@
 export const parameters = {
 	actions: {
-		argTypesRegex: "^on[A-Z].*"
+		argTypesRegex: '^on[A-Z].*'
 	},
 	controls: {
 		matchers: {
@@ -8,4 +8,4 @@ export const parameters = {
 			date: /Date$/
 		}
 	}
-}
+};

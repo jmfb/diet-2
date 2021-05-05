@@ -44,29 +44,7 @@ module.exports = {
 			{
 				test: /\.(j|t)sx?$/,
 				exclude: /node_modules/,
-				use: {
-					loader: 'babel-loader',
-					options: {
-						presets: [
-							[
-								'@babel/preset-env', {
-									modules: isTest ? 'commonjs' : 'auto',
-									targets: 'last 2 versions, >0.5% in US, not dead, ie 11',
-									useBuiltIns: false
-								}
-							],
-							'@babel/preset-react',
-							'@babel/preset-typescript'
-						],
-						plugins: [
-							'@babel/plugin-proposal-class-properties',
-							'@babel/plugin-proposal-object-rest-spread',
-							'babel-plugin-macros',
-							'@babel/plugin-transform-runtime'
-						],
-						cacheDirectory: isDebug
-					}
-				}
+				use: 'babel-loader'
 			},
 			{
 				test: /\.css$/,
@@ -83,18 +61,15 @@ module.exports = {
 							}
 						}
 					},
-					{
-						loader: 'postcss-loader',
-						options: {
-							sourceMap: isDebug,
-						}
-					}
+					'postcss-loader'
 				]
 			}
 		]
 	},
 	plugins: [
-		new MiniCssExtractPlugin({ filename: isTest ? '[name].css' : '[name].css?[contenthash]' }),
+		new MiniCssExtractPlugin({
+			filename: isTest ? '[name].css' : '[name].css?[contenthash]'
+		}),
 		new EsLintPlugin({
 			extensions: ['ts', 'tsx'],
 			failOnWarning: treatWarningsAsErrors,
@@ -105,7 +80,9 @@ module.exports = {
 		new ForkTsCheckerWebpackPlugin(),
 		...isTest ? [] : [
 			new CleanWebpackPlugin(),
-			new AssetsPlugin({ path: buildDir })
+			new AssetsPlugin({
+				path: buildDir
+			})
 		],
 		...isAnalyze ? [new BundleAnalyzerPlugin()] : []
 	],
