@@ -6,12 +6,9 @@ using Amazon.Lambda.Core;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http.Features;
 
-namespace Diet.Server
-{
-	public class LambdaEntryPoint : APIGatewayProxyFunction
-	{
-		protected override void Init(IWebHostBuilder builder)
-		{
+namespace Diet.Server {
+	public class LambdaEntryPoint : APIGatewayProxyFunction {
+		protected override void Init(IWebHostBuilder builder) {
 			RegisterBinaryContentTypes();
 			builder
 				.UseContentRoot(Directory.GetCurrentDirectory())
@@ -19,14 +16,12 @@ namespace Diet.Server
 				.UseLambdaServer();
 		}
 
-		private readonly IEnumerable<string> binaryContentTypes = new[]
-		{
+		private readonly IEnumerable<string> binaryContentTypes = new[] {
 			"image/x-icon",
 			"image/png"
 		};
 
-		private void RegisterBinaryContentTypes()
-		{
+		private void RegisterBinaryContentTypes() {
 			foreach (var contentType in binaryContentTypes)
 				RegisterResponseContentEncodingForContentType(contentType, ResponseContentEncoding.Base64);
 		}

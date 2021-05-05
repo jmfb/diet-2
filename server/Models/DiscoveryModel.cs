@@ -1,9 +1,7 @@
 using System.Text.Json.Serialization;
 
-namespace Diet.Server.Models
-{
-	public class DiscoveryModel
-	{
+namespace Diet.Server.Models {
+	public class DiscoveryModel {
 		[JsonPropertyName("authorization_endpoint")]
 		public string AuthorizationEndpoint { get; set; }
 

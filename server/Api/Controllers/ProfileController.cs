@@ -5,27 +5,22 @@ using Microsoft.Extensions.Options;
 using Diet.Server.Models;
 using Diet.Server.Services;
 
-namespace Diet.Server.Api.Controllers
-{
+namespace Diet.Server.Api.Controllers {
 	[Route("api/profile")]
-	public class ProfileController : AuthorizedController
-	{
+	public class ProfileController : AuthorizedController {
 		private IProfileService ProfileService { get; }
 
-		public ProfileController(IProfileService profileService)
-		{
+		public ProfileController(IProfileService profileService) {
 			ProfileService = profileService;
 		}
 
 		[HttpGet]
-		public async Task<Profile> GetAsync(CancellationToken cancellationToken)
-		{
+		public async Task<Profile> GetAsync(CancellationToken cancellationToken) {
 			return await ProfileService.GetAsync(UserId, cancellationToken);
 		}
 
 		[HttpPut]
-		public async Task<IActionResult> SaveAsync([FromBody] Profile profile, CancellationToken cancellationToken)
-		{
+		public async Task<IActionResult> SaveAsync([FromBody] Profile profile, CancellationToken cancellationToken) {
 			profile.UserId = UserId;
 			if (!ProfileService.TryValidate(profile, out var errorMessage))
 				return BadRequest(errorMessage);

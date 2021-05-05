@@ -6,15 +6,12 @@ using Diet.Server.Api.Models;
 using Diet.Server.Models;
 using Diet.Server.Services;
 
-namespace Diet.Server.Api.Controllers
-{
+namespace Diet.Server.Api.Controllers {
 	[Route("api/weights")]
-	public class WeightsController : AuthorizedController
-	{
+	public class WeightsController : AuthorizedController {
 		private IWeightsService WeightsService { get; }
 
-		public WeightsController(IWeightsService weightsService)
-		{
+		public WeightsController(IWeightsService weightsService) {
 			WeightsService = weightsService;
 		}
 
@@ -22,10 +19,9 @@ namespace Diet.Server.Api.Controllers
 		public async Task<IActionResult> SaveAsync(
 			string date,
 			[FromBody] SaveWeightRequest model,
-			CancellationToken cancellationToken)
-		{
-			var weight = new Weight
-			{
+			CancellationToken cancellationToken
+		) {
+			var weight = new Weight {
 				UserId = UserId,
 				Date = date,
 				WeightInPounds = model.WeightInPounds
@@ -37,8 +33,7 @@ namespace Diet.Server.Api.Controllers
 		}
 
 		[HttpGet]
-		public async Task<IList<Weight>> LoadAllAsync(CancellationToken cancellationToken)
-		{
+		public async Task<IList<Weight>> LoadAllAsync(CancellationToken cancellationToken) {
 			return await WeightsService.LoadAllAsync(UserId, cancellationToken);
 		}
 	}

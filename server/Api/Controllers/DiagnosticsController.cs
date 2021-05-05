@@ -3,25 +3,18 @@ using Microsoft.Extensions.Options;
 using Diet.Server.Models;
 using Diet.Server.Api.Models;
 
-namespace Diet.Server.Api.Controllers
-{
+namespace Diet.Server.Api.Controllers {
 	[Route("api/diagnostics")]
-	public class DiagnosticsController : AuthorizedController
-	{
+	public class DiagnosticsController : AuthorizedController {
 		private AppSettings AppSettings { get; }
 
-		public DiagnosticsController(IOptions<AppSettings> appSettingsAccessor)
-		{
+		public DiagnosticsController(IOptions<AppSettings> appSettingsAccessor) {
 			AppSettings = appSettingsAccessor.Value;
 		}
 
 		[HttpGet("heartbeat")]
-		public HeartbeatModel Heartbeat()
-		{
-			return new HeartbeatModel
-			{
-				BundleVersion = AppSettings.BundleVersion
-			};
-		}
+		public HeartbeatModel Heartbeat() => new HeartbeatModel {
+			BundleVersion = AppSettings.BundleVersion
+		};
 	}
 }

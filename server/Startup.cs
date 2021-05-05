@@ -18,21 +18,17 @@ using Amazon;
 using Amazon.DynamoDBv2;
 using Amazon.DynamoDBv2.DataModel;
 
-namespace Diet.Server
-{
-	public class Startup
-	{
+namespace Diet.Server {
+	public class Startup {
 		public IConfiguration Configuration { get; }
 		public IWebHostEnvironment HostEnvironment { get; }
 
-		public Startup(IConfiguration configuration, IWebHostEnvironment hostEnvironment)
-		{
+		public Startup(IConfiguration configuration, IWebHostEnvironment hostEnvironment) {
 			Configuration = configuration;
 			HostEnvironment = hostEnvironment;
 		}
 
-		public void ConfigureServices(IServiceCollection services)
-		{
+		public void ConfigureServices(IServiceCollection services) {
 			var key = AppSettings.CreateKey();
 			services.Configure<AppSettings>(settings => settings.Configure(key, HostEnvironment.WebRootPath));
 			services.AddHttpClient<IAuthenticationService, AuthenticationService>();
@@ -50,8 +46,7 @@ namespace Diet.Server
 			services.AddMvc();
 		}
 
-		public void Configure(IApplicationBuilder app)
-		{
+		public void Configure(IApplicationBuilder app) {
 			app.UseHsts();
 			app.UseHttpsRedirection();
 			app.UseStaticFiles(StaticFiles.Configure());

@@ -15,18 +15,15 @@ using Microsoft.Extensions.Options;
 using Diet.Server.Models;
 using Microsoft.IdentityModel.Tokens;
 
-namespace Diet.Server.Services
-{
-	public interface IAuthenticationService
-	{
+namespace Diet.Server.Services {
+	public interface IAuthenticationService {
 		Task<string> GetGoogleAuthenticationUrlAsync(string redirectUrl);
 		Task<TokenModel> GetGoogleTokenAsync(string redirectUrl, string authorizationCode);
 		Task<UserInfoModel> GetUserInfoAsync(string tokenType, string accessToken);
 		string CreateAccessToken(string email);
 	}
 
-	public class AuthenticationService : IAuthenticationService
-	{
+	public class AuthenticationService : IAuthenticationService {
 		private const string clientId = "959516251255-t1bd2ee6771be2ck4j68vpbg9em8g2pp.apps.googleusercontent.com";
 		public const string Audience = "https://diet.buysse.link";
 		public const string Issuer = "https://diet.buysse.link";
@@ -40,16 +37,15 @@ namespace Diet.Server.Services
 
 		public AuthenticationService(
 			HttpClient httpClient,
-			IOptions<AppSettings> appSettingsAccessor)
-		{
+			IOptions<AppSettings> appSettingsAccessor
+		) {
 			HttpClient = httpClient;
 			var appSettings = appSettingsAccessor.Value;
 			Key = appSettings.Key;
 			ClientSecret = appSettings.AuthClientSecret;
 		}
 
-		private async Task<DiscoveryModel> GetDiscoveryModelAsync()
-		{
+		private async Task<DiscoveryModel> GetDiscoveryModelAsync() {
 			var response = await HttpClient.GetAsync("https://accounts.google.com/.well-known/openid-configuration");
 			if (!response.IsSuccessStatusCode)
 				throw new InvalidOperationException(await response.Content.ReadAsStringAsync());
@@ -57,8 +53,7 @@ namespace Diet.Server.Services
 			return JsonSerializer.Deserialize<DiscoveryModel>(json);
 		}
 
-		public async Task<string> GetGoogleAuthenticationUrlAsync(string redirectUrl)
-		{
+		public async Task<string> GetGoogleAuthenticationUrlAsync(string redirectUrl) {
 			var query = HttpUtility.ParseQueryString("");
 			query["redirect_uri"] = redirectUrl;
 			query["prompt"] = "consent";
@@ -70,8 +65,7 @@ namespace Diet.Server.Services
 			return $"{discovery.AuthorizationEndpoint}?{query}";
 		}
 
-		public async Task<TokenModel> GetGoogleTokenAsync(string redirectUrl, string authorizationCode)
-		{
+		public async Task<TokenModel> GetGoogleTokenAsync(string redirectUrl, string authorizationCode) {
 			var discovery = await GetDiscoveryModelAsync();
 			var query = HttpUtility.ParseQueryString("");
 			query["code"] = authorizationCode;
@@ -88,28 +82,22 @@ namespace Diet.Server.Services
 			return JsonSerializer.Deserialize<TokenModel>(json);
 		}
 
-		public async Task<UserInfoModel> GetUserInfoAsync(string tokenType, string accessToken)
-		{
+		public async Task<UserInfoModel> GetUserInfoAsync(string tokenType, string accessToken) {
 			var discovery = await GetDiscoveryModelAsync();
-			using (var request = new HttpRequestMessage(HttpMethod.Get, discovery.UserInfoEndpoint))
-			{
-				request.Headers.Authorization = new AuthenticationHeaderValue(tokenType, accessToken);
-				var response = await HttpClient.SendAsync(request);
-				if (!response.IsSuccessStatusCode)
-					throw new InvalidOperationException(await response.Content.ReadAsStringAsync());
-				var json = await response.Content.ReadAsStringAsync();
-				return JsonSerializer.Deserialize<UserInfoModel>(json);
-			}
+			using var request = new HttpRequestMessage(HttpMethod.Get, discovery.UserInfoEndpoint);
+			request.Headers.Authorization = new AuthenticationHeaderValue(tokenType, accessToken);
+			var response = await HttpClient.SendAsync(request);
+			if (!response.IsSuccessStatusCode)
+				throw new InvalidOperationException(await response.Content.ReadAsStringAsync());
+			var json = await response.Content.ReadAsStringAsync();
+			return JsonSerializer.Deserialize<UserInfoModel>(json);
 		}
 
 		public string CreateAccessToken(string userId) => new JwtSecurityTokenHandler()
 			.WriteToken(new JwtSecurityToken(
 				Issuer,
 				Audience,
-				new[]
-				{
-					new Claim(UserIdClaimType, userId)
-				},
+				new[] { new Claim(UserIdClaimType, userId) },
 				signingCredentials: new SigningCredentials(Key, signatureAlgorithm, digestAlgorithm)));
 	}
 }

@@ -2,10 +2,8 @@ using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
-namespace Diet.Server.Models
-{
-	public class IndexModel
-	{
+namespace Diet.Server.Models {
+	public class IndexModel {
 		public string BundleVersion { get; set; }
 
 		[JsonIgnore]
@@ -16,6 +14,8 @@ namespace Diet.Server.Models
 
 		public string ToJson() => JsonSerializer.Serialize(
 			this,
-			new JsonSerializerOptions { PropertyNamingPolicy = JsonNamingPolicy.CamelCase });
+			new JsonSerializerOptions {
+				PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+			});
 	}
 }

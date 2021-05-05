@@ -3,32 +3,26 @@ using Microsoft.AspNetCore.Mvc;
 using Diet.Server.Api.Models;
 using Diet.Server.Services;
 
-namespace Diet.Server.Api.Controllers
-{
+namespace Diet.Server.Api.Controllers {
 	[Route("api/authentication")]
-	public class AuthenticationController : Controller
-	{
+	public class AuthenticationController : Controller {
 		private IAuthenticationService AuthenticationService { get; }
 
-		public AuthenticationController(IAuthenticationService authenticationService)
-		{
+		public AuthenticationController(IAuthenticationService authenticationService) {
 			AuthenticationService = authenticationService;
 		}
 
 		[HttpGet("url")]
-		public async Task<string> GetAuthenticationUrlAsync(string redirectUrl)
-		{
+		public async Task<string> GetAuthenticationUrlAsync(string redirectUrl) {
 			return await AuthenticationService.GetGoogleAuthenticationUrlAsync(redirectUrl);
 		}
 
 		[HttpGet("sign-in")]
-		public async Task<SignedInModel> SignInAsync(string redirectUrl, string authorizationCode)
-		{
+		public async Task<SignedInModel> SignInAsync(string redirectUrl, string authorizationCode) {
 			var googleToken = await AuthenticationService.GetGoogleTokenAsync(redirectUrl, authorizationCode);
 			var userInfo = await AuthenticationService.GetUserInfoAsync(googleToken.TokenType, googleToken.AccessToken);
 			var email = userInfo.Email.ToLower();
-			return new SignedInModel
-			{
+			return new SignedInModel {
 				AccessToken = AuthenticationService.CreateAccessToken(email),
 				Email = email
 			};

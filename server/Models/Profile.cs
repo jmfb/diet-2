@@ -1,11 +1,9 @@
 using System.Text.Json.Serialization;
 using Amazon.DynamoDBv2.DataModel;
 
-namespace Diet.Server.Models
-{
+namespace Diet.Server.Models {
 	[DynamoDBTable("diet-profiles")]
-	public class Profile
-	{
+	public class Profile {
 		[JsonIgnore]
 		[DynamoDBHashKey]
 		public string UserId { get; set; }
