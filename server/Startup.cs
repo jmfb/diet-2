@@ -34,7 +34,7 @@ namespace Diet.Server
 		public void ConfigureServices(IServiceCollection services)
 		{
 			var key = AppSettings.CreateKey();
-			services.Configure<AppSettings>(settings => settings.Configure(key));
+			services.Configure<AppSettings>(settings => settings.Configure(key, HostEnvironment.WebRootPath));
 			services.AddHttpClient<IAuthenticationService, AuthenticationService>();
 			services.AddSingleton<AmazonDynamoDBClient>(provider => HostEnvironment.IsDevelopment() ?
 				new AmazonDynamoDBClient(new AmazonDynamoDBConfig { ServiceURL = "http://localhost:8000" }) :

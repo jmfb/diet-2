@@ -18,7 +18,9 @@ namespace Diet.Server.Controllers
 		{
 			var model = new IndexModel
 			{
-				BundleVersion = AppSettings.BundleVersion
+				BundleVersion = AppSettings.BundleVersion,
+				ScriptChunks = AppSettings.ScriptChunks,
+				StyleChunks = AppSettings.StyleChunks
 			};
 			return View(model);
 		}

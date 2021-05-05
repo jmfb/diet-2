@@ -1,7 +1,4 @@
-@using Diet.Server.Models
-@using System.Text.Json;
-@model IndexModel
-@{var options = new JsonSerializerOptions { PropertyNamingPolicy = JsonNamingPolicy.CamelCase };}
+@model Diet.Server.Models.IndexModel
 <!DOCTYPE html>
 <html lang="en">
 	<head>
@@ -11,10 +8,14 @@
 		<meta name="author" content="Jacob Buysse">
 		<meta name="description" content="Meal planner and weight tracker.">
 		<title>Diet</title>
-		<link href="/dist/bundle.css?v=@Model.BundleVersion" rel="stylesheet" type="text/css" />
+		@foreach (var scriptChunk in Model.ScriptChunks) {
+			{<script defer src="@scriptChunk"></script>}
+		}
+		@foreach (var styleChunk in Model.StyleChunks) {
+			{<link href="@styleChunk" rel="stylesheet" />}
+		}
 	</head>
 	<body>
-		<div id="root" data-initial-state="@JsonSerializer.Serialize(@Model, options)"></div>
-		<script src="/dist/bundle.js?v=@Model.BundleVersion"></script>
+		<div id="root" data-initial-state="@Model.ToJson()"></div>
 	</body>
 </html>

@@ -18,6 +18,7 @@ export default function LoadingIcon() {
 				strokeWidth='1.5'>
 				{coordinates.map(([indexX, indexY], index) =>
 					<circle
+						key={index}
 						cx={axisValues[indexX]}
 						cy={axisValues[indexY]}
 						r={5}

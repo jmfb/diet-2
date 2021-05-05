@@ -127,6 +127,9 @@ module.exports = {
 		minimizer: [
 			new TerserWebpackPlugin(),
 			new CssMinimizerWebpackPlugin()
-		]
+		],
+		splitChunks: {
+			chunks: 'all'
+		}
 	}
 };
