@@ -2,8 +2,10 @@ const AssetsPlugin = require('assets-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CssMinimizerWebpackPlugin = require('css-minimizer-webpack-plugin');
+const TerserWebpackPlugin = require('terser-webpack-plugin');
 const EsLintPlugin = require('eslint-webpack-plugin');
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
+const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 const path = require('path');
 const webpack = require('webpack');
 
@@ -11,6 +13,7 @@ const isProduction = process.argv[process.argv.indexOf('--node-env') + 1] === 'p
 const isDebug = !isProduction;
 const isVerbose = process.env.VERBOSE === 'true';
 const isTest = process.env.NODE_TEST === 'test';
+const isAnalyze = process.env.ANALYZE === 'true';
 const treatWarningsAsErrors = !process.argv.includes('--watch');
 
 const buildDir = path.resolve(__dirname, '../server/wwwroot/dist');
@@ -47,10 +50,9 @@ module.exports = {
 						presets: [
 							[
 								'@babel/preset-env', {
-									...{ modules: isTest ? 'commonjs' : undefined },
-									corejs: 3,
+									modules: isTest ? 'commonjs' : 'auto',
 									targets: 'last 2 versions, >0.5% in US, not dead, ie 11',
-									useBuiltIns: 'usage'
+									useBuiltIns: false
 								}
 							],
 							'@babel/preset-react',
@@ -59,7 +61,8 @@ module.exports = {
 						plugins: [
 							'@babel/plugin-proposal-class-properties',
 							'@babel/plugin-proposal-object-rest-spread',
-							'babel-plugin-macros'
+							'babel-plugin-macros',
+							'@babel/plugin-transform-runtime'
 						],
 						cacheDirectory: isDebug
 					}
@@ -103,7 +106,8 @@ module.exports = {
 		...isTest ? [] : [
 			new CleanWebpackPlugin(),
 			new AssetsPlugin({ path: buildDir })
-		]
+		],
+		...isAnalyze ? [new BundleAnalyzerPlugin()] : []
 	],
 	cache: isDebug,
 	stats: {
@@ -119,9 +123,10 @@ module.exports = {
 		children: isVerbose
 	},
 	optimization: {
+		minimize: isProduction,
 		minimizer: [
-			'...',
-			...isProduction ? [new CssMinimizerWebpackPlugin()] : []
+			new TerserWebpackPlugin(),
+			new CssMinimizerWebpackPlugin()
 		]
 	}
 };

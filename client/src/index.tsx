@@ -1,5 +1,5 @@
 import React, { Suspense, lazy } from 'react';
-import ReactDOM from 'react-dom';
+import { render } from 'react-dom';
 import { Route, Switch, BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { PageLoading } from '~/components';
@@ -31,7 +31,7 @@ function start() {
 				</ErrorBoundary>
 			</BrowserRouter>
 		</Provider>;
-	ReactDOM.render(rootElement, rootContainer);
+	render(rootElement, rootContainer);
 }
 
 start();
