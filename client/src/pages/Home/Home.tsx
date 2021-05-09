@@ -18,7 +18,9 @@ export default function Home(props: IHomeProps) {
 	const { weights: { weightStateByDate, isLoading, isLoaded }, today, onSaveWeight, profile } = props;
 
 	if (isLoading || !profile) {
-		return <PageLoading message='Loading weights from the server...' />;
+		return (
+			<PageLoading message='Loading weights from the server...' />
+		);
 	}
 
 	if (!isLoaded) {

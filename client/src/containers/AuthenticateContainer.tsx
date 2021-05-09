@@ -20,6 +20,7 @@ export default function AuthenticationContainer() {
 			<Redirect to='/' />
 		);
 	}
+
 	return (
 		<main>
 			<section>

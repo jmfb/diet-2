@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector, batch } from 'react-redux';
 import { Profile } from '~/pages';
 import { IProfile } from '~/models';
 import { IState, profileDuck, weightsDuck } from '~/redux';
@@ -13,8 +13,10 @@ export default function ProfileContainer() {
 	const weightInPounds = weightService.getMostRecentWeight(weightStateByDate);
 
 	useEffect(() => {
-		dispatch(weightsDuck.actions.loadAllWeights());
-		dispatch(profileDuck.actions.getProfile());
+		batch(() => {
+			dispatch(weightsDuck.actions.loadAllWeights());
+			dispatch(profileDuck.actions.getProfile());
+		});
 	}, []);
 
 	const handleSaved = (profile: IProfile) => {
