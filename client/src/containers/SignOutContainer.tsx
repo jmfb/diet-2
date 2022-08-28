@@ -10,7 +10,5 @@ export default function SignOutContainer() {
 		dispatch(authDuck.actions.signOut());
 	}, []);
 
-	return (
-		<Redirect to='/sign-in' />
-	);
+	return <Redirect to='/sign-in' />;
 }

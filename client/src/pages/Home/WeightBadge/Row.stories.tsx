@@ -8,10 +8,7 @@ export default {
 	component: Row
 } as Meta;
 
-const Template: Story<IRowProps> = props =>
-	<Row {...props}>
-		Children
-	</Row>
+const Template: Story<IRowProps> = props => <Row {...props}>Children</Row>;
 
 export const Default = Template.bind({});
 Default.args = {

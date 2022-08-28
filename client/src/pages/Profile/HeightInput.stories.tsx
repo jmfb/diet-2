@@ -8,8 +8,7 @@ export default {
 	component: HeightInput
 } as Meta;
 
-const Template: Story<IHeightInputProps> = props =>
-	<HeightInput {...props} />;
+const Template: Story<IHeightInputProps> = props => <HeightInput {...props} />;
 
 export const Default = Template.bind({});
 

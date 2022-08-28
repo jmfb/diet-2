@@ -10,10 +10,14 @@ export interface IWeightProps {
 
 export default function Weight(props: IWeightProps) {
 	const { startingWeight, mostRecentWeight } = props;
-	const changeInPounds = weightService.getChange(startingWeight, mostRecentWeight);
+	const changeInPounds = weightService.getChange(
+		startingWeight,
+		mostRecentWeight
+	);
 	return (
 		<Row label='Weight'>
-			{startingWeight} lbs ➜ {mostRecentWeight} lbs <Change {...{changeInPounds}} />
+			{startingWeight} lbs ➜ {mostRecentWeight} lbs{' '}
+			<Change {...{ changeInPounds }} />
 		</Row>
 	);
 }

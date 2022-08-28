@@ -20,7 +20,9 @@ export default function WeightInput(props: IWeightInputProps) {
 	}, [date]);
 
 	const handleInputChanged = (event: React.FormEvent<HTMLInputElement>) => {
-		const { currentTarget: { value } } = event;
+		const {
+			currentTarget: { value }
+		} = event;
 		setText(value);
 		const weightInPounds = Number.parseFloat(value);
 		onChange(Number.isNaN(weightInPounds) ? undefined : weightInPounds);
@@ -28,12 +30,12 @@ export default function WeightInput(props: IWeightInputProps) {
 
 	return (
 		<input
-			{...{autoFocus}}
+			{...{ autoFocus }}
 			className={styles.root}
 			type='text'
 			placeholder='lbs...'
 			value={text}
 			onChange={handleInputChanged}
-			/>
+		/>
 	);
 }

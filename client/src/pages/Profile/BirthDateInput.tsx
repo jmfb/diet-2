@@ -11,7 +11,9 @@ export default function BirthDateInput(props: IBirthDateInputProps) {
 	const [text, setText] = useState(value ?? '');
 
 	const handleInputChanged = (event: React.FormEvent<HTMLInputElement>) => {
-		const { currentTarget: { value: birthDate } } = event;
+		const {
+			currentTarget: { value: birthDate }
+		} = event;
 		setText(birthDate);
 		const parsedValue = dateService.parse(birthDate);
 		onChange(parsedValue);
@@ -23,6 +25,6 @@ export default function BirthDateInput(props: IBirthDateInputProps) {
 			value={text}
 			pattern='\d{4}-\d{2}-\d{2}'
 			onChange={handleInputChanged}
-			/>
+		/>
 	);
 }

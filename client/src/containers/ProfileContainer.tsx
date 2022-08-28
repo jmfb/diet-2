@@ -9,7 +9,9 @@ export default function ProfileContainer() {
 	const dispatch = useDispatch();
 	const profile = useSelector((state: IState) => state.profile.profile);
 	const isSaving = useSelector((state: IState) => state.profile.isSaving);
-	const weightStateByDate = useSelector((state: IState) => state.weights.weightStateByDate);
+	const weightStateByDate = useSelector(
+		(state: IState) => state.weights.weightStateByDate
+	);
 	const weightInPounds = weightService.getMostRecentWeight(weightStateByDate);
 
 	useEffect(() => {
@@ -31,6 +33,6 @@ export default function ProfileContainer() {
 				weightInPounds
 			}}
 			onSave={handleSaved}
-			/>
+		/>
 	);
 }

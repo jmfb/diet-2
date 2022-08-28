@@ -14,9 +14,13 @@ export interface IProfileFormProps {
 
 export default function ProfileForm(props: IProfileFormProps) {
 	const { initialValue, isSaving, onSave } = props;
-	const [targetWeightInPounds, setTargetWeightInPounds] = useState(initialValue.targetWeightInPounds);
+	const [targetWeightInPounds, setTargetWeightInPounds] = useState(
+		initialValue.targetWeightInPounds
+	);
 	const [birthDate, setBirthDate] = useState(initialValue.birthDate);
-	const [heightInInches, setHeightInInches] = useState(initialValue.heightInInches);
+	const [heightInInches, setHeightInInches] = useState(
+		initialValue.heightInInches
+	);
 	const [gender, setGender] = useState(initialValue.gender);
 
 	const isDifferent =
@@ -38,7 +42,7 @@ export default function ProfileForm(props: IProfileFormProps) {
 					<WeightInput
 						value={targetWeightInPounds}
 						onChange={setTargetWeightInPounds}
-						/>
+					/>
 				</label>
 			</div>
 			<div>
@@ -47,7 +51,7 @@ export default function ProfileForm(props: IProfileFormProps) {
 					<BirthDateInput
 						value={birthDate}
 						onChange={setBirthDate}
-						/>
+					/>
 				</label>
 			</div>
 			<div>
@@ -56,7 +60,7 @@ export default function ProfileForm(props: IProfileFormProps) {
 					<HeightInput
 						value={heightInInches}
 						onChange={setHeightInInches}
-						/>
+					/>
 				</label>
 			</div>
 			<div>
@@ -65,7 +69,7 @@ export default function ProfileForm(props: IProfileFormProps) {
 					<GenderInput
 						value={gender}
 						onChange={setGender}
-						/>
+					/>
 				</label>
 			</div>
 			<div className={styles.actions}>

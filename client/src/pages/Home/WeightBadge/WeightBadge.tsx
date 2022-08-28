@@ -15,7 +15,8 @@ export interface IWeightBadgeProps {
 export default function WeightBadge(props: IWeightBadgeProps) {
 	const { targetWeightInPounds, heightInInches, weightStateByDate } = props;
 	const startingWeight = weightService.getStartingWeight(weightStateByDate);
-	const mostRecentWeight = weightService.getMostRecentWeight(weightStateByDate);
+	const mostRecentWeight =
+		weightService.getMostRecentWeight(weightStateByDate);
 	if (!startingWeight) {
 		return null;
 	}
@@ -27,23 +28,23 @@ export default function WeightBadge(props: IWeightBadgeProps) {
 					startingWeight,
 					mostRecentWeight
 				}}
-				/>
-			{heightInInches &&
+			/>
+			{heightInInches && (
 				<BodyMassIndex
 					{...{
 						heightInInches,
 						mostRecentWeight
 					}}
-					/>
-			}
-			{targetWeightInPounds &&
+				/>
+			)}
+			{targetWeightInPounds && (
 				<Goal
 					{...{
 						mostRecentWeight,
 						targetWeightInPounds
 					}}
-					/>
-			}
+				/>
+			)}
 		</div>
 	);
 }

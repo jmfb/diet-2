@@ -10,10 +10,13 @@ export interface IGoalProps {
 
 export default function Goal(props: IGoalProps) {
 	const { mostRecentWeight, targetWeightInPounds } = props;
-	const changeInPounds = weightService.getChange(mostRecentWeight, targetWeightInPounds);
+	const changeInPounds = weightService.getChange(
+		mostRecentWeight,
+		targetWeightInPounds
+	);
 	return (
 		<Row label='Goal'>
-			{targetWeightInPounds} lbs <Change {...{changeInPounds}} />
+			{targetWeightInPounds} lbs <Change {...{ changeInPounds }} />
 		</Row>
 	);
 }

@@ -10,9 +10,7 @@ export default function PageLoading(props: IPageLoadingProps) {
 	const { message } = props;
 	return (
 		<>
-			{message &&
-				<div className={styles.message}>{message}</div>
-			}
+			{message && <div className={styles.message}>{message}</div>}
 			<div className={styles.loading}>
 				<LoadingIcon />
 			</div>

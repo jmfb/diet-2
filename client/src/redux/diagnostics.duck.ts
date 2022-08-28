@@ -27,19 +27,20 @@ export const { name, reducer } = createSlice({
 	name: 'diagnostics',
 	initialState: makeInitialState(),
 	reducers: {},
-	extraReducers: builder => builder
-		.addCase(heartbeat.pending, state => {
-			state.isHeartbeatInProgress = true;
-		})
-		.addCase(heartbeat.fulfilled, (state, action) => {
-			const { bundleVersion, today } = action.payload;
-			state.isHeartbeatInProgress = false;
-			state.serverBundleVersion = bundleVersion;
-			state.today = today;
-		})
-		.addCase(heartbeat.rejected, state => {
-			state.isHeartbeatInProgress = false;
-		})
+	extraReducers: builder =>
+		builder
+			.addCase(heartbeat.pending, state => {
+				state.isHeartbeatInProgress = true;
+			})
+			.addCase(heartbeat.fulfilled, (state, action) => {
+				const { bundleVersion, today } = action.payload;
+				state.isHeartbeatInProgress = false;
+				state.serverBundleVersion = bundleVersion;
+				state.today = today;
+			})
+			.addCase(heartbeat.rejected, state => {
+				state.isHeartbeatInProgress = false;
+			})
 });
 
 export const actions = {

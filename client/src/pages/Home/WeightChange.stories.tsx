@@ -8,10 +8,11 @@ export default {
 	component: WeightChange
 } as Meta;
 
-const Template: Story<IWeightChangeProps> = props =>
+const Template: Story<IWeightChangeProps> = props => (
 	<span style={{ display: 'inline-block' }}>
 		<WeightChange {...props} />
-	</span>;
+	</span>
+);
 
 export const None = Template.bind({});
 None.args = {

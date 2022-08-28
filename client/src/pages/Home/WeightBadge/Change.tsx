@@ -9,7 +9,8 @@ export default function Change(props: IChangeProps) {
 	const sign = changeInPounds > 0 ? '+' : '';
 	return (
 		<>
-			({sign}{changeInPounds} lbs)
+			({sign}
+			{changeInPounds} lbs)
 		</>
 	);
 }

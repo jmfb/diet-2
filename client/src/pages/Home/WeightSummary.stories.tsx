@@ -8,8 +8,9 @@ export default {
 	component: WeightSummary
 } as Meta;
 
-const Template: Story<IWeightSummaryProps> = props =>
-	<WeightSummary {...props} />;
+const Template: Story<IWeightSummaryProps> = props => (
+	<WeightSummary {...props} />
+);
 
 export const FilterAndSort = Template.bind({});
 FilterAndSort.args = {

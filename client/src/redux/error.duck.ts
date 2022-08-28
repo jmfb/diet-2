@@ -19,7 +19,12 @@ const initialState: IErrorState = {
 	message: undefined
 };
 
-function setErrorState(state: IErrorState, name: string, message: string, context?: any) {
+function setErrorState(
+	state: IErrorState,
+	name: string,
+	message: string,
+	context?: any
+) {
 	state.showError = true;
 	state.action = name;
 	state.message = message;
@@ -41,26 +46,41 @@ export const { name, reducer, actions } = createSlice({
 			state.message = message;
 		}
 	},
-	extraReducers: builder => builder
-		.addCase(getAuthenticationUrl.rejected, (state, action) => {
-			setErrorState(state, 'Getting authentication URL', action.error.message);
-		})
-		.addCase(authenticate.rejected, (state, action) => {
-			setErrorState(state, 'Authenticating', action.error.message);
-		})
-		.addCase(heartbeat.rejected, (state, action) => {
-			setErrorState(state, 'Heartbeat', action.error.message);
-		})
-		.addCase(saveWeight.rejected, (state, action) => {
-			setErrorState(state, 'Saving weight', action.error.message, action.meta.arg);
-		})
-		.addCase(loadAllWeights.rejected, (state, action) => {
-			setErrorState(state, 'Loading weights', action.error.message);
-		})
-		.addCase(getProfile.rejected, (state, action) => {
-			setErrorState(state, 'Loading profile', action.error.message);
-		})
-		.addCase(setProfile.rejected, (state, action) => {
-			setErrorState(state, 'Saving profile', action.error.message, action.meta.arg);
-		})
+	extraReducers: builder =>
+		builder
+			.addCase(getAuthenticationUrl.rejected, (state, action) => {
+				setErrorState(
+					state,
+					'Getting authentication URL',
+					action.error.message
+				);
+			})
+			.addCase(authenticate.rejected, (state, action) => {
+				setErrorState(state, 'Authenticating', action.error.message);
+			})
+			.addCase(heartbeat.rejected, (state, action) => {
+				setErrorState(state, 'Heartbeat', action.error.message);
+			})
+			.addCase(saveWeight.rejected, (state, action) => {
+				setErrorState(
+					state,
+					'Saving weight',
+					action.error.message,
+					action.meta.arg
+				);
+			})
+			.addCase(loadAllWeights.rejected, (state, action) => {
+				setErrorState(state, 'Loading weights', action.error.message);
+			})
+			.addCase(getProfile.rejected, (state, action) => {
+				setErrorState(state, 'Loading profile', action.error.message);
+			})
+			.addCase(setProfile.rejected, (state, action) => {
+				setErrorState(
+					state,
+					'Saving profile',
+					action.error.message,
+					action.meta.arg
+				);
+			})
 });

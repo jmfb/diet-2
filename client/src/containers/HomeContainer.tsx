@@ -29,6 +29,6 @@ export default function HomeContainer() {
 				today
 			}}
 			onSaveWeight={handleWeightSaved}
-			/>
+		/>
 	);
 }

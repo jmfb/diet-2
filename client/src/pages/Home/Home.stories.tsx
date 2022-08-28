@@ -8,12 +8,13 @@ export default {
 	component: Home
 } as Meta;
 
-const Template: Story<IHomeProps> = props =>
+const Template: Story<IHomeProps> = props => (
 	<main>
 		<section>
 			<Home {...props} />
 		</section>
-	</main>;
+	</main>
+);
 
 export const LoadingProfile = Template.bind({});
 LoadingProfile.args = {
@@ -23,7 +24,7 @@ LoadingProfile.args = {
 		isLoaded: false
 	},
 	profile: undefined,
-	today: '2020-01-01',
+	today: '2020-01-01'
 };
 
 export const LoadingWeights = Template.bind({});
@@ -37,7 +38,7 @@ LoadingWeights.args = {
 		targetWeightInPounds: undefined,
 		heightInInches: undefined
 	},
-	today: '2020-01-01',
+	today: '2020-01-01'
 };
 
 export const ProfileLoadedTooFast = Template.bind({});
@@ -51,7 +52,7 @@ ProfileLoadedTooFast.args = {
 		targetWeightInPounds: undefined,
 		heightInInches: undefined
 	},
-	today: '2020-01-01',
+	today: '2020-01-01'
 };
 
 export const NoData = Template.bind({});
@@ -65,7 +66,7 @@ NoData.args = {
 		targetWeightInPounds: undefined,
 		heightInInches: undefined
 	},
-	today: '2020-01-01',
+	today: '2020-01-01'
 };
 
 export const SomeData = Template.bind({});
@@ -92,5 +93,5 @@ SomeData.args = {
 		targetWeightInPounds: undefined,
 		heightInInches: undefined
 	},
-	today: '2020-01-01',
+	today: '2020-01-01'
 };

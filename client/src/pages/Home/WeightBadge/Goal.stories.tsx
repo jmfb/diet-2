@@ -8,8 +8,7 @@ export default {
 	component: Goal
 } as Meta;
 
-const Template: Story<IGoalProps> = props =>
-	<Goal {...props} />;
+const Template: Story<IGoalProps> = props => <Goal {...props} />;
 
 export const Default = Template.bind({});
 Default.args = {

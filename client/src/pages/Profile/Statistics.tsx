@@ -9,17 +9,29 @@ export interface IStatisticsProps {
 }
 
 export default function Statistics(props: IStatisticsProps) {
-	const { weightInPounds, profile: { targetWeightInPounds, heightInInches, birthDate } } = props;
+	const {
+		weightInPounds,
+		profile: { targetWeightInPounds, heightInInches, birthDate }
+	} = props;
 	const weightInKilograms = weightService.toKilograms(weightInPounds);
 	const heightInMeters = weightService.toMeters(heightInInches);
 	const ageInYears = dateService.yearsOld(birthDate);
-	const bodyMassIndex = weightService.computeBodyMassIndex(weightInPounds, heightInInches);
+	const bodyMassIndex = weightService.computeBodyMassIndex(
+		weightInPounds,
+		heightInInches
+	);
 	const weightCategory = weightService.getWeightCategory(bodyMassIndex);
 	const { name: weightCategoryName } = weightCategories[weightCategory];
-	const targetWeightInKilograms = weightService.toKilograms(targetWeightInPounds);
-	const targetBodyMassIndex = weightService.computeBodyMassIndex(targetWeightInPounds, heightInInches);
-	const targetWeightCategory = weightService.getWeightCategory(targetBodyMassIndex);
-	const { name: targetWeightCategoryName } = weightCategories[targetWeightCategory];
+	const targetWeightInKilograms =
+		weightService.toKilograms(targetWeightInPounds);
+	const targetBodyMassIndex = weightService.computeBodyMassIndex(
+		targetWeightInPounds,
+		heightInInches
+	);
+	const targetWeightCategory =
+		weightService.getWeightCategory(targetBodyMassIndex);
+	const { name: targetWeightCategoryName } =
+		weightCategories[targetWeightCategory];
 
 	return (
 		<dl className={styles.root}>

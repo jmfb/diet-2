@@ -9,12 +9,13 @@ export default {
 	component: Profile
 } as Meta;
 
-const Template: Story<IProfileProps> = props =>
+const Template: Story<IProfileProps> = props => (
 	<main>
 		<section>
 			<Profile {...props} />
 		</section>
-	</main>;
+	</main>
+);
 
 export const Default = Template.bind({});
 Default.args = {

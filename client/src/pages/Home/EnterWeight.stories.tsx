@@ -8,8 +8,7 @@ export default {
 	component: EnterWeight
 } as Meta;
 
-const Template: Story<IEnterWeightProps> = props =>
-	<EnterWeight {...props} />;
+const Template: Story<IEnterWeightProps> = props => <EnterWeight {...props} />;
 
 export const Default = Template.bind({});
 Default.args = {

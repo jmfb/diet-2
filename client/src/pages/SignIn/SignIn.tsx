@@ -19,10 +19,10 @@ export default function SignIn(props: ISignInProps) {
 					type='dark'
 					isDisabled={isSigningIn}
 					onClick={onClickSignIn}
-					/>
-				{isSigningIn &&
+				/>
+				{isSigningIn && (
 					<PageLoading message='Redirecting to Google sign-in page...' />
-				}
+				)}
 			</section>
 		</main>
 	);

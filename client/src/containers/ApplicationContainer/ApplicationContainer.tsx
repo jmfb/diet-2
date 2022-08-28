@@ -6,21 +6,39 @@ import NewerVersionPrompt from './NewerVersionPrompt';
 import { IState, authDuck, diagnosticsDuck } from '~/redux';
 import { useInterval } from '~/hooks';
 
-const asyncHomeContainer = lazy(() =>
-	import(/* webpackChunkName: 'HomeContainer' */ '~/containers/HomeContainer'));
-const asyncProfileContainer = lazy(() =>
-	import(/* webpackChunkName: 'ProfileContainer' */ '~/containers/ProfileContainer'));
-const asyncSignOutContainer = lazy(() =>
-	import(/* webpackChunkName: 'SignOutContainer' */ '~/containers/SignOutContainer'));
+const asyncHomeContainer = lazy(
+	() =>
+		import(
+			/* webpackChunkName: 'HomeContainer' */ '~/containers/HomeContainer'
+		)
+);
+const asyncProfileContainer = lazy(
+	() =>
+		import(
+			/* webpackChunkName: 'ProfileContainer' */ '~/containers/ProfileContainer'
+		)
+);
+const asyncSignOutContainer = lazy(
+	() =>
+		import(
+			/* webpackChunkName: 'SignOutContainer' */ '~/containers/SignOutContainer'
+		)
+);
 
 export default function ApplicationContainer() {
 	const dispatch = useDispatch();
 	const history = useHistory();
-	const redirectToSignIn = useSelector((state: IState) => state.auth.redirectToSignIn);
+	const redirectToSignIn = useSelector(
+		(state: IState) => state.auth.redirectToSignIn
+	);
 	const url = useSelector((state: IState) => state.auth.url);
 	const email = useSelector((state: IState) => state.auth.email);
-	const bundleVersion = useSelector((state: IState) => state.diagnostics.bundleVersion);
-	const serverBundleVersion = useSelector((state: IState) => state.diagnostics.serverBundleVersion);
+	const bundleVersion = useSelector(
+		(state: IState) => state.diagnostics.bundleVersion
+	);
+	const serverBundleVersion = useSelector(
+		(state: IState) => state.diagnostics.serverBundleVersion
+	);
 
 	useEffect(() => {
 		dispatch(authDuck.actions.readLocalStorage());
@@ -35,9 +53,7 @@ export default function ApplicationContainer() {
 	};
 
 	if (redirectToSignIn && url === undefined) {
-		return (
-			<Redirect to='/sign-in' />
-		);
+		return <Redirect to='/sign-in' />;
 	}
 
 	if (email === undefined) {
@@ -46,13 +62,23 @@ export default function ApplicationContainer() {
 
 	return (
 		<>
-			<Header {...{email}} />
+			<Header {...{ email }} />
 			<main>
 				<section>
 					<Switch>
-						<Route exact path='/' component={asyncHomeContainer} />
-						<Route path='/profile' component={asyncProfileContainer} />
-						<Route path='/sign-out' component={asyncSignOutContainer} />
+						<Route
+							exact
+							path='/'
+							component={asyncHomeContainer}
+						/>
+						<Route
+							path='/profile'
+							component={asyncProfileContainer}
+						/>
+						<Route
+							path='/sign-out'
+							component={asyncSignOutContainer}
+						/>
 						<Route>
 							<Redirect to='/' />
 						</Route>
@@ -63,7 +89,7 @@ export default function ApplicationContainer() {
 							serverBundleVersion
 						}}
 						onClickRefresh={handleRefreshClicked}
-						/>
+					/>
 				</section>
 			</main>
 		</>

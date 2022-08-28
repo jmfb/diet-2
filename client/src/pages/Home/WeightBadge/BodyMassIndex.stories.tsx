@@ -8,8 +8,9 @@ export default {
 	component: BodyMassIndex
 } as Meta;
 
-const Template: Story<IBodyMassIndexProps> = props =>
-	<BodyMassIndex {...props} />;
+const Template: Story<IBodyMassIndexProps> = props => (
+	<BodyMassIndex {...props} />
+);
 
 export const SevereThinness = Template.bind({});
 SevereThinness.args = {

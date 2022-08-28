@@ -14,9 +14,7 @@ export function convertDateToString(date: Date) {
 
 export function parse(value: string) {
 	const time = Date.parse(value);
-	return Number.isNaN(time) ?
-		undefined :
-		convertTimeToString(time);
+	return Number.isNaN(time) ? undefined : convertTimeToString(time);
 }
 
 export function addDays(value: string, count: number) {

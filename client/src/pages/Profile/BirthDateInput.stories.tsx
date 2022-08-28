@@ -8,8 +8,9 @@ export default {
 	component: BirthDateInput
 } as Meta;
 
-const Template: Story<IBirthDateInputProps> = props =>
-	<BirthDateInput {...props} />;
+const Template: Story<IBirthDateInputProps> = props => (
+	<BirthDateInput {...props} />
+);
 
 export const Default = Template.bind({});
 

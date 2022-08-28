@@ -9,8 +9,7 @@ export default {
 	component: Statistics
 } as Meta;
 
-const Template: Story<IStatisticsProps> = props =>
-	<Statistics {...props} />;
+const Template: Story<IStatisticsProps> = props => <Statistics {...props} />;
 
 export const Default = Template.bind({});
 Default.args = {

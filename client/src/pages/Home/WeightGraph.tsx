@@ -23,26 +23,29 @@ export default function WeightGraph(props: IWeightGraphProps) {
 		const height = rootNode.clientHeight;
 		const y = d3.scaleLinear().range([height, 0]);
 		const x = d3.scaleLinear().range([0, width]);
-		const areaData = d3.area<number>()
+		const areaData = d3
+			.area<number>()
 			.x((weight, index) => x(index))
 			.y0(height)
 			.y1(weight => y(weight));
-		const lineData = d3.line<number>()
+		const lineData = d3
+			.line<number>()
 			.x((weight, index) => x(index))
 			.y(weight => y(weight));
-		const svg = d3.select(rootNode)
+		const svg = d3
+			.select(rootNode)
 			.append('g')
 			.attr('transform', 'translate(0,0)');
 
 		const minWeight = Math.min(...weightsInPounds);
 		const maxWeight = Math.max(...weightsInPounds);
 
-		const lowerBound = targetWeightInPounds ?
-			Math.min(minWeight, Math.max(0, targetWeightInPounds - 10)) :
-			minWeight;
-		const upperBound = targetWeightInPounds ?
-			Math.max(maxWeight, targetWeightInPounds + 10) :
-			maxWeight;
+		const lowerBound = targetWeightInPounds
+			? Math.min(minWeight, Math.max(0, targetWeightInPounds - 10))
+			: minWeight;
+		const upperBound = targetWeightInPounds
+			? Math.max(maxWeight, targetWeightInPounds + 10)
+			: maxWeight;
 
 		y.domain([lowerBound, upperBound]);
 		x.domain([0, weightsInPounds.length - 1]);
@@ -91,7 +94,9 @@ export default function WeightGraph(props: IWeightGraphProps) {
 
 	if (weightsInPounds.length === 0) {
 		return (
-			<div className={styles.none}>No weight records since {startDate}</div>
+			<div className={styles.none}>
+				No weight records since {startDate}
+			</div>
 		);
 	}
 
@@ -100,9 +105,20 @@ export default function WeightGraph(props: IWeightGraphProps) {
 
 	return (
 		<div className={styles.wrapper}>
-			<svg ref={svgRef} className={styles.root} />
-			<Pill type='info' className={styles.max}>Max {maxWeight} lbs</Pill>
-			<Pill type='info' className={styles.min}>Min {minWeight} lbs</Pill>
+			<svg
+				ref={svgRef}
+				className={styles.root}
+			/>
+			<Pill
+				type='info'
+				className={styles.max}>
+				Max {maxWeight} lbs
+			</Pill>
+			<Pill
+				type='info'
+				className={styles.min}>
+				Min {minWeight} lbs
+			</Pill>
 		</div>
 	);
 }

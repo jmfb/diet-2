@@ -8,8 +8,7 @@ export default {
 	component: WeightGraph
 } as Meta;
 
-const Template: Story<IWeightGraphProps> = props =>
-	<WeightGraph {...props} />;
+const Template: Story<IWeightGraphProps> = props => <WeightGraph {...props} />;
 
 export const NoData = Template.bind({});
 NoData.args = {

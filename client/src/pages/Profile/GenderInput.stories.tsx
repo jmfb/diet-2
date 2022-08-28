@@ -9,8 +9,7 @@ export default {
 	component: GenderInput
 } as Meta;
 
-const Template: Story<IGenderInputProps> = props =>
-	<GenderInput {...props} />;
+const Template: Story<IGenderInputProps> = props => <GenderInput {...props} />;
 
 export const Default = Template.bind({});
 

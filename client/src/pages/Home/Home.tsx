@@ -15,12 +15,15 @@ export interface IHomeProps {
 }
 
 export default function Home(props: IHomeProps) {
-	const { weights: { weightStateByDate, isLoading, isLoaded }, today, onSaveWeight, profile } = props;
+	const {
+		weights: { weightStateByDate, isLoading, isLoaded },
+		today,
+		onSaveWeight,
+		profile
+	} = props;
 
 	if (isLoading || !profile) {
-		return (
-			<PageLoading message='Loading weights from the server...' />
-		);
+		return <PageLoading message='Loading weights from the server...' />;
 	}
 
 	if (!isLoaded) {
@@ -44,15 +47,15 @@ export default function Home(props: IHomeProps) {
 					onSaveWeight
 				}}
 				date={today}
-				/>
+			/>
 			<WeightBadge
 				{...{
 					targetWeightInPounds,
 					heightInInches,
 					weightStateByDate
 				}}
-				/>
-			{Object.entries(graphs).map(([title, daysAgo]) =>
+			/>
+			{Object.entries(graphs).map(([title, daysAgo]) => (
 				<WeightSummary
 					key={daysAgo}
 					{...{
@@ -61,8 +64,8 @@ export default function Home(props: IHomeProps) {
 						title
 					}}
 					startDate={dateService.addDays(today, -daysAgo)}
-					/>
-			)}
+				/>
+			))}
 		</>
 	);
 }

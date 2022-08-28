@@ -15,13 +15,13 @@ export default function Button(props: IButtonProps) {
 	const { className, onClick, children, isDisabled, isProcessing } = props;
 	return (
 		<button
-			{...{onClick}}
+			{...{ onClick }}
 			className={cx(styles.button, styles.primary, className)}
 			disabled={isDisabled}>
-			<div className={cx({ [styles.processing]: isProcessing })}>{children}</div>
-			{isProcessing &&
-				<LoadingIcon />
-			}
+			<div className={cx({ [styles.processing]: isProcessing })}>
+				{children}
+			</div>
+			{isProcessing && <LoadingIcon />}
 		</button>
 	);
 }

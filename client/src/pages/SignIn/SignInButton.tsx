@@ -27,6 +27,6 @@ export default function SignInButton(props: ISignInButtonProps) {
 				className
 			)}
 			onClick={handleClicked}
-			/>
+		/>
 	);
 }

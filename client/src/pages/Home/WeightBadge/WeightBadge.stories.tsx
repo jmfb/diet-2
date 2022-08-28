@@ -8,8 +8,7 @@ export default {
 	component: WeightBadge
 } as Meta;
 
-const Template: Story<IWeightBadgeProps> = props =>
-	<WeightBadge {...props} />;
+const Template: Story<IWeightBadgeProps> = props => <WeightBadge {...props} />;
 
 export const Weight = Template.bind({});
 Weight.args = {

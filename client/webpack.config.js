@@ -9,7 +9,8 @@ const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 const path = require('path');
 const webpack = require('webpack');
 
-const isProduction = process.argv[process.argv.indexOf('--node-env') + 1] === 'production';
+const isProduction =
+	process.argv[process.argv.indexOf('--node-env') + 1] === 'production';
 const isDebug = !isProduction;
 const isVerbose = process.env.VERBOSE === 'true';
 const isTest = process.env.NODE_TEST === 'test';
@@ -21,10 +22,7 @@ const buildDir = path.resolve(__dirname, '../server/wwwroot/dist');
 module.exports = {
 	mode: isDebug ? 'development' : 'production',
 	entry: {
-		'bundle': [
-			'whatwg-fetch',
-			'./src/index.tsx'
-		]
+		bundle: ['whatwg-fetch', './src/index.tsx']
 	},
 	output: {
 		publicPath: '/dist/',
@@ -57,7 +55,9 @@ module.exports = {
 							sourceMap: isDebug,
 							url: false,
 							modules: {
-								localIdentName: isDebug ? '[name]_[local]_[hash:base64:3]' : '[hash:base64:4]'
+								localIdentName: isDebug
+									? '[name]_[local]_[hash:base64:3]'
+									: '[hash:base64:4]'
 							}
 						}
 					},
@@ -73,18 +73,18 @@ module.exports = {
 		new EsLintPlugin({
 			extensions: ['ts', 'tsx'],
 			failOnWarning: treatWarningsAsErrors,
-			exclude: [
-				'node_modules'
-			]
+			exclude: ['node_modules']
 		}),
 		new ForkTsCheckerWebpackPlugin(),
-		...isTest ? [] : [
-			new CleanWebpackPlugin(),
-			new AssetsPlugin({
-				path: buildDir
-			})
-		],
-		...isAnalyze ? [new BundleAnalyzerPlugin()] : []
+		...(isTest
+			? []
+			: [
+					new CleanWebpackPlugin(),
+					new AssetsPlugin({
+						path: buildDir
+					})
+			  ]),
+		...(isAnalyze ? [new BundleAnalyzerPlugin()] : [])
 	],
 	cache: isDebug,
 	stats: {
@@ -101,10 +101,7 @@ module.exports = {
 	},
 	optimization: {
 		minimize: isProduction,
-		minimizer: [
-			new TerserWebpackPlugin(),
-			new CssMinimizerWebpackPlugin()
-		],
+		minimizer: [new TerserWebpackPlugin(), new CssMinimizerWebpackPlugin()],
 		splitChunks: {
 			chunks: 'all'
 		}

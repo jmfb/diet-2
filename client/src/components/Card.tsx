@@ -9,9 +9,5 @@ export interface ICardProps {
 
 export default function Card(props: ICardProps) {
 	const { className, children } = props;
-	return (
-		<div className={cx(styles.root, className)}>
-			{children}
-		</div>
-	);
+	return <div className={cx(styles.root, className)}>{children}</div>;
 }

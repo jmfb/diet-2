@@ -21,7 +21,10 @@ export function toMeters(inches: number, places = 1) {
 	return round(inches * 0.0254, places);
 }
 
-export function computeBodyMassIndex(weightInPounds: number, heightInInches: number) {
+export function computeBodyMassIndex(
+	weightInPounds: number,
+	heightInInches: number
+) {
 	const weightInKilograms = toKilograms(weightInPounds, undefined);
 	const heightInMeters = toMeters(heightInInches, undefined);
 	const bodyMassIndex = weightInKilograms / Math.pow(heightInMeters, 2);
@@ -29,11 +32,14 @@ export function computeBodyMassIndex(weightInPounds: number, heightInInches: num
 }
 
 export function getWeightCategory(bodyMassIndex: number) {
-	const weightCategoryString = Object
-		.entries(weightCategories)
-		.filter(([, metadata]) => bodyMassIndex < metadata.upperBoundBodyMassIndex)
-		.sort(([,a], [,b]) => a.upperBoundBodyMassIndex - b.upperBoundBodyMassIndex)
-		[0][0];
+	const weightCategoryString = Object.entries(weightCategories)
+		.filter(
+			([, metadata]) => bodyMassIndex < metadata.upperBoundBodyMassIndex
+		)
+		.sort(
+			([, a], [, b]) =>
+				a.upperBoundBodyMassIndex - b.upperBoundBodyMassIndex
+		)[0][0];
 	return Number.parseInt(weightCategoryString, 10) as WeightCategory;
 }
 
@@ -49,9 +55,11 @@ export function getMostRecentWeight(weightStateByDate: IWeightStateByDate) {
 	return weightStateByDate[maxDate]?.weightInPounds;
 }
 
-export function getWeightsOnOrAfter(weightStateByDate: IWeightStateByDate, startDate: string) {
-	return Object
-		.keys(weightStateByDate)
+export function getWeightsOnOrAfter(
+	weightStateByDate: IWeightStateByDate,
+	startDate: string
+) {
+	return Object.keys(weightStateByDate)
 		.filter(date => date >= startDate)
 		.sort()
 		.map(date => weightStateByDate[date].weightInPounds);

@@ -11,7 +11,9 @@ export interface IEnterWeightProps {
 
 export default function EnterWeight(props: IEnterWeightProps) {
 	const { date, weightState, onSaveWeight } = props;
-	const [weightInPounds, setWeightInPounds] = useState(weightState?.weightInPounds);
+	const [weightInPounds, setWeightInPounds] = useState(
+		weightState?.weightInPounds
+	);
 
 	const canSave =
 		!weightState?.isSaving &&
@@ -27,11 +29,11 @@ export default function EnterWeight(props: IEnterWeightProps) {
 		<div className={styles.root}>
 			<div className={styles.date}>{date}</div>
 			<WeightInput
-				{...{date}}
+				{...{ date }}
 				autoFocus
 				value={weightInPounds}
 				onChange={setWeightInPounds}
-				/>
+			/>
 			<Button
 				className={styles.save}
 				isDisabled={!canSave}

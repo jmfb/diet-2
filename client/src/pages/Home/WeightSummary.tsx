@@ -14,7 +14,10 @@ export interface IWeightSummaryProps {
 
 export default function WeightSummary(props: IWeightSummaryProps) {
 	const { title, startDate, targetWeightInPounds, weightStateByDate } = props;
-	const weightsInPounds = weightService.getWeightsOnOrAfter(weightStateByDate, startDate);
+	const weightsInPounds = weightService.getWeightsOnOrAfter(
+		weightStateByDate,
+		startDate
+	);
 
 	return (
 		<div className={styles.root}>
@@ -26,7 +29,7 @@ export default function WeightSummary(props: IWeightSummaryProps) {
 						weightsInPounds
 					}}
 					className={styles.change}
-					/>
+				/>
 			</h2>
 			<WeightGraph
 				{...{
@@ -34,7 +37,7 @@ export default function WeightSummary(props: IWeightSummaryProps) {
 					targetWeightInPounds,
 					weightsInPounds
 				}}
-				/>
+			/>
 		</div>
 	);
 }

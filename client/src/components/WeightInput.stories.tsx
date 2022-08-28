@@ -8,8 +8,7 @@ export default {
 	component: WeightInput
 } as Meta;
 
-const Template: Story<IWeightInputProps> = props =>
-	<WeightInput {...props} />;
+const Template: Story<IWeightInputProps> = props => <WeightInput {...props} />;
 
 export const Blank = Template.bind({});
 

@@ -9,8 +9,7 @@ export default {
 	component: ProfileForm
 } as Meta;
 
-const Template: Story<IProfileFormProps> = props =>
-	<ProfileForm {...props} />;
+const Template: Story<IProfileFormProps> = props => <ProfileForm {...props} />;
 
 export const BlankProfile = Template.bind({});
 BlankProfile.args = {

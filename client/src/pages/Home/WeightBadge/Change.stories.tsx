@@ -8,8 +8,7 @@ export default {
 	component: Change
 } as Meta;
 
-const Template: Story<IChangeProps> = props =>
-	<Change {...props} />;
+const Template: Story<IChangeProps> = props => <Change {...props} />;
 
 export const Negative = Template.bind({});
 Negative.args = {

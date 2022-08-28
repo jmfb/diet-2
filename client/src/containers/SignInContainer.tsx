@@ -18,9 +18,7 @@ export default function SignInContainer() {
 	};
 
 	if (url !== undefined) {
-		return (
-			<Redirect to={url} />
-		);
+		return <Redirect to={url} />;
 	}
 
 	return (
@@ -30,6 +28,6 @@ export default function SignInContainer() {
 				url
 			}}
 			onClickSignIn={handleSignInClicked}
-			/>
+		/>
 	);
 }

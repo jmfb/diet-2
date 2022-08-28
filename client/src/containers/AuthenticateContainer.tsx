@@ -9,16 +9,14 @@ export default function AuthenticationContainer() {
 	const dispatch = useDispatch();
 	const location = useLocation();
 	const email = useSelector((state: IState) => state.auth.email);
-	const { code } = queryString.parse(location.search) as { code: string; };
+	const { code } = queryString.parse(location.search) as { code: string };
 
 	useEffect(() => {
 		dispatch(authDuck.actions.authenticate(code));
 	}, [code]);
 
 	if (email !== undefined || !code) {
-		return (
-			<Redirect to='/' />
-		);
+		return <Redirect to='/' />;
 	}
 
 	return (

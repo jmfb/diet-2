@@ -10,7 +10,10 @@ export interface IBodyMassIndexProps {
 
 export default function BodyMassIndex(props: IBodyMassIndexProps) {
 	const { heightInInches, mostRecentWeight } = props;
-	const bodyMassIndex = weightService.computeBodyMassIndex(mostRecentWeight, heightInInches);
+	const bodyMassIndex = weightService.computeBodyMassIndex(
+		mostRecentWeight,
+		heightInInches
+	);
 	const weightCategory = weightService.getWeightCategory(bodyMassIndex);
 	const weightCategoryName = weightCategories[weightCategory].name;
 	return (

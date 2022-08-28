@@ -16,9 +16,7 @@ export default function Profile(props: IProfileProps) {
 	const { profile, weightInPounds, onSave, isSaving } = props;
 
 	if (profile === undefined) {
-		return (
-			<PageLoading message='Loading profile...' />
-		);
+		return <PageLoading message='Loading profile...' />;
 	}
 
 	const canComputeStatistics =
@@ -38,9 +36,9 @@ export default function Profile(props: IProfileProps) {
 						isSaving
 					}}
 					initialValue={profile}
-					/>
+				/>
 			</Card>
-			{canComputeStatistics ?
+			{canComputeStatistics ? (
 				<div className={styles.root}>
 					<h2>Statistics</h2>
 					<Statistics
@@ -48,12 +46,13 @@ export default function Profile(props: IProfileProps) {
 							profile,
 							weightInPounds
 						}}
-						/>
-				</div> :
+					/>
+				</div>
+			) : (
 				<div className={styles.finishProfile}>
 					Finish filling in your profile to view statistics.
 				</div>
-			}
+			)}
 		</>
 	);
 }
