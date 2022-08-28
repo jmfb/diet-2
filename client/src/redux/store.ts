@@ -1,19 +1,22 @@
 import { configureStore } from '@reduxjs/toolkit';
-import * as errorDuck from './error.duck';
-import * as authDuck from './auth.duck';
-import * as diagnosticsDuck from './diagnostics.duck';
-import * as weightsDuck from './weights.duck';
-import * as profileDuck from './profile.duck';
+import { useSelector, TypedUseSelectorHook } from 'react-redux';
+import errorSlice from './error.slice';
+import authSlice from './auth.slice';
+import diagnosticsSlice from './diagnostics.slice';
+import weightsSlice from './weights.slice';
+import profileSlice from './profile.slice';
 import IState from './IState';
 
 export function createStore() {
 	return configureStore<IState>({
 		reducer: {
-			[errorDuck.name]: errorDuck.reducer,
-			[authDuck.name]: authDuck.reducer,
-			[diagnosticsDuck.name]: diagnosticsDuck.reducer,
-			[weightsDuck.name]: weightsDuck.reducer,
-			[profileDuck.name]: profileDuck.reducer
+			[errorSlice.name]: errorSlice.reducer,
+			[authSlice.name]: authSlice.reducer,
+			[diagnosticsSlice.name]: diagnosticsSlice.reducer,
+			[weightsSlice.name]: weightsSlice.reducer,
+			[profileSlice.name]: profileSlice.reducer
 		}
 	});
 }
+
+export const useAppSelector: TypedUseSelectorHook<IState> = useSelector;

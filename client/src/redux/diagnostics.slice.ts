@@ -23,7 +23,7 @@ function makeInitialState(): IDiagnosticsState {
 	};
 }
 
-export const { name, reducer } = createSlice({
+const slice = createSlice({
 	name: 'diagnostics',
 	initialState: makeInitialState(),
 	reducers: {},
@@ -43,6 +43,10 @@ export const { name, reducer } = createSlice({
 			})
 });
 
-export const actions = {
-	heartbeat
+export default {
+	...slice,
+	actions: {
+		...slice.actions,
+		heartbeat
+	}
 };

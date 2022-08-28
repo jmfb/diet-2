@@ -1,12 +1,20 @@
 import React, { useEffect } from 'react';
-import { useDispatch, useSelector, batch } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Profile } from '~/pages';
-import { IProfile } from '~/models';
-import { IState, profileDuck, weightsDuck } from '~/redux';
+import { IState, profileSlice, weightsSlice } from '~/redux';
 import { weightService } from '~/services';
 
 export default function ProfileContainer() {
 	const dispatch = useDispatch();
+	const { loadAllWeights } = bindActionCreators(
+		weightsSlice.actions,
+		dispatch
+	);
+	const { getProfile, setProfile } = bindActionCreators(
+		profileSlice.actions,
+		dispatch
+	);
 	const profile = useSelector((state: IState) => state.profile.profile);
 	const isSaving = useSelector((state: IState) => state.profile.isSaving);
 	const weightStateByDate = useSelector(
@@ -15,15 +23,9 @@ export default function ProfileContainer() {
 	const weightInPounds = weightService.getMostRecentWeight(weightStateByDate);
 
 	useEffect(() => {
-		batch(() => {
-			dispatch(weightsDuck.actions.loadAllWeights());
-			dispatch(profileDuck.actions.getProfile());
-		});
+		loadAllWeights();
+		getProfile();
 	}, []);
-
-	const handleSaved = (profile: IProfile) => {
-		dispatch(profileDuck.actions.setProfile(profile));
-	};
 
 	return (
 		<Profile
@@ -32,7 +34,7 @@ export default function ProfileContainer() {
 				isSaving,
 				weightInPounds
 			}}
-			onSave={handleSaved}
+			onSave={setProfile}
 		/>
 	);
 }

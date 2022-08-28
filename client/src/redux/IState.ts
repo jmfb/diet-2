@@ -1,8 +1,8 @@
-import { IErrorState } from './error.duck';
-import { IAuthState } from './auth.duck';
-import { IDiagnosticsState } from './diagnostics.duck';
-import { IWeightsState } from './weights.duck';
-import { IProfileState } from './profile.duck';
+import { IErrorState } from './error.slice';
+import { IAuthState } from './auth.slice';
+import { IDiagnosticsState } from './diagnostics.slice';
+import { IWeightsState } from './weights.slice';
+import { IProfileState } from './profile.slice';
 
 export default interface IState {
 	error: IErrorState;

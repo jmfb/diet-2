@@ -1,24 +1,28 @@
 import React, { lazy, useEffect } from 'react';
-import { Redirect, Switch, Route, useHistory } from 'react-router-dom';
+import { bindActionCreators } from 'redux';
+import { Navigate, Routes, Route } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import Header from './Header';
 import NewerVersionPrompt from './NewerVersionPrompt';
-import { IState, authDuck, diagnosticsDuck } from '~/redux';
+import { IState, authSlice, diagnosticsSlice } from '~/redux';
 import { useInterval } from '~/hooks';
 
-const asyncHomeContainer = lazy(
+// eslint-disable-next-line @typescript-eslint/naming-convention
+const AsyncHomeContainer = lazy(
 	() =>
 		import(
 			/* webpackChunkName: 'HomeContainer' */ '~/containers/HomeContainer'
 		)
 );
-const asyncProfileContainer = lazy(
+// eslint-disable-next-line @typescript-eslint/naming-convention
+const AsyncProfileContainer = lazy(
 	() =>
 		import(
 			/* webpackChunkName: 'ProfileContainer' */ '~/containers/ProfileContainer'
 		)
 );
-const asyncSignOutContainer = lazy(
+// eslint-disable-next-line @typescript-eslint/naming-convention
+const AsyncSignOutContainer = lazy(
 	() =>
 		import(
 			/* webpackChunkName: 'SignOutContainer' */ '~/containers/SignOutContainer'
@@ -27,7 +31,14 @@ const asyncSignOutContainer = lazy(
 
 export default function ApplicationContainer() {
 	const dispatch = useDispatch();
-	const history = useHistory();
+	const { readLocalStorage } = bindActionCreators(
+		authSlice.actions,
+		dispatch
+	);
+	const { heartbeat } = bindActionCreators(
+		diagnosticsSlice.actions,
+		dispatch
+	);
 	const redirectToSignIn = useSelector(
 		(state: IState) => state.auth.redirectToSignIn
 	);
@@ -41,11 +52,11 @@ export default function ApplicationContainer() {
 	);
 
 	useEffect(() => {
-		dispatch(authDuck.actions.readLocalStorage());
+		readLocalStorage();
 	}, []);
 
 	useInterval(() => {
-		dispatch(diagnosticsDuck.actions.heartbeat());
+		heartbeat();
 	}, 60_000);
 
 	const handleRefreshClicked = () => {
@@ -53,7 +64,7 @@ export default function ApplicationContainer() {
 	};
 
 	if (redirectToSignIn && url === undefined) {
-		return <Redirect to='/sign-in' />;
+		return <Navigate to='/sign-in' />;
 	}
 
 	if (email === undefined) {
@@ -65,24 +76,24 @@ export default function ApplicationContainer() {
 			<Header {...{ email }} />
 			<main>
 				<section>
-					<Switch>
+					<Routes>
 						<Route
-							exact
 							path='/'
-							component={asyncHomeContainer}
+							element={<AsyncHomeContainer />}
 						/>
 						<Route
 							path='/profile'
-							component={asyncProfileContainer}
+							element={<AsyncProfileContainer />}
 						/>
 						<Route
 							path='/sign-out'
-							component={asyncSignOutContainer}
+							element={<AsyncSignOutContainer />}
 						/>
-						<Route>
-							<Redirect to='/' />
-						</Route>
-					</Switch>
+						<Route
+							path='*'
+							element={<Navigate to='/' />}
+						/>
+					</Routes>
 					<NewerVersionPrompt
 						{...{
 							bundleVersion,

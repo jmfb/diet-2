@@ -1,14 +1,16 @@
 import React, { useEffect } from 'react';
-import { Redirect } from 'react-router-dom';
+import { bindActionCreators } from 'redux';
+import { Navigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { authDuck } from '~/redux';
+import { authSlice } from '~/redux';
 
 export default function SignOutContainer() {
 	const dispatch = useDispatch();
+	const { signOut } = bindActionCreators(authSlice.actions, dispatch);
 
 	useEffect(() => {
-		dispatch(authDuck.actions.signOut());
+		signOut();
 	}, []);
 
-	return <Redirect to='/sign-in' />;
+	return <Navigate to='/sign-in' />;
 }

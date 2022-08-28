@@ -22,7 +22,7 @@ const initialState: IAuthState = {
 	url: undefined
 };
 
-export const { name, reducer } = createSlice({
+const slice = createSlice({
 	name: 'auth',
 	initialState,
 	reducers: {},
@@ -65,9 +65,13 @@ export const { name, reducer } = createSlice({
 			})
 });
 
-export const actions = {
-	readLocalStorage,
-	getAuthenticationUrl,
-	authenticate,
-	signOut
+export default {
+	...slice,
+	actions: {
+		...slice.actions,
+		readLocalStorage,
+		getAuthenticationUrl,
+		authenticate,
+		signOut
+	}
 };

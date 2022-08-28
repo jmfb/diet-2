@@ -31,7 +31,7 @@ function setErrorState(
 	state.context = context ? JSON.stringify(context) : undefined;
 }
 
-export const { name, reducer, actions } = createSlice({
+const slice = createSlice({
 	name: 'error',
 	initialState,
 	reducers: {
@@ -84,3 +84,10 @@ export const { name, reducer, actions } = createSlice({
 				);
 			})
 });
+
+export default {
+	...slice,
+	actions: {
+		...slice.actions
+	}
+};

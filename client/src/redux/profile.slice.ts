@@ -15,7 +15,7 @@ const initialState: IProfileState = {
 	profile: undefined
 };
 
-export const { name, reducer } = createSlice({
+const slice = createSlice({
 	name: 'profile',
 	initialState,
 	reducers: {},
@@ -48,7 +48,11 @@ export const { name, reducer } = createSlice({
 			})
 });
 
-export const actions = {
-	getProfile,
-	setProfile
+export default {
+	...slice,
+	actions: {
+		...slice.actions,
+		getProfile,
+		setProfile
+	}
 };

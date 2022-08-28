@@ -15,7 +15,7 @@ const initialState: IWeightsState = {
 	weightStateByDate: {}
 };
 
-export const { name, reducer } = createSlice({
+const slice = createSlice({
 	name: 'weights',
 	initialState,
 	reducers: {},
@@ -63,7 +63,11 @@ export const { name, reducer } = createSlice({
 			})
 });
 
-export const actions = {
-	loadAllWeights,
-	saveWeight
+export default {
+	...slice,
+	actions: {
+		...slice.actions,
+		loadAllWeights,
+		saveWeight
+	}
 };

@@ -12,23 +12,11 @@ module.exports = {
 		sourceType: 'module'
 	},
 	plugins: ['@typescript-eslint', '@typescript-eslint/tslint'],
+	extends: ['prettier'],
 	rules: {
 		semi: 'off',
 		camelcase: 'off',
 		'no-multi-spaces': 'error',
-		'@typescript-eslint/member-delimiter-style': [
-			'error',
-			{
-				multiline: {
-					delimiter: 'semi',
-					requireLast: true
-				},
-				singleline: {
-					delimiter: 'semi',
-					requireLast: true
-				}
-			}
-		],
 		'@typescript-eslint/naming-convention': [
 			'error',
 			{

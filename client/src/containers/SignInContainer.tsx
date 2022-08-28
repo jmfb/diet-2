@@ -1,24 +1,25 @@
 import React, { useEffect } from 'react';
-import { Redirect } from 'react-router-dom';
+import { bindActionCreators } from 'redux';
+import { Navigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { SignIn } from '~/pages';
-import { IState, authDuck } from '~/redux';
+import { IState, authSlice } from '~/redux';
 
 export default function SignInContainer() {
 	const dispatch = useDispatch();
+	const { signOut, getAuthenticationUrl } = bindActionCreators(
+		authSlice.actions,
+		dispatch
+	);
 	const isSigningIn = useSelector((state: IState) => state.auth.isSigningIn);
 	const url = useSelector((state: IState) => state.auth.url);
 
 	useEffect(() => {
-		dispatch(authDuck.actions.signOut());
+		signOut();
 	}, []);
 
-	const handleSignInClicked = () => {
-		dispatch(authDuck.actions.getAuthenticationUrl());
-	};
-
 	if (url !== undefined) {
-		return <Redirect to={url} />;
+		return <Navigate to={url} />;
 	}
 
 	return (
@@ -27,7 +28,7 @@ export default function SignInContainer() {
 				isSigningIn,
 				url
 			}}
-			onClickSignIn={handleSignInClicked}
+			onClickSignIn={getAuthenticationUrl}
 		/>
 	);
 }

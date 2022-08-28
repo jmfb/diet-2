@@ -13,21 +13,26 @@ export default function Header(props: IHeaderProps) {
 			<nav className={styles.links}>
 				<div className={styles.left}>
 					<NavLink
-						exact
 						to='/'
-						activeClassName={styles.active}>
+						className={props =>
+							props.isActive ? styles.active : ''
+						}>
 						Home
 					</NavLink>
 				</div>
 				<div className={styles.right}>
 					<NavLink
 						to='/profile'
-						activeClassName={styles.active}>
+						className={props =>
+							props.isActive ? styles.active : ''
+						}>
 						{email}
 					</NavLink>
 					<NavLink
 						to='/sign-out'
-						activeClassName={styles.active}>
+						className={props =>
+							props.isActive ? styles.active : ''
+						}>
 						Sign Out
 					</NavLink>
 				</div>
