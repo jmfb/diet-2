@@ -75,5 +75,6 @@
 		"react-redux": "^7.2.4",
 		"react-router-dom": "^5.2.0",
 		"whatwg-fetch": "^3.6.2"
-	}
+	},
+	"packageManager": "yarn@3.2.3"
 }
